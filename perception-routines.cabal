@@ -1,0 +1,72 @@
+cabal-version:   2.4
+name:            perception-routines
+version:         0.0.1.0
+license:         BSD-3-Clause
+license-file:    LICENSE.md
+maintainer:      Mark Karpov <markkarpov92@gmail.com>
+author:          Mark Karpov <markkarpov92@gmail.com>
+tested-with:     ghc ==9.4.7 ghc ==9.6.3 ghc ==9.8.1
+homepage:        https://github.com/mrkkrp/perception-routines
+bug-reports:     https://github.com/mrkkrp/perception-routines/issues
+synopsis:        An implementation of perception routines in Haskell
+description:     An implementation of perception routines in Haskell.
+category:        Text
+build-type:      Simple
+extra-doc-files:
+    CHANGELOG.md
+    README.md
+
+source-repository head
+    type:     git
+    location: https://github.com/mrkkrp/perception-routines.git
+
+flag dev
+    description: Turn on development settings.
+    default:     False
+    manual:      True
+
+library
+    default-language: Haskell2010
+    build-depends:    base >=4.15 && <5
+
+    if flag(dev)
+        ghc-options: -Wall -Werror -Wpartial-fields -Wunused-packages
+
+    else
+        ghc-options: -O2 -Wall
+
+executable proutine
+    main-is:          Main.hs
+    hs-source-dirs:   app
+    default-language: GHC2021
+    build-depends:
+        base >=4.15 && <5,
+        perception-routines
+
+    if flag(dev)
+        ghc-options:
+            -Wall -Werror -Wredundant-constraints -Wpartial-fields
+            -Wunused-packages
+
+    else
+        ghc-options: -O2 -Wall
+
+test-suite tests
+    type:               exitcode-stdio-1.0
+    main-is:            Spec.hs
+    build-tool-depends: hspec-discover:hspec-discover >=2 && <3
+    hs-source-dirs:     tests
+    default-language:   GHC2021
+    build-depends:
+        QuickCheck >=2.4 && <3,
+        base >=4.15 && <5,
+        hspec >=2 && <3,
+        perception-routines
+
+    if flag(dev)
+        ghc-options:
+            -Wall -Werror -Wredundant-constraints -Wpartial-fields
+            -Wunused-packages
+
+    else
+        ghc-options: -O2 -Wall
