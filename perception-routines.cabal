@@ -34,7 +34,7 @@ library
     default-language: GHC2021
     build-depends:
         base >=4.15 && <5,
-        splitmix >= 0.1 && < 0.2,
+        splitmix >=0.1 && <0.2,
         text >=0.2 && <2.2
 
     if flag(dev)
@@ -70,9 +70,7 @@ test-suite tests
         perception-routines
 
     if flag(dev)
-        ghc-options:
-            -Wall -Werror -Wredundant-constraints -Wpartial-fields
-            -Wunused-packages
+        ghc-options: -Wall -Werror -Wredundant-constraints -Wpartial-fields
 
     else
         ghc-options: -O2 -Wall

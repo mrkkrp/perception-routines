@@ -1,7 +1,7 @@
 # Perception routines
 
 [![License BSD3](https://img.shields.io/badge/license-BSD3-brightgreen.svg)](http://opensource.org/licenses/BSD-3-Clause)
-![CI](https://github.com/mrkkrp/perception-routines/workflows/CI/badge.svg?branch=master)
+[![CI](https://github.com/mrkkrp/perception-routines/actions/workflows/ci.yaml/badge.svg)](https://github.com/mrkkrp/perception-routines/actions/workflows/ci.yaml)
 
 Work in progress.
 
