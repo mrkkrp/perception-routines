@@ -1,0 +1,10 @@
+cradle:
+  cabal:
+    - path: "./"
+      component: "lib:perception-routines"
+
+    - path: "app/Main.hs"
+      component: "perception-routines:exe:proutine"
+
+    - path: "tests"
+      component: "perception-routines:test:tests"
