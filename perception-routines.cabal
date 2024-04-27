@@ -29,6 +29,8 @@ library
     exposed-modules:
         Perception.Directive
         Perception.Routine
+        Perception.Routine.Mnemonic
+        Perception.Routine.Probability
         Perception.State
 
     default-language: GHC2021
