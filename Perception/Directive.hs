@@ -1,9 +1,12 @@
+{-# LANGUAGE LambdaCase #-}
+{-# LANGUAGE OverloadedStrings #-}
+
 module Perception.Directive
   ( Directive (..),
     all,
     name,
     mnemonic,
-    text,
+    description,
     precondition,
     effect,
   )
@@ -14,23 +17,28 @@ import Numeric.Natural
 import Perception.State.Internal (State (..))
 import Prelude hiding (all)
 
-data Directive = Foo
+data Directive
+  = Breath
   deriving (Enum, Bounded, Eq)
 
 all :: [Directive]
 all = [minBound .. maxBound]
 
 name :: Directive -> Text
-name = undefined
+name = \case
+  Breath -> "Breath"
 
 mnemonic :: Directive -> Char
-mnemonic = undefined
+mnemonic = \case
+  Breath -> 'b'
 
-text :: Directive -> Text
-text = undefined
+description :: Directive -> Text
+description = \case
+  Breath -> "Take a slow deep breath, pay attention to qualities of the air."
 
 precondition :: Directive -> Natural -> State -> Bool
-precondition = undefined
+precondition directive _n _st = case directive of
+  Breath -> True
 
 effect :: Directive -> Natural -> State -> State
-effect = undefined
+effect _directive _n st = st {stStamina = stStamina st - 1}
