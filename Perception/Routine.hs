@@ -4,7 +4,6 @@ module Perception.Routine
     make,
     id,
     mnemonic,
-    explain,
   )
 where
 
@@ -67,9 +66,6 @@ id (Routine id' _) = id'
 mnemonic :: Routine -> Text
 mnemonic (Routine _ xs) =
   (Text.toTitle . Text.pack . fmap Directive.mnemonic) xs
-
-explain :: Routine -> Text
-explain = undefined
 
 maxDirectivesPerRoutine :: Natural
 maxDirectivesPerRoutine = round (1.2 * sqrt n)
