@@ -11,5 +11,5 @@ import System.Random.SplitMix
 attachEqualWeights :: [a] -> [(Ratio Natural, a)]
 attachEqualWeights = undefined
 
-weightedSample :: SMGen -> [(Ratio Natural, a)] -> (SMGen, a)
+weightedSample :: SMGen -> [(Ratio Natural, a)] -> (a, SMGen)
 weightedSample = undefined

@@ -6,7 +6,7 @@ where
 
 import Numeric.Natural
 
-data Environment = Outdoor | Indoor
+data Environment = Outdoors | Indoors
 
 data State = State
   { stEnvironment :: Environment,
