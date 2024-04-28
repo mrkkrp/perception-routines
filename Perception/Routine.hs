@@ -29,11 +29,17 @@ makeN n0 st g0 = unfoldr makeOne (n0, g0)
       let (routine, g') = make st g
        in Just (routine, (n - 1, g'))
 
+maxDirectivesPerRoutine :: Natural
+maxDirectivesPerRoutine = round (1.2 * sqrt n)
+  where
+    n :: Double
+    n = fromIntegral (length Directive.all)
+
 make :: State -> SMGen -> (Routine, SMGen)
 make st0 g0 = first Routine (go st0 g0 0 Nothing id)
   where
     go st g n lastDirective acc =
-      if stStamina st == 0
+      if stStamina st == 0 || n >= maxDirectivesPerRoutine
         then (acc [], g)
         else
           let precondition x =
