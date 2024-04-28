@@ -12,6 +12,7 @@ import Development.GitRev
 import Numeric.Natural
 import Options.Applicative
 import Paths_perception_routines (version)
+import Perception.Directive qualified as Directive
 import Perception.Routine qualified as Routine
 import Perception.Routine.Domain
 import Perception.Routine.Id qualified as Routine.Id
@@ -40,6 +41,16 @@ main = do
       Text.putStr (Routine.Id.render (Routine.id routine))
       Text.putStr ")"
     Text.putStrLn ""
+  when optPrintExplanations $ do
+    Text.putStrLn ""
+    forM_ Directive.all $ \d -> do
+      putChar (Directive.mnemonic d)
+      Text.putStr " = "
+      Text.putStr (Directive.name d)
+      Text.putStr "\n  "
+      Text.putStr (Directive.text d)
+      Text.putStrLn ""
+    Text.putStrLn ""
 
 ----------------------------------------------------------------------------
 -- Command line options parsing
@@ -56,8 +67,10 @@ data Opts = Opts
     optRoutinesToGenerate :: Natural,
     -- | Print indices of the generated perception routines.
     optPrintIndices :: Bool,
-    -- | Print routine ids
-    optPrintIds :: Bool
+    -- | Print routine ids.
+    optPrintIds :: Bool,
+    -- | Print explanations of each directive.
+    optPrintExplanations :: Bool
   }
 
 optsParserInfo :: ParserInfo Opts
@@ -118,6 +131,11 @@ optsParser =
       [ long "ids",
         short 'I',
         help "Print routine ids"
+      ]
+    <*> (switch . mconcat)
+      [ long "explain",
+        short 'x',
+        help "Print explanations for all directives."
       ]
 
 ----------------------------------------------------------------------------

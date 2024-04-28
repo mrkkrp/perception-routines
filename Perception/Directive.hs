@@ -6,7 +6,7 @@ module Perception.Directive
     all,
     name,
     mnemonic,
-    description,
+    text,
     precondition,
     effect,
   )
@@ -32,8 +32,8 @@ mnemonic :: Directive -> Char
 mnemonic = \case
   Breath -> 'b'
 
-description :: Directive -> Text
-description = \case
+text :: Directive -> Text
+text = \case
   Breath -> "Take a slow deep breath, pay attention to qualities of the air."
 
 precondition :: Directive -> Natural -> State -> Bool
