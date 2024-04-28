@@ -1,10 +1,11 @@
 {-# LANGUAGE LambdaCase #-}
+{-# LANGUAGE OverloadedStrings #-}
 {-# LANGUAGE RecordWildCards #-}
 {-# LANGUAGE TemplateHaskell #-}
 
 module Main (main) where
 
-import Control.Monad (forM_)
+import Control.Monad (forM_, when)
 import Data.Text.IO qualified as Text
 import Data.Version (showVersion)
 import Development.GitRev
@@ -13,18 +14,32 @@ import Options.Applicative
 import Paths_perception_routines (version)
 import Perception.Routine qualified as Routine
 import Perception.Routine.Domain
+import Perception.Routine.Id qualified as Routine.Id
 import System.Random.SplitMix
 
 -- | Entry point of the program.
 main :: IO ()
 main = do
   Opts {..} <- execParser optsParserInfo
-  let domain = Domain optEnvironment optStamina
   g <- case optSeed of
     Nothing -> initSMGen
     Just seed -> return (mkSMGen (fromIntegral seed))
-  let routines = Routine.makeN optRoutinesToGenerate domain g
-  forM_ routines (Text.putStrLn . Routine.mnemonic)
+  let domain = Domain optEnvironment optStamina
+      routines = Routine.makeN optRoutinesToGenerate domain g
+      m :: Int
+      m =
+        1 + floor (logBase 10.0 (fromIntegral optRoutinesToGenerate :: Double))
+  forM_ (zip [1 ..] routines) $ \(i :: Int, routine) -> do
+    when optPrintIndices $ do
+      let i' = show i
+          m' = m - length i'
+      putStr (replicate m' ' ' ++ i' ++ ". ")
+    Text.putStr (Routine.mnemonic routine)
+    when optPrintIds $ do
+      Text.putStr " ("
+      Text.putStr (Routine.Id.render (Routine.id routine))
+      Text.putStr ")"
+    Text.putStrLn ""
 
 ----------------------------------------------------------------------------
 -- Command line options parsing
@@ -38,7 +53,11 @@ data Opts = Opts
     -- | Stamina.
     optStamina :: Natural,
     -- | The number of routines to generate.
-    optRoutinesToGenerate :: Natural
+    optRoutinesToGenerate :: Natural,
+    -- | Print indices of the generated perception routines.
+    optPrintIndices :: Bool,
+    -- | Print routine ids
+    optPrintIds :: Bool
   }
 
 optsParserInfo :: ParserInfo Opts
@@ -89,6 +108,16 @@ optsParser =
         metavar "N",
         value 1,
         help "Number of routines to generate"
+      ]
+    <*> (switch . mconcat)
+      [ long "indices",
+        short 'i',
+        help "Print indices of the generated perception routines"
+      ]
+    <*> (switch . mconcat)
+      [ long "ids",
+        short 'I',
+        help "Print routine ids"
       ]
 
 ----------------------------------------------------------------------------

@@ -19,7 +19,7 @@ make :: Domain -> SMGen -> Id
 make domain g = Id domain (unseedSMGen g)
 
 render :: Id -> Text
-render (Id (Domain env s) (x, y)) = Text.pack (printf "%c-%2d-%8x" e s x y)
+render (Id (Domain env s) (x, y)) = Text.pack (printf "%c%d-%8x%8x" e s x y)
   where
     e = case env of
       Outdoors -> 'e'
