@@ -12,4 +12,4 @@ applyPhoneticBias ::
   f (Natural, a) ->
   f (Natural, a)
 applyPhoneticBias _ Nothing xs = xs
-applyPhoneticBias _ (Just _prevChar) _xs = undefined
+applyPhoneticBias _ (Just _prevChar) xs = xs
