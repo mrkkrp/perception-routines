@@ -1,14 +1,8 @@
 module Perception.State
-  ( State (..),
-    Environment (..),
+  ( Internal.State,
+    Internal.init,
+    Internal.stamina,
   )
 where
 
-import Numeric.Natural
-
-data Environment = Outdoors | Indoors
-
-data State = State
-  { stEnvironment :: Environment,
-    stStamina :: Natural
-  }
+import Perception.State.Internal qualified as Internal

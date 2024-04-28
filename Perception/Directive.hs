@@ -11,7 +11,7 @@ where
 
 import Data.Text (Text)
 import Numeric.Natural
-import Perception.State (State)
+import Perception.State.Internal (State (..))
 import Prelude hiding (all)
 
 data Directive = Foo

@@ -12,23 +12,19 @@ import Numeric.Natural
 import Options.Applicative
 import Paths_perception_routines (version)
 import Perception.Routine qualified as Routine
-import Perception.State
+import Perception.Routine.Domain
 import System.Random.SplitMix
 
 -- | Entry point of the program.
 main :: IO ()
 main = do
   Opts {..} <- execParser optsParserInfo
-  let st =
-        State
-          { stEnvironment = optEnvironment,
-            stStamina = optStamina
-          }
+  let domain = Domain optEnvironment optStamina
   g <- case optSeed of
     Nothing -> initSMGen
     Just seed -> return (mkSMGen (fromIntegral seed))
-  let routines = Routine.makeN optRoutinesToGenerate st g
-  forM_ routines (Text.putStrLn . Routine.render)
+  let routines = Routine.makeN optRoutinesToGenerate domain g
+  forM_ routines (Text.putStrLn . Routine.mnemonic)
 
 ----------------------------------------------------------------------------
 -- Command line options parsing
