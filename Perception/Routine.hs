@@ -10,6 +10,7 @@ where
 import Data.Bifunctor (first)
 import Data.List (unfoldr)
 import Data.Text (Text)
+import Data.Text qualified as Text
 import Numeric.Natural
 import Perception.Directive (Directive)
 import Perception.Directive qualified as Directive
@@ -52,7 +53,7 @@ make st0 g0 = first Routine (go st0 g0 0 Nothing id)
                    in go st' g' (n + 1) (Just directive) (acc . (directive :))
 
 render :: Routine -> Text
-render = undefined
+render (Routine xs) = (Text.toTitle . Text.pack . fmap Directive.mnemonic) xs
 
 explain :: Routine -> Text
 explain = undefined
