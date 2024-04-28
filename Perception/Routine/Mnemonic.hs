@@ -3,9 +3,13 @@ module Perception.Routine.Mnemonic
   )
 where
 
-import Data.Ratio
 import Numeric.Natural
 
-applyPhoneticBias :: (a -> Char) -> Maybe a -> [(Ratio Natural, a)] -> [(Ratio Natural, a)]
+applyPhoneticBias ::
+  (Functor f) =>
+  (a -> Char) ->
+  Maybe a ->
+  f (Natural, a) ->
+  f (Natural, a)
 applyPhoneticBias _ Nothing xs = xs
 applyPhoneticBias _ (Just _prevChar) _xs = undefined

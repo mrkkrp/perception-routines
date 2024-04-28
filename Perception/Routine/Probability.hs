@@ -4,12 +4,22 @@ module Perception.Routine.Probability
   )
 where
 
-import Data.Ratio
+import Data.List.NonEmpty (NonEmpty (..))
+import Data.List.NonEmpty qualified as NonEmpty
 import Numeric.Natural
 import System.Random.SplitMix
 
-attachEqualWeights :: [a] -> [(Ratio Natural, a)]
-attachEqualWeights = undefined
+attachEqualWeights :: (Functor f) => f a -> f (Natural, a)
+attachEqualWeights = fmap (1,)
 
-weightedSample :: SMGen -> [(Ratio Natural, a)] -> (a, SMGen)
-weightedSample = undefined
+weightedSample :: SMGen -> NonEmpty (Natural, a) -> (a, SMGen)
+weightedSample g xs0 = (go (NonEmpty.toList xs0), g')
+  where
+    n = max 1 (sum (fmap fst xs0))
+    (w64, g') = nextWord64 g
+    i = fromIntegral w64 `rem` n
+    go [] = snd (NonEmpty.head xs0)
+    go ((w, x) : xs) =
+      if i < w
+        then x
+        else go xs

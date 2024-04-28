@@ -10,6 +10,7 @@ where
 
 import Data.Bifunctor (first)
 import Data.List (unfoldr)
+import Data.List.NonEmpty qualified as NonEmpty
 import Data.Text (Text)
 import Data.Text qualified as Text
 import Numeric.Natural
@@ -46,9 +47,9 @@ make domain g0 =
         else
           let precondition x =
                 Directive.precondition x n st && Just x /= lastDirective
-           in case filter precondition Directive.all of
-                [] -> (acc [], g)
-                xs ->
+           in case NonEmpty.nonEmpty (filter precondition Directive.all) of
+                Nothing -> (acc [], g)
+                Just xs ->
                   let (directive, g') =
                         weightedSample
                           g
