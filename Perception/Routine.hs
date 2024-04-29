@@ -68,7 +68,4 @@ mnemonic (Routine _ xs) =
   (Text.toTitle . Text.pack . fmap Directive.mnemonic) xs
 
 maxDirectivesPerRoutine :: Natural
-maxDirectivesPerRoutine = round (1.2 * sqrt n)
-  where
-    n :: Double
-    n = fromIntegral (length Directive.all)
+maxDirectivesPerRoutine = fromIntegral (length Directive.all)
