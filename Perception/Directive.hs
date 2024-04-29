@@ -21,7 +21,7 @@ import Prelude hiding (all)
 data Directive
   = Breath
   | Sky
-  deriving (Enum, Bounded, Eq)
+  deriving (Enum, Bounded, Eq, Show)
 
 all :: [Directive]
 all = [minBound .. maxBound]
