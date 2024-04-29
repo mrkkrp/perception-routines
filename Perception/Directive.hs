@@ -39,9 +39,9 @@ mnemonic = \case
 text :: Directive -> Text
 text = \case
   Breath -> "Take a slow deep breath, pay attention to qualities of the air."
-  Sky ->
-    "Concentrate on the sky, study it in minute detail. Are there any clouds?\n\
-    \If yes, what is their character and speed?"
+  Sky -> "Concentrate on the sky. How does its color vary? How big does it feel? Are\n\
+\there any clouds? If yes, how many different kinds? What is their\n\
+\character and speed? Stare long enough to see how clouds actually move."
 
 precondition :: Directive -> Natural -> State -> Bool
 precondition directive _n st = case directive of
