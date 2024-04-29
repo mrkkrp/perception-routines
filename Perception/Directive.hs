@@ -20,6 +20,7 @@ import Prelude hiding (all)
 
 data Directive
   = Breath
+  | ConstancyThroughAngle
   | Expectations
   | Ground
   | Sky
@@ -32,6 +33,7 @@ all = [minBound .. maxBound]
 name :: Directive -> Text
 name = \case
   Breath -> "breath"
+  ConstancyThroughAngle -> "constancy through angle of view"
   Expectations -> "expectations"
   Ground -> "ground/floor"
   Sky -> "sky"
@@ -40,6 +42,7 @@ name = \case
 mnemonic :: Directive -> Char
 mnemonic = \case
   Breath -> 'b'
+  ConstancyThroughAngle -> 'a'
   Expectations -> 'e'
   Ground -> 'g'
   Sky -> 's'
@@ -48,6 +51,10 @@ mnemonic = \case
 text :: Directive -> Text
 text = \case
   Breath -> "Take a slow deep breath, pay attention to qualities of the air."
+  ConstancyThroughAngle ->
+    "Choose an object. Move slowly around it in various ways while looking at\n\
+    \the object so as to explore it from different angles. Concentrate on the\n\
+    \fact that it is the same object no matter the angle of view."
   Expectations ->
     "Choose an object. Imagine what it would feel like to grasp, touch, or\n\
     \perform some other manipulation with that object. Now, perform the\n\
@@ -68,6 +75,7 @@ text = \case
 precondition :: Directive -> Natural -> State -> Bool
 precondition directive _n st = case directive of
   Breath -> True
+  ConstancyThroughAngle -> True
   Expectations -> True
   Ground -> True
   Sky -> stEnvironment st == Outdoors
