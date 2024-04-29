@@ -7,6 +7,7 @@ module Main (main) where
 
 import Control.Monad (forM_, when)
 import Data.FileEmbed
+import Data.List (sortOn)
 import Data.Text (Text)
 import Data.Text qualified as Text
 import Data.Text.Encoding qualified as Text
@@ -48,7 +49,7 @@ main = do
   when optPrintExplanations $ do
     Text.putStrLn ""
     Text.putStrLn (Text.decodeUtf8 $(embedFile "intro.txt"))
-    forM_ Directive.all $ \d -> do
+    forM_ (sortOn Directive.mnemonic Directive.all) $ \d -> do
       putChar (Directive.mnemonic d)
       Text.putStr " = "
       Text.putStr (Directive.name d)
