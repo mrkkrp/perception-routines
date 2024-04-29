@@ -20,6 +20,7 @@ import Prelude hiding (all)
 
 data Directive
   = Breath
+  | Ground
   | Sky
   | Sounds
   deriving (Enum, Bounded, Eq, Show)
@@ -30,18 +31,23 @@ all = [minBound .. maxBound]
 name :: Directive -> Text
 name = \case
   Breath -> "breath"
+  Ground -> "ground/floor"
   Sky -> "sky"
   Sounds -> "sounds"
 
 mnemonic :: Directive -> Char
 mnemonic = \case
   Breath -> 'b'
+  Ground -> 'g'
   Sky -> 's'
   Sounds -> 'o'
 
 text :: Directive -> Text
 text = \case
   Breath -> "Take a slow deep breath, pay attention to qualities of the air."
+  Ground ->
+    "What does the ground/floor feel like? How hard is it? Try to move around while\n\
+    \paying attention to how the ground/floor reacts."
   Sky ->
     "Concentrate on the sky. How does its color vary? How big does it feel? Are\n\
     \there any clouds? If yes, how many different kinds? What is their\n\
@@ -54,6 +60,7 @@ text = \case
 precondition :: Directive -> Natural -> State -> Bool
 precondition directive _n st = case directive of
   Breath -> True
+  Ground -> True
   Sky -> stEnvironment st == Outdoors
   Sounds -> True
 
