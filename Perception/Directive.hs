@@ -20,6 +20,7 @@ import Prelude hiding (all)
 
 data Directive
   = Breath
+  | Expectations
   | Ground
   | Sky
   | Sounds
@@ -31,6 +32,7 @@ all = [minBound .. maxBound]
 name :: Directive -> Text
 name = \case
   Breath -> "breath"
+  Expectations -> "expectations"
   Ground -> "ground/floor"
   Sky -> "sky"
   Sounds -> "sounds"
@@ -38,6 +40,7 @@ name = \case
 mnemonic :: Directive -> Char
 mnemonic = \case
   Breath -> 'b'
+  Expectations -> 'e'
   Ground -> 'g'
   Sky -> 's'
   Sounds -> 'o'
@@ -45,6 +48,11 @@ mnemonic = \case
 text :: Directive -> Text
 text = \case
   Breath -> "Take a slow deep breath, pay attention to qualities of the air."
+  Expectations ->
+    "Choose an object. Imagine what it would feel like to grasp, touch, or\n\
+    \perform some other manipulation with that object. Now, perform the\n\
+    \imagined action and compare your expectation with reality. (Repetition is\n\
+    \possible.)"
   Ground ->
     "What does the ground/floor feel like? How hard is it? Try to move around while\n\
     \paying attention to how the ground/floor reacts."
@@ -60,6 +68,7 @@ text = \case
 precondition :: Directive -> Natural -> State -> Bool
 precondition directive _n st = case directive of
   Breath -> True
+  Expectations -> True
   Ground -> True
   Sky -> stEnvironment st == Outdoors
   Sounds -> True
