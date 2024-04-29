@@ -6,12 +6,14 @@
 module Main (main) where
 
 import Control.Monad (forM_, when)
+import Data.FileEmbed
+import Data.Text (Text)
+import Data.Text qualified as Text
+import Data.Text.Encoding qualified as Text
 import Data.Text.IO qualified as Text
 import Data.Version (showVersion)
 import Development.GitRev
 import Numeric.Natural
-import Data.Text (Text)
-import Data.Text qualified as Text
 import Options.Applicative
 import Paths_perception_routines (version)
 import Perception.Directive qualified as Directive
@@ -45,6 +47,7 @@ main = do
     Text.putStrLn ""
   when optPrintExplanations $ do
     Text.putStrLn ""
+    Text.putStrLn (Text.decodeUtf8 $(embedFile "intro.txt"))
     forM_ Directive.all $ \d -> do
       putChar (Directive.mnemonic d)
       Text.putStr " = "

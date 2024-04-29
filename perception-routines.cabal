@@ -1,17 +1,18 @@
-cabal-version:   2.4
-name:            perception-routines
-version:         0.0.1.0
-license:         BSD-3-Clause
-license-file:    LICENSE.md
-maintainer:      Mark Karpov <markkarpov92@gmail.com>
-author:          Mark Karpov <markkarpov92@gmail.com>
-tested-with:     ghc ==9.4.7 ghc ==9.6.3 ghc ==9.8.1
-homepage:        https://github.com/mrkkrp/perception-routines
-bug-reports:     https://github.com/mrkkrp/perception-routines/issues
-synopsis:        An implementation of perception routines in Haskell
-description:     An implementation of perception routines in Haskell.
-category:        Text
-build-type:      Simple
+cabal-version:      2.4
+name:               perception-routines
+version:            0.0.1.0
+license:            BSD-3-Clause
+license-file:       LICENSE.md
+maintainer:         Mark Karpov <markkarpov92@gmail.com>
+author:             Mark Karpov <markkarpov92@gmail.com>
+tested-with:        ghc ==9.4.7 ghc ==9.6.3 ghc ==9.8.1
+homepage:           https://github.com/mrkkrp/perception-routines
+bug-reports:        https://github.com/mrkkrp/perception-routines/issues
+synopsis:           An implementation of perception routines in Haskell
+description:        An implementation of perception routines in Haskell.
+category:           Text
+build-type:         Simple
+extra-source-files: intro.txt
 extra-doc-files:
     CHANGELOG.md
     README.md
@@ -56,6 +57,7 @@ executable proutine
     default-language: GHC2021
     build-depends:
         base >=4.15 && <5,
+        file-embed >=0.0.12,
         gitrev >=1.3 && <1.4,
         optparse-applicative >=0.14 && <0.19,
         perception-routines,
