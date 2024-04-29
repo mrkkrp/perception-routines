@@ -10,6 +10,8 @@ import Data.Text.IO qualified as Text
 import Data.Version (showVersion)
 import Development.GitRev
 import Numeric.Natural
+import Data.Text (Text)
+import Data.Text qualified as Text
 import Options.Applicative
 import Paths_perception_routines (version)
 import Perception.Directive qualified as Directive
@@ -47,9 +49,8 @@ main = do
       putChar (Directive.mnemonic d)
       Text.putStr " = "
       Text.putStr (Directive.name d)
-      Text.putStr "\n  "
-      Text.putStr (Directive.text d)
       Text.putStrLn ""
+      Text.putStr (indentText (Directive.text d))
     Text.putStrLn ""
 
 ----------------------------------------------------------------------------
@@ -149,3 +150,6 @@ environmentReader = eitherReader $ \case
   "outdoors" -> Right Outdoors
   "indoors" -> Right Indoors
   s -> Left $ "unknown environment: " ++ s
+
+indentText :: Text -> Text
+indentText = Text.unlines . fmap ("  " <>) . Text.lines
