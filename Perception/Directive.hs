@@ -62,7 +62,7 @@ text = \case
     \possible."
   Ground ->
     "What does the ground/floor feel like? How hard is it? Try to move around while\n\
-    \paying attention to how the ground/floor reacts."
+    \paying attention to how the ground/floor reacts, the sound it makes, if any."
   Sky ->
     "Concentrate on the sky. How does its color vary? How big does it feel? Are\n\
     \there any clouds? If yes, how many different kinds? What is their\n\
