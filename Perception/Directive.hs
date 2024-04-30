@@ -70,7 +70,8 @@ text = \case
   Sounds ->
     "Concentrate on what you hear. How many distinct sound sources are there?\n\
     \Pay attention to the spacial position and character of sounds. Separate\n\
-    \them mentally, keep track of new sound sources that appear."
+    \them mentally, keep track of new sound sources that appear. Closing your\n\
+    \eyes might be helpful."
 
 precondition :: Directive -> Natural -> State -> Bool
 precondition directive _n st = case directive of
