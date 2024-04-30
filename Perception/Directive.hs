@@ -52,9 +52,9 @@ text :: Directive -> Text
 text = \case
   Breath -> "Take a slow deep breath, pay attention to qualities of the air."
   ConstancyThroughAngle ->
-    "Choose an object. Move slowly around it in various ways while looking at\n\
-    \the object so as to explore it from different angles. Concentrate on the\n\
-    \fact that it is the same object no matter the angle of view."
+    "Choose an object or an area. Move around it in various ways so as to\n\
+    \explore it from different angles. Concentrate on the fact that it is the\n\
+    \same thing no matter the angle of view."
   Expectations ->
     "Choose an object. Imagine what it would feel like to grasp, touch, or\n\
     \perform some other manipulation with that object. Now, perform the\n\
