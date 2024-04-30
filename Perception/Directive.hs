@@ -58,8 +58,8 @@ text = \case
   Expectations ->
     "Choose an object. Imagine what it would feel like to grasp, touch, or\n\
     \perform some other manipulation with that object. Now, perform the\n\
-    \imagined action and compare your expectation with reality. (Repetition is\n\
-    \possible.)"
+    \imagined action and compare your expectation with reality. Repetition is\n\
+    \possible."
   Ground ->
     "What does the ground/floor feel like? How hard is it? Try to move around while\n\
     \paying attention to how the ground/floor reacts."
