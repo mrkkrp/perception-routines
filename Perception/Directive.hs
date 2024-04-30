@@ -24,6 +24,7 @@ data Directive
   | ConstancyThroughTime
   | Expectations
   | Ground
+  | Pressure
   | Sky
   | Sounds
   deriving (Enum, Bounded, Eq, Show)
@@ -38,6 +39,7 @@ name = \case
   ConstancyThroughTime -> "constancy through time"
   Expectations -> "expectations"
   Ground -> "ground/floor"
+  Pressure -> "pressure"
   Sky -> "sky"
   Sounds -> "sounds"
 
@@ -48,6 +50,7 @@ mnemonic = \case
   ConstancyThroughTime -> 't'
   Expectations -> 'e'
   Ground -> 'g'
+  Pressure -> 'p'
   Sky -> 's'
   Sounds -> 'o'
 
@@ -66,11 +69,17 @@ text = \case
   Expectations ->
     "Choose an object. Imagine what it would feel like to grasp, touch, or\n\
     \perform some other manipulation with that object. Now, perform the\n\
-    \imagined action and compare your expectation with reality. Repetition is\n\
-    \possible."
+    \imagined action and compare your expectation with reality. Repetition\n\
+    \with different objects is welcome."
   Ground ->
     "What does the ground/floor feel like? How hard is it? Try to move around while\n\
     \paying attention to how the ground/floor reacts, the sound it makes, if any."
+  Pressure ->
+    "Choose a suitable surface and press on it with your hand. Maintain the\n\
+    \pressure for some time, thus experiencing materiality of the surface.\n\
+    \Mentally extrapolate this feeling to other similar surfaces that surround\n\
+    \you. Try to give yourself an account of their materiality, materiality of\n\
+    \your surroundings. Repetition with different surfaces is welcome."
   Sky ->
     "Concentrate on the sky. How does its color vary? How big does it feel? Are\n\
     \there any clouds? If yes, how many different kinds? What is their\n\
@@ -83,13 +92,8 @@ text = \case
 
 precondition :: Directive -> Natural -> State -> Bool
 precondition directive _n st = case directive of
-  Breath -> True
-  ConstancyThroughAngle -> True
-  ConstancyThroughTime -> True
-  Expectations -> True
-  Ground -> True
   Sky -> stEnvironment st == Outdoors
-  Sounds -> True
+  _ -> True
 
 effect :: Directive -> Natural -> State -> State
 effect _directive _n st = st {stStamina = stStamina st - 1}
