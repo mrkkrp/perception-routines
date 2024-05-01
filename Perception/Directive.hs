@@ -20,6 +20,7 @@ import Prelude hiding (all)
 
 data Directive
   = Breath
+  | ColorDifferentiation
   | ConstancyThroughAngle
   | ConstancyThroughTime
   | ExpectationsOfView
@@ -38,6 +39,7 @@ all = [minBound .. maxBound]
 name :: Directive -> Text
 name = \case
   Breath -> "breath"
+  ColorDifferentiation -> "color differentiation"
   ConstancyThroughAngle -> "constancy through angle of view"
   ConstancyThroughTime -> "constancy through time"
   ExpectationsOfView -> "expectations of view"
@@ -52,6 +54,7 @@ name = \case
 mnemonic :: Directive -> Char
 mnemonic = \case
   Breath -> 'b'
+  ColorDifferentiation -> 'c'
   ConstancyThroughAngle -> 'a'
   ConstancyThroughTime -> 't'
   ExpectationsOfView -> 'v'
@@ -66,6 +69,9 @@ mnemonic = \case
 text :: Directive -> Text
 text = \case
   Breath -> "Take a slow deep breath, pay attention to qualities of the air."
+  ColorDifferentiation ->
+    "Find two closest colors belonging to different objects. How do they\n\
+    \differ?"
   ConstancyThroughAngle ->
     "Choose an object or an area. Move around it in various ways so as to\n\
     \explore it from different angles. Concentrate on the fact that it is the\n\
