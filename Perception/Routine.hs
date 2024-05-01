@@ -55,7 +55,7 @@ make domain g0 =
                           ( applyPhoneticBias
                               Directive.mnemonic
                               lastDirective
-                              (attachEqualWeights xs)
+                              (attachBaseWeights Directive.mnemonic xs)
                           )
                       st' = Directive.effect directive n st
                    in go st' g' (n + 1) (Just directive) (acc . (directive :))

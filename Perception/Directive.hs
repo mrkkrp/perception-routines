@@ -53,17 +53,17 @@ name = \case
 
 mnemonic :: Directive -> Char
 mnemonic = \case
-  Breath -> 'b'
+  Breath -> 'e'
   ColorDifferentiation -> 'c'
   ConstancyThroughAngle -> 'a'
-  ConstancyThroughTime -> 't'
+  ConstancyThroughTime -> 'i'
   ExpectationsOfView -> 'v'
   Ground -> 'g'
   Pressure -> 'p'
   Shadows -> 'h'
   Sky -> 's'
   Sounds -> 'o'
-  TactileExpectations -> 'e'
+  TactileExpectations -> 't'
   VisualReconstruction -> 'r'
 
 text :: Directive -> Text

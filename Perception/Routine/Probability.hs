@@ -1,6 +1,5 @@
 module Perception.Routine.Probability
-  ( attachEqualWeights,
-    weightedSample,
+  ( weightedSample,
   )
 where
 
@@ -8,9 +7,6 @@ import Data.List.NonEmpty (NonEmpty (..))
 import Data.List.NonEmpty qualified as NonEmpty
 import Numeric.Natural
 import System.Random.SplitMix
-
-attachEqualWeights :: (Functor f) => f a -> f (Natural, a)
-attachEqualWeights = fmap (1,)
 
 weightedSample :: SMGen -> NonEmpty (Natural, a) -> (a, SMGen)
 weightedSample g xs0 = (go (NonEmpty.toList xs0) i0, g')
