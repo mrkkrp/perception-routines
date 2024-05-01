@@ -67,10 +67,10 @@ text = \case
     \you are attending to persists through time; try to see it as an active\n\
     \process rather than something gratuitous."
   Expectations ->
-    "Choose an object. Imagine what it would feel like to grasp, touch, or\n\
-    \perform some other manipulation with that object. Now, perform the\n\
-    \imagined action and compare your expectation with reality. Repetition\n\
-    \with different objects is welcome."
+    "Choose an object or a surface. Imagine what it would feel like to grasp,\n\
+    \touch, or perform some other manipulation with that object or surface.\n\
+    \Now, perform the imagined action and compare your expectation with\n\
+    \reality."
   Ground ->
     "What does the ground/floor feel like? How hard is it? Try to move around while\n\
     \paying attention to how the ground/floor reacts, the sound it makes, if any."
@@ -79,7 +79,7 @@ text = \case
     \pressure for some time, thus experiencing materiality of the surface.\n\
     \Mentally extrapolate this feeling to other similar surfaces that surround\n\
     \you. Try to give yourself an account of their materiality, materiality of\n\
-    \your surroundings. Repetition with different surfaces is welcome."
+    \your surroundings."
   Sky ->
     "Concentrate on the sky. How does its color vary? How big does it feel? Are\n\
     \there any clouds? If yes, how many different kinds? What is their\n\
