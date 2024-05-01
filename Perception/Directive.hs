@@ -28,6 +28,7 @@ data Directive
   | Sky
   | Sounds
   | TactileExpectations
+  | VisualReconstruction
   deriving (Enum, Bounded, Eq, Show)
 
 all :: [Directive]
@@ -44,6 +45,7 @@ name = \case
   Sky -> "sky"
   Sounds -> "sounds"
   TactileExpectations -> "tactile expectations"
+  VisualReconstruction -> "visual reconstruction"
 
 mnemonic :: Directive -> Char
 mnemonic = \case
@@ -56,6 +58,7 @@ mnemonic = \case
   Sky -> 's'
   Sounds -> 'o'
   TactileExpectations -> 'e'
+  VisualReconstruction -> 'r'
 
 text :: Directive -> Text
 text = \case
@@ -96,6 +99,10 @@ text = \case
     \touch, or perform some other manipulation with that object or surface.\n\
     \Now, perform the imagined action and compare your expectation with\n\
     \reality."
+  VisualReconstruction ->
+    "Look carefully at a scene of your choice. Now close your eyes and try to\n\
+    \reconstruct the scene in your head. Open your eyes and compare your\n\
+    \reconstruction with what you can actually see."
 
 precondition :: Directive -> Natural -> State -> Bool
 precondition directive _n st = case directive of
