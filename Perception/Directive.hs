@@ -25,6 +25,7 @@ data Directive
   | ExpectationsOfView
   | Ground
   | Pressure
+  | Shadows
   | Sky
   | Sounds
   | TactileExpectations
@@ -42,6 +43,7 @@ name = \case
   ExpectationsOfView -> "expectations of view"
   Ground -> "ground/floor"
   Pressure -> "pressure"
+  Shadows -> "shadows"
   Sky -> "sky"
   Sounds -> "sounds"
   TactileExpectations -> "tactile expectations"
@@ -55,6 +57,7 @@ mnemonic = \case
   ExpectationsOfView -> 'v'
   Ground -> 'g'
   Pressure -> 'p'
+  Shadows -> 'h'
   Sky -> 's'
   Sounds -> 'o'
   TactileExpectations -> 'e'
@@ -85,6 +88,11 @@ text = \case
     \Mentally extrapolate this feeling to other similar surfaces that surround\n\
     \you. Try to give yourself an account of their materiality, materiality of\n\
     \your surroundings."
+  Shadows ->
+    "Investigate shadows: their position, length, character. This directive\n\
+    \applies equally in the case of diffuse light. There will always be shaded\n\
+    \areas, e.g. in vegetation. Where is the darkest and lightest shadow you\n\
+    \can find?"
   Sky ->
     "Concentrate on the sky. How does its color vary? How big does it feel? Are\n\
     \there any clouds? If yes, how many different kinds? What is their\n\
