@@ -24,6 +24,7 @@ data Directive
   | ConstancyThroughAngle
   | ConstancyThroughTime
   | ExpectationsOfView
+  | GoOut
   | Ground
   | Pressure
   | Shadows
@@ -43,6 +44,7 @@ name = \case
   ConstancyThroughAngle -> "constancy through angle of view"
   ConstancyThroughTime -> "constancy through time"
   ExpectationsOfView -> "expectations of view"
+  GoOut -> "go out"
   Ground -> "ground/floor"
   Pressure -> "pressure"
   Shadows -> "shadows"
@@ -58,6 +60,7 @@ mnemonic = \case
   ConstancyThroughAngle -> 'a'
   ConstancyThroughTime -> 'i'
   ExpectationsOfView -> 'v'
+  GoOut -> 'x'
   Ground -> 'g'
   Pressure -> 'p'
   Shadows -> 'h'
@@ -85,6 +88,8 @@ text = \case
     "Imagine what you would see from a certain position and angle of view\n\
     \different from where you are now. Go there and compare your expectation\n\
     \with reality."
+  GoOut ->
+    "Go out, pay attention to the change in materiality of the environment."
   Ground ->
     "What does the ground/floor feel like? How hard is it? Try to move around while\n\
     \paying attention to how the ground/floor reacts, the sound it makes, if any."
@@ -120,8 +125,16 @@ text = \case
 
 precondition :: Directive -> Natural -> State -> Bool
 precondition directive _n st = case directive of
+  GoOut -> stEnvironment st == Indoors
   Sky -> stEnvironment st == Outdoors
   _ -> True
 
 effect :: Directive -> Natural -> State -> State
-effect _directive _n st = st {stStamina = stStamina st - 1}
+effect directive _n st =
+  st
+    { stEnvironment =
+        if directive == GoOut
+          then Outdoors
+          else stEnvironment st,
+      stStamina = stStamina st - 1
+    }
