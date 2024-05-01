@@ -77,15 +77,17 @@ test-suite tests
     main-is:            Spec.hs
     build-tool-depends: hspec-discover:hspec-discover >=2 && <3
     hs-source-dirs:     tests
+    other-modules:      Perception.DirectiveSpec
     default-language:   GHC2021
     build-depends:
-        QuickCheck >=2.4 && <3,
         base >=4.15 && <5,
         hspec >=2 && <3,
         perception-routines
 
     if flag(dev)
-        ghc-options: -Wall -Werror -Wredundant-constraints -Wpartial-fields
+        ghc-options:
+            -Wall -Werror -Wredundant-constraints -Wpartial-fields
+            -Wunused-packages
 
     else
         ghc-options: -O2 -Wall
