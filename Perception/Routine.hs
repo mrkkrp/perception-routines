@@ -9,6 +9,7 @@ module Perception.Routine
 where
 
 import Data.Bifunctor (first)
+import Data.Char
 import Data.List (unfoldr)
 import Data.List.NonEmpty qualified as NonEmpty
 import Data.Text (Text)
@@ -56,14 +57,14 @@ make ::
 make domain g0 =
   first
     (Routine (Routine.Id.make domain g0))
-    (go (State.init domain) g0 0 Nothing Prelude.id)
+    (go (State.init domain) g0 0 noHistory Prelude.id)
   where
-    go st g n lastDirective acc =
+    go st g n history acc =
       if State.stamina st == 0 || n >= maxDirectivesPerRoutine
         then (acc [], g)
         else
           let precondition x =
-                Directive.precondition x n st && Just x /= lastDirective
+                Directive.precondition x n st && Just x /= lastDirective history
            in case NonEmpty.nonEmpty (filter precondition Directive.all) of
                 Nothing -> (acc [], g)
                 Just xs ->
@@ -72,11 +73,22 @@ make domain g0 =
                           g
                           ( applyPhoneticBias
                               Directive.mnemonic
-                              lastDirective
+                              history
                               (attachBaseWeights Directive.mnemonic xs)
                           )
                       st' = Directive.effect directive n st
-                   in go st' g' (n + 1) (Just directive) (acc . (directive :))
+                   in go
+                        st'
+                        g'
+                        (n + 1)
+                        (addToHistory history directive)
+                        (acc . (directive :))
+    -- This is a simple set of helpers to maintain a history of 2 last
+    -- directives.
+    noHistory = Nothing
+    lastDirective = fmap fst
+    addToHistory Nothing x = Just (x, Nothing)
+    addToHistory (Just (h, _)) x = Just (x, Just h)
 
 -- | Project the routine id from a routine.
 id :: Routine -> Routine.Id.Id
@@ -85,7 +97,12 @@ id (Routine id' _) = id'
 -- | Render a 'Routine' as a mnemonic phrase.
 mnemonic :: Routine -> Text
 mnemonic (Routine _ xs) =
-  (Text.toTitle . Text.pack . fmap Directive.mnemonic) xs
+  (capitalize . Text.pack . breakIntoWords . fmap Directive.mnemonic) xs
+  where
+    capitalize txt =
+      case Text.uncons txt of
+        Nothing -> txt
+        Just (a, as) -> Text.cons (toUpper a) as
 
 -- | The maximal number of directives that can be included in a perception
 -- routine. This is mostly for safely so as to prevent diverging generation

@@ -5,9 +5,14 @@
 module Perception.Routine.Mnemonic
   ( attachBaseWeights,
     applyPhoneticBias,
+    breakIntoWords,
   )
 where
 
+import Data.Bifunctor (first)
+import Data.List (find)
+import Data.Maybe (isJust)
+import Data.Ratio
 import Numeric.Natural
 
 -- | Attach base weights to a collection of items that can be mapped to
@@ -73,16 +78,51 @@ applyPhoneticBias ::
   (Functor f) =>
   -- | The mapping function
   (a -> Char) ->
-  -- | The preceding element, if any
-  Maybe a ->
+  -- | The preceding elements, if any
+  Maybe (a, Maybe a) ->
   -- | The original (unadjusted) collection
   f (Natural, a) ->
   -- | The resulting adjusted collection
   f (Natural, a)
 applyPhoneticBias _ Nothing xs = xs
-applyPhoneticBias mnemonic (Just p) xs = g <$> xs
+applyPhoneticBias mnemonic (Just (p, _)) xs = g <$> xs
   where
     g (n, a) =
       if classify (mnemonic a) == classify (mnemonic p)
         then (n, a)
         else (n * 2, a)
+
+-- | Break a continuous 'String' into groups of characters that are
+-- word-like by inserting spaces where necessary.
+breakIntoWords :: String -> String
+breakIntoWords = go noHistory id
+  where
+    go history acc = \case
+      [] -> (acc [])
+      (x : xs) ->
+        if charProbability x history <= wordSeparationThreshold
+          && isJust history
+          then go noHistory (acc . (' ' :) . (x :)) xs
+          else go (addToHistory history x) (acc . (x :)) xs
+    noHistory = Nothing
+    addToHistory Nothing x = Just (x, Nothing)
+    addToHistory (Just (h, _)) x = Just (x, Just h)
+
+wordSeparationThreshold :: Ratio Natural
+wordSeparationThreshold = 1 % 25
+
+charProbability :: Char -> Maybe (Char, Maybe Char) -> Ratio Natural
+charProbability ch history =
+  maybe
+    wordSeparationThreshold
+    fst
+    (find (\(_, x) -> ch == x) normalizedLetterWeights)
+  where
+    weightedLetters =
+      applyPhoneticBias id history (attachBaseWeights id allLetters)
+    totalWeight = sum (fst <$> weightedLetters)
+    normalizedLetterWeights =
+      first (% totalWeight) <$> weightedLetters
+
+allLetters :: [Char]
+allLetters = ['a' .. 'z']
