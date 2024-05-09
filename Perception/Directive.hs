@@ -1,6 +1,7 @@
 {-# LANGUAGE LambdaCase #-}
 {-# LANGUAGE OverloadedStrings #-}
 
+-- | This module defines all perception directives.
 module Perception.Directive
   ( Directive (..),
     all,
@@ -18,6 +19,7 @@ import Perception.Routine.Domain (Environment (..))
 import Perception.State.Internal (State (..))
 import Prelude hiding (all)
 
+-- | All known perception directives.
 data Directive
   = Breath
   | ColorDifferentiation
@@ -35,9 +37,11 @@ data Directive
   | VisualReconstruction
   deriving (Enum, Bounded, Eq, Show)
 
+-- | An enumeration of all different values of 'Directive'.
 all :: [Directive]
 all = [minBound .. maxBound]
 
+-- | The human-friendly name of a 'Directive'.
 name :: Directive -> Text
 name = \case
   Breath -> "breath"
@@ -55,6 +59,7 @@ name = \case
   TactileExpectations -> "tactile expectations"
   VisualReconstruction -> "visual reconstruction"
 
+-- | The mnemonic of a 'Directive'.
 mnemonic :: Directive -> Char
 mnemonic = \case
   Breath -> 'e'
@@ -72,6 +77,7 @@ mnemonic = \case
   TactileExpectations -> 't'
   VisualReconstruction -> 'r'
 
+-- | The comprehensive description of a 'Directive'.
 text :: Directive -> Text
 text = \case
   Breath -> "Take a slow deep breath, pay attention to qualities of the air."
@@ -128,13 +134,32 @@ text = \case
     \reconstruct the scene in your head. Open your eyes and compare your\n\
     \reconstruction with what you can actually see."
 
-precondition :: Directive -> Natural -> State -> Bool
+-- | Return the function that determines when a given 'Directive' can be
+-- used.
+precondition ::
+  -- | The directive in question
+  Directive ->
+  -- | The index of this directive
+  Natural ->
+  -- | The perception routine state
+  State ->
+  -- | Can this directive be used?
+  Bool
 precondition directive _n st = case directive of
   GoOut -> stEnvironment st == Indoors
   Sky -> stEnvironment st == Outdoors
   _ -> True
 
-effect :: Directive -> Natural -> State -> State
+-- | Apply the side-effects of a 'Directive' to a 'State'.
+effect ::
+  -- | The directive in question
+  Directive ->
+  -- | The index of this directive
+  Natural ->
+  -- | The state before
+  State ->
+  -- | The state after
+  State
 effect directive _n st =
   st
     { stEnvironment =

@@ -1,5 +1,7 @@
 {-# LANGUAGE LambdaCase #-}
 
+-- | This module defines the functionality that is responsible for mnemonic
+-- representation of perception routines.
 module Perception.Routine.Mnemonic
   ( attachBaseWeights,
     applyPhoneticBias,
@@ -8,15 +10,23 @@ where
 
 import Numeric.Natural
 
+-- | Attach base weights to a collection of items that can be mapped to
+-- 'Char's proportionally to the frequency of those 'Char's in the English
+-- language.
 attachBaseWeights ::
   (Functor f) =>
+  -- | The mapping function
   (a -> Char) ->
+  -- | The original collection with weights
   f a ->
+  -- | The resulting collection with weights assigned
   f (Natural, a)
 attachBaseWeights mnemonic xs = g <$> xs
   where
     g x = (letterWeight (mnemonic x), x)
 
+-- | Return the weight that corresponds to the given 'Char' in the English
+-- language.
 letterWeight :: Char -> Natural
 letterWeight = \case
   -- https://en.wikipedia.org/wiki/Letter_frequency
@@ -48,17 +58,26 @@ letterWeight = \case
   'z' -> 1
   x -> error $ "Cannot use '" ++ [x] ++ "' as mnemonic"
 
+-- | Classification of letters into vowels and consonants.
 data Class = Vowel | Consonant
   deriving (Eq, Show)
 
+-- | Classify a 'Char' as belonging to a 'Class'.
 classify :: Char -> Class
 classify x = if x `elem` "aeiouy" then Vowel else Consonant
 
+-- | Adjust the weights in a collection of elements that can be mapped to
+-- 'Char's in such a way as to encourage production of quasi-English
+-- syllables.
 applyPhoneticBias ::
   (Functor f) =>
+  -- | The mapping function
   (a -> Char) ->
+  -- | The preceding element, if any
   Maybe a ->
+  -- | The original (unadjusted) collection
   f (Natural, a) ->
+  -- | The resulting adjusted collection
   f (Natural, a)
 applyPhoneticBias _ Nothing xs = xs
 applyPhoneticBias mnemonic (Just p) xs = g <$> xs

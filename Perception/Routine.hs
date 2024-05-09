@@ -1,3 +1,4 @@
+-- | This module implements generation of perception routines.
 module Perception.Routine
   ( Routine,
     makeN,
@@ -24,9 +25,19 @@ import System.Random.SplitMix
 import Prelude hiding (id)
 import Prelude qualified
 
+-- | Perception routine.
 data Routine = Routine Routine.Id.Id [Directive]
 
-makeN :: Natural -> Domain -> SMGen -> [Routine]
+-- | Generate multiple perception routines.
+makeN ::
+  -- | How many perception routines to generate?
+  Natural ->
+  -- | The domain to use
+  Domain ->
+  -- | The state of the preudo-random generator
+  SMGen ->
+  -- | The generated routines
+  [Routine]
 makeN n0 domain g0 = unfoldr makeOne (n0, g0)
   where
     makeOne (0, _) = Nothing
@@ -34,7 +45,14 @@ makeN n0 domain g0 = unfoldr makeOne (n0, g0)
       let (routine, g') = make domain g
        in Just (routine, (n - 1, g'))
 
-make :: Domain -> SMGen -> (Routine, SMGen)
+-- | Generate a perception routine.
+make ::
+  -- | The domain to use
+  Domain ->
+  -- | The state of the preudo-random generator
+  SMGen ->
+  -- | The generated routine and the updated preudo-random generator state
+  (Routine, SMGen)
 make domain g0 =
   first
     (Routine (Routine.Id.make domain g0))
@@ -60,12 +78,17 @@ make domain g0 =
                       st' = Directive.effect directive n st
                    in go st' g' (n + 1) (Just directive) (acc . (directive :))
 
+-- | Project the routine id from a routine.
 id :: Routine -> Routine.Id.Id
 id (Routine id' _) = id'
 
+-- | Render a 'Routine' as a mnemonic phrase.
 mnemonic :: Routine -> Text
 mnemonic (Routine _ xs) =
   (Text.toTitle . Text.pack . fmap Directive.mnemonic) xs
 
+-- | The maximal number of directives that can be included in a perception
+-- routine. This is mostly for safely so as to prevent diverging generation
+-- even when the directives fail to e.g. decrease the stamina.
 maxDirectivesPerRoutine :: Natural
 maxDirectivesPerRoutine = fromIntegral (length Directive.all)

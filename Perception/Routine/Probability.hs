@@ -1,3 +1,5 @@
+-- | This module provides basic functionality to deal with weighted sampling
+-- from a collection of elements.
 module Perception.Routine.Probability
   ( weightedSample,
   )
@@ -8,6 +10,7 @@ import Data.List.NonEmpty qualified as NonEmpty
 import Numeric.Natural
 import System.Random.SplitMix
 
+-- | Pick an element from a given weighted collection.
 weightedSample :: SMGen -> NonEmpty (Natural, a) -> (a, SMGen)
 weightedSample g xs0 = (go (NonEmpty.toList xs0) i0, g')
   where
