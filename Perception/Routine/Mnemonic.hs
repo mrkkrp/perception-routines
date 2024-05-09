@@ -85,12 +85,24 @@ applyPhoneticBias ::
   -- | The resulting adjusted collection
   f (Natural, a)
 applyPhoneticBias _ Nothing xs = xs
-applyPhoneticBias mnemonic (Just (p, _)) xs = g <$> xs
+applyPhoneticBias mnemonic (Just (p1, mp2)) xs = g <$> xs
   where
     g (n, a) =
-      if classify (mnemonic a) == classify (mnemonic p)
-        then (n, a)
-        else (n * 2, a)
+      let discourageConsequentVowels x@(n', a') =
+            case mp2 of
+              Nothing -> x
+              Just p2 ->
+                if classify (mnemonic p1) == Vowel
+                  && classify (mnemonic p2) == Vowel
+                  then
+                    if classify (mnemonic a') == Vowel
+                      then x
+                      else (n' * 2, a')
+                  else x
+       in discourageConsequentVowels $
+            if classify (mnemonic a) == classify (mnemonic p1)
+              then (n, a)
+              else (n * 2, a)
 
 -- | Break a continuous 'String' into groups of characters that are
 -- word-like by inserting spaces where necessary.
@@ -109,7 +121,7 @@ breakIntoWords = go noHistory id
     addToHistory (Just (h, _)) x = Just (x, Just h)
 
 wordSeparationThreshold :: Ratio Natural
-wordSeparationThreshold = 1 % 25
+wordSeparationThreshold = 1 % 20
 
 charProbability :: Char -> Maybe (Char, Maybe Char) -> Ratio Natural
 charProbability ch history =
