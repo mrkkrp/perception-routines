@@ -29,6 +29,7 @@ data Directive
   | Pressure
   | Shadows
   | Sky
+  | Smell
   | Sounds
   | TactileExpectations
   | VisualReconstruction
@@ -49,6 +50,7 @@ name = \case
   Pressure -> "pressure"
   Shadows -> "shadows"
   Sky -> "sky"
+  Smell -> "smell"
   Sounds -> "sounds"
   TactileExpectations -> "tactile expectations"
   VisualReconstruction -> "visual reconstruction"
@@ -64,7 +66,8 @@ mnemonic = \case
   Ground -> 'g'
   Pressure -> 'p'
   Shadows -> 'h'
-  Sky -> 's'
+  Sky -> 'y'
+  Smell -> 's'
   Sounds -> 'o'
   TactileExpectations -> 't'
   VisualReconstruction -> 'r'
@@ -108,6 +111,8 @@ text = \case
     "Concentrate on the sky. How does its color vary? How big does it feel? Are\n\
     \there any clouds? If yes, how many different kinds? What is their\n\
     \character and speed? Stare long enough to see how clouds actually move."
+  Smell ->
+    "Choose a suitable object and smell it."
   Sounds ->
     "Concentrate on what you hear. How many distinct sound sources are there?\n\
     \Pay attention to the spacial position and character of sounds. Separate\n\
