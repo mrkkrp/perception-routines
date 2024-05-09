@@ -85,24 +85,26 @@ applyPhoneticBias ::
   -- | The resulting adjusted collection
   f (Natural, a)
 applyPhoneticBias _ Nothing xs = xs
-applyPhoneticBias mnemonic (Just (p1, mp2)) xs = g <$> xs
+applyPhoneticBias mnemonic (Just (p1, mp2)) xs =
+  fmap
+    (discourageConsequentVowels . vowelConsonantAlternation)
+    xs
   where
-    g (n, a) =
-      let discourageConsequentVowels x@(n', a') =
-            case mp2 of
-              Nothing -> x
-              Just p2 ->
-                if classify (mnemonic p1) == Vowel
-                  && classify (mnemonic p2) == Vowel
-                  then
-                    if classify (mnemonic a') == Vowel
-                      then x
-                      else (n' * 2, a')
-                  else x
-       in discourageConsequentVowels $
-            if classify (mnemonic a) == classify (mnemonic p1)
-              then (n, a)
-              else (n * 2, a)
+    vowelConsonantAlternation (n, a) =
+      if classify (mnemonic a) == classify (mnemonic p1)
+        then (n, a)
+        else (n * 2, a)
+    discourageConsequentVowels (n, a) =
+      case mp2 of
+        Nothing -> (n, a)
+        Just p2 ->
+          if classify (mnemonic p1) == Vowel
+            && classify (mnemonic p2) == Vowel
+            then
+              if classify (mnemonic a) == Vowel
+                then (n, a)
+                else (n * 2, a)
+            else (n, a)
 
 -- | Break a continuous 'String' into groups of characters that are
 -- word-like by inserting spaces where necessary.
