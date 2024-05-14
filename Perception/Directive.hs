@@ -24,6 +24,7 @@ data Directive
   = Breath
   | ColorDifferentiation
   | ConstancyThroughAngle
+  | ConstancyThroughMotion
   | ConstancyThroughTime
   | ExpectationsOfView
   | GoOut
@@ -47,6 +48,7 @@ name = \case
   Breath -> "breath"
   ColorDifferentiation -> "color differentiation"
   ConstancyThroughAngle -> "constancy through angle of view"
+  ConstancyThroughMotion -> "constancy through motion"
   ConstancyThroughTime -> "constancy through time"
   ExpectationsOfView -> "expectations of view"
   GoOut -> "go out"
@@ -65,6 +67,7 @@ mnemonic = \case
   Breath -> 'e'
   ColorDifferentiation -> 'c'
   ConstancyThroughAngle -> 'a'
+  ConstancyThroughMotion -> 'm'
   ConstancyThroughTime -> 'i'
   ExpectationsOfView -> 'v'
   GoOut -> 'x'
@@ -88,6 +91,11 @@ text = \case
     "Choose an object or an area. Move around it in various ways so as to\n\
     \explore it from different angles. Concentrate on the fact that it is the\n\
     \same thing no matter the angle of view."
+  ConstancyThroughMotion ->
+    "Attend to everything that is in movement around you. Is everything still,\n\
+    \or are most things moving? What about things that seem to be still but\n\
+    \move on closer inspection? How does the character of movement change over\n\
+    \time?"
   ConstancyThroughTime ->
     "Choose an object or an area. Scrutinize it carefully over a period of\n\
     \time. How does it change in time, if at all? Concentrate on how the thing\n\
