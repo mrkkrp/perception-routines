@@ -23,6 +23,7 @@ import Prelude hiding (all)
 data Directive
   = Breath
   | ColorDifferentiation
+  | CompletionOfInvisibleAreas
   | ConstancyThroughAngle
   | ConstancyThroughMotion
   | ConstancyThroughTime
@@ -48,6 +49,7 @@ name :: Directive -> Text
 name = \case
   Breath -> "breath"
   ColorDifferentiation -> "color differentiation"
+  CompletionOfInvisibleAreas -> "completion of invisible areas"
   ConstancyThroughAngle -> "constancy through angle of view"
   ConstancyThroughMotion -> "constancy through motion"
   ConstancyThroughTime -> "constancy through time"
@@ -68,6 +70,7 @@ mnemonic :: Directive -> Char
 mnemonic = \case
   Breath -> 'e'
   ColorDifferentiation -> 'c'
+  CompletionOfInvisibleAreas -> 'r'
   ConstancyThroughAngle -> 'a'
   ConstancyThroughMotion -> 'm'
   ConstancyThroughTime -> 'i'
@@ -80,13 +83,19 @@ mnemonic = \case
   Smell -> 's'
   Sounds -> 'o'
   TactileExpectations -> 't'
-  VisualReconstruction -> 'r'
+  VisualReconstruction -> 'u'
   Walk -> 'w'
 
 -- | The comprehensive description of a 'Directive'.
 text :: Directive -> Text
 text = \case
   Breath -> "Take a slow deep breath, pay attention to qualities of the air."
+  CompletionOfInvisibleAreas ->
+    "Choose a partially occluded object, or an object with an invisible area\n\
+    \(e.g. back side) that you feel you can visualize in your head. Visualize\n\
+    \the invisible area of the object, then either move yourself or move the\n\
+    \object (if possible) so as to reveal that part to yourself. Compare your\n\
+    \expectation with what you actually see."
   ColorDifferentiation ->
     "Find two closest colors belonging to different objects. How do they\n\
     \differ?"
