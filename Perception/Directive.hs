@@ -36,6 +36,7 @@ data Directive
   | Sounds
   | TactileExpectations
   | VisualReconstruction
+  | Walk
   deriving (Enum, Bounded, Eq, Show)
 
 -- | An enumeration of all different values of 'Directive'.
@@ -60,6 +61,7 @@ name = \case
   Sounds -> "sounds"
   TactileExpectations -> "tactile expectations"
   VisualReconstruction -> "visual reconstruction"
+  Walk -> "walk"
 
 -- | The mnemonic of a 'Directive'.
 mnemonic :: Directive -> Char
@@ -79,6 +81,7 @@ mnemonic = \case
   Sounds -> 'o'
   TactileExpectations -> 't'
   VisualReconstruction -> 'r'
+  Walk -> 'w'
 
 -- | The comprehensive description of a 'Directive'.
 text :: Directive -> Text
@@ -141,6 +144,8 @@ text = \case
     "Look carefully at a scene of your choice. Now close your eyes and try to\n\
     \reconstruct the scene in your head. Open your eyes and compare your\n\
     \reconstruction with what you can actually see."
+  Walk ->
+    "Walk so as to change your position."
 
 -- | Return the function that determines when a given 'Directive' can be
 -- used.
