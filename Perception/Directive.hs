@@ -22,12 +22,14 @@ import Prelude hiding (all)
 -- | All known perception directives.
 data Directive
   = Breath
+  | ClosestArea
   | ColorDifferentiation
   | CompletionOfInvisibleAreas
   | ConstancyThroughAngle
   | ConstancyThroughMotion
   | ConstancyThroughTime
   | ExpectationsOfView
+  | FarthestArea
   | GoOut
   | Ground
   | Pressure
@@ -48,12 +50,14 @@ all = [minBound .. maxBound]
 name :: Directive -> Text
 name = \case
   Breath -> "breath"
+  ClosestArea -> "closest area"
   ColorDifferentiation -> "color differentiation"
   CompletionOfInvisibleAreas -> "completion of invisible areas"
   ConstancyThroughAngle -> "constancy through angle of view"
   ConstancyThroughMotion -> "constancy through motion"
   ConstancyThroughTime -> "constancy through time"
   ExpectationsOfView -> "expectations of view"
+  FarthestArea -> "farthest area"
   GoOut -> "go out"
   Ground -> "ground/floor"
   Pressure -> "pressure"
@@ -69,12 +73,14 @@ name = \case
 mnemonic :: Directive -> Char
 mnemonic = \case
   Breath -> 'e'
+  ClosestArea -> 'l'
   ColorDifferentiation -> 'c'
   CompletionOfInvisibleAreas -> 'r'
   ConstancyThroughAngle -> 'a'
   ConstancyThroughMotion -> 'm'
   ConstancyThroughTime -> 'i'
   ExpectationsOfView -> 'v'
+  FarthestArea -> 'f'
   GoOut -> 'x'
   Ground -> 'g'
   Pressure -> 'p'
@@ -90,6 +96,9 @@ mnemonic = \case
 text :: Directive -> Text
 text = \case
   Breath -> "Take a slow deep breath, pay attention to qualities of the air."
+  ClosestArea ->
+    "Scrutinize the area that immediately surrounds you, say, within your arm's\n\
+    \length. Do not hesitate to use touch for exploration where it makes sense."
   CompletionOfInvisibleAreas ->
     "Choose a partially occluded object, or an object with an invisible area\n\
     \(e.g. back side) that you feel you can visualize in your head. Visualize\n\
@@ -117,6 +126,11 @@ text = \case
     "Imagine what you would see from a certain position and angle of view\n\
     \different from where you are now. Go there and compare your expectation\n\
     \with reality."
+  FarthestArea ->
+    "Scrutinize the farthest area (according to your estimation, excluding the\n\
+    \sky and celestial objects) that you can observe from your position. Try to\n\
+    \evaluate how much space is accessible to your vision in every direction.\n\
+    \Form a mental image of the totality of that space."
   GoOut ->
     "Go out, pay attention to the change in materiality of the environment."
   Ground ->
