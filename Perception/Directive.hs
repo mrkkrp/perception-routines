@@ -59,7 +59,7 @@ name = \case
   ExpectationsOfView -> "expectations of view"
   FarthestArea -> "farthest area"
   GoOut -> "go out"
-  Ground -> "ground/floor"
+  Ground -> "walk (with focus on the ground/floor)"
   Pressure -> "pressure"
   Shadows -> "shadows"
   Sky -> "sky"
@@ -67,7 +67,7 @@ name = \case
   Sounds -> "sounds"
   TactileExpectations -> "tactile expectations"
   VisualReconstruction -> "visual reconstruction"
-  Walk -> "walk"
+  Walk -> "walk (with focus on spacial movement)"
 
 -- | The mnemonic of a 'Directive'.
 mnemonic :: Directive -> Char
@@ -134,8 +134,9 @@ text = \case
   GoOut ->
     "Go out, pay attention to the change in materiality of the environment."
   Ground ->
-    "What does the ground/floor feel like? How hard is it? Try to move around while\n\
-    \paying attention to how the ground/floor reacts, the sound it makes, if any."
+    "Walk so as to change your position. What does the ground/floor feel like?\n\
+    \How hard is it? How does it react when you step on it? What sounds does it\n\
+    \make, if any?"
   Pressure ->
     "Choose a suitable surface and press on it with your hand. Maintain the\n\
     \pressure for some time, thus experiencing materiality of the surface.\n\
@@ -168,7 +169,10 @@ text = \case
     \reconstruct the scene in your head. Open your eyes and compare your\n\
     \reconstruction with what you can actually see."
   Walk ->
-    "Walk so as to change your position."
+    "Walk so as to change your position. Pay special attention to things that\n\
+    \you pass by. How does the constantly changing angle of view and your\n\
+    \movement contribute to your sense of spacial immersion? Try to concentrate\n\
+    \on your being embedded in a 3d scene that you are traversing."
 
 -- | Return the function that determines when a given 'Directive' can be
 -- used.
