@@ -97,6 +97,7 @@ text :: Directive -> Text
 text = \case
   Breath -> "Take a slow deep breath, pay attention to qualities of the air."
   ClosestArea ->
+    -- Is this necessary/interesting enough?
     "Scrutinize the area that immediately surrounds you, say, within your arm's\n\
     \length. Do not hesitate to use touch for exploration where it makes sense."
   CompletionOfInvisibleAreas ->
@@ -106,6 +107,10 @@ text = \case
     \object (if possible) so as to reveal that part to yourself. Compare your\n\
     \expectation with what you actually see."
   ColorDifferentiation ->
+    -- Too specific? How interesting is this? If we have this, then we
+    -- should also have more color-related directives, because this is just
+    -- one very particular instance and having it without others seems
+    -- arbitrary.
     "Find two closest colors belonging to different objects. How do they\n\
     \differ?"
   ConstancyThroughAngle ->
@@ -132,6 +137,9 @@ text = \case
     \evaluate how much space is accessible to your vision in every direction.\n\
     \Form a mental image of the totality of that space."
   GoOut ->
+    -- May not always be possible and seems to disrespect the original
+    -- preference of the subject with respect to the environment where they
+    -- want to practice perception routines.
     "Go out, pay attention to the change in materiality of the environment."
   Ground ->
     "Walk so as to change your position. What does the ground/floor feel like?\n\
