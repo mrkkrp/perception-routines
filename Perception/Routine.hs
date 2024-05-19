@@ -59,9 +59,9 @@ make ::
 make domain g0 =
   first
     (Routine (Routine.Id.make domain g0))
-    (go (State.init domain) g0 0 Nothing Prelude.id)
+    (go (State.init domain) g0 0 Nothing Nothing Prelude.id)
   where
-    go st g n lastDirective acc =
+    go st g n lastDirective lastMnemonic acc =
       if State.stamina st == 0 || n >= maxDirectivesPerRoutine
         then (finalize acc, g)
         else
@@ -75,14 +75,23 @@ make domain g0 =
                           g
                           ( assignWeights
                               Directive.mnemonic
-                              lastDirective
+                              lastMnemonic
                               xs
                           )
-                      st' =
+                      (lastDirective', st') =
                         case mdirective of
-                          Nothing -> st
-                          Just directive -> Directive.effect directive n st
-                   in go st' g' (n + 1) mdirective (acc . (mdirective :))
+                          Nothing ->
+                            (lastDirective, st)
+                          Just directive ->
+                            (Just directive, Directive.effect directive n st)
+                      lastMnemonic' = Directive.mnemonic <$> mdirective
+                   in go
+                        st'
+                        g'
+                        (n + 1)
+                        lastDirective'
+                        lastMnemonic'
+                        (acc . (mdirective :))
     finalize acc =
       mapMaybe
         f

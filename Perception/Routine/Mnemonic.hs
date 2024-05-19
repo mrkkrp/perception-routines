@@ -15,8 +15,8 @@ import Perception.Routine.Mnemonic.LetterWeight (letterWeight)
 assignWeights ::
   -- | The mapping function
   (a -> Char) ->
-  -- | The preceding element, if any
-  Maybe a ->
+  -- | The preceding 'Char', if any
+  Maybe Char ->
   -- | The original collection
   NonEmpty a ->
   -- | The resulting weighted collection, also allowing for the end of word
@@ -27,5 +27,5 @@ assignWeights mnemonic prev xs =
     (letterWeight' Nothing, Nothing)
     (fmap g xs)
   where
-    letterWeight' = letterWeight (mnemonic <$> prev)
+    letterWeight' = letterWeight prev
     g x = (letterWeight' (Just (mnemonic x)), Just x)

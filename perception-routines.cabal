@@ -44,6 +44,7 @@ library
 
     default-language: GHC2021
     build-depends:
+        QuickCheck >=2.14,
         base >=4.15 && <5,
         splitmix >=0.1 && <0.2,
         text >=0.2 && <2.2
@@ -105,12 +106,18 @@ test-suite tests
     main-is:            Spec.hs
     build-tool-depends: hspec-discover:hspec-discover >=2 && <3
     hs-source-dirs:     tests
-    other-modules:      Perception.DirectiveSpec
+    other-modules:
+        Perception.DirectiveSpec
+        Perception.RoutineSpec
+
     default-language:   GHC2021
     build-depends:
+        QuickCheck >=2 && <3,
         base >=4.15 && <5,
         hspec >=2 && <3,
-        perception-routines
+        perception-routines,
+        splitmix >=0.1 && <0.2,
+        text >=0.2 && <2.2
 
     if flag(dev)
         ghc-options:

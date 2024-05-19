@@ -23,6 +23,7 @@ data State = State
     -- least by 1.
     stStamina :: Natural
   }
+  deriving (Show)
 
 -- | Initialize 'State' given a 'Domain'.
 init :: Domain -> State
