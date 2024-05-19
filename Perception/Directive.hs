@@ -114,9 +114,10 @@ text = \case
     "Find two closest colors belonging to different objects. How do they\n\
     \differ?"
   ConstancyThroughAngle ->
-    "Choose an object or an area. Move around it in various ways so as to\n\
-    \explore it from different angles. Concentrate on the fact that it is the\n\
-    \same thing no matter the angle of view."
+    "Concentrate on an object or an area of your choice. Move around it in\n\
+    \various ways while maintaining your attention so as to explore the\n\
+    \object/area from different angles. Concentrate on the fact that it is the\n\
+    \same thing in the same position no matter the angle of view."
   ConstancyThroughMotion ->
     "Attend to everything that is in movement around you. Is everything still,\n\
     \or are most things moving? What about things that seem to be still but\n\
