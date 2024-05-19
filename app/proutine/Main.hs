@@ -80,8 +80,7 @@ data Opts = Opts
 
 optsParserInfo :: ParserInfo Opts
 optsParserInfo =
-  info (helper <*> ver <*> optsParser) . mconcat $
-    [fullDesc]
+  info (helper <*> ver <*> optsParser) fullDesc
   where
     ver :: Parser (a -> a)
     ver =

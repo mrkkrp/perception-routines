@@ -1,10 +1,13 @@
 cradle:
   cabal:
-    - path: "./"
+    - path: "././"
       component: "lib:perception-routines"
 
-    - path: "app/Main.hs"
+    - path: "./app/proutine/Main.hs"
       component: "perception-routines:exe:proutine"
 
-    - path: "tests"
+    - path: "./app/gen-letter-weights/Main.hs"
+      component: "perception-routines:exe:gen-letter-weights"
+
+    - path: "./tests"
       component: "perception-routines:test:tests"

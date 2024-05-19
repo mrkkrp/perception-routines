@@ -12,7 +12,11 @@ synopsis:           An implementation of perception routines in Haskell
 description:        An implementation of perception routines in Haskell.
 category:           Text
 build-type:         Simple
-extra-source-files: intro.txt
+extra-source-files:
+    intro.txt
+    pride-and-prejudice.txt
+    template/LetterWeight.mustache
+
 extra-doc-files:
     CHANGELOG.md
     README.md
@@ -52,7 +56,7 @@ library
 
 executable proutine
     main-is:          Main.hs
-    hs-source-dirs:   app
+    hs-source-dirs:   app/proutine
     other-modules:    Paths_perception_routines
     autogen-modules:  Paths_perception_routines
     default-language: GHC2021
@@ -63,6 +67,29 @@ executable proutine
         optparse-applicative >=0.14 && <0.19,
         perception-routines,
         splitmix >=0.1 && <0.2,
+        text >=0.2 && <2.2
+
+    if flag(dev)
+        ghc-options:
+            -Wall -Werror -Wredundant-constraints -Wpartial-fields
+            -Wunused-packages
+
+    else
+        ghc-options: -O2 -Wall
+
+executable gen-letter-weights
+    main-is:          Main.hs
+    hs-source-dirs:   app/gen-letter-weights
+    other-modules:    Paths_perception_routines
+    autogen-modules:  Paths_perception_routines
+    default-language: GHC2021
+    build-depends:
+        aeson >=2 && <3,
+        base >=4.15 && <5,
+        containers >=0.5 && <0.8,
+        gitrev >=1.3 && <1.4,
+        optparse-applicative >=0.14 && <0.19,
+        stache >=2.3 && <3,
         text >=0.2 && <2.2
 
     if flag(dev)
