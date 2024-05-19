@@ -44,7 +44,7 @@ letterWeight prev actual =
     (Nothing, Just 'x') -> 62
     (Nothing, Just 'y') -> 2352
     (Nothing, Just 'z') -> 0
-    (Just 'a', Nothing) -> 2393
+    (Just 'a', Nothing) -> 1196
     (Just 'a', Just 'a') -> 0
     (Just 'a', Just 'b') -> 1602
     (Just 'a', Just 'c') -> 1188
@@ -71,7 +71,7 @@ letterWeight prev actual =
     (Just 'a', Just 'x') -> 5
     (Just 'a', Just 'y') -> 1245
     (Just 'a', Just 'z') -> 23
-    (Just 'b', Nothing) -> 9
+    (Just 'b', Nothing) -> 4
     (Just 'b', Just 'a') -> 313
     (Just 'b', Just 'b') -> 9
     (Just 'b', Just 'c') -> 0
@@ -98,7 +98,7 @@ letterWeight prev actual =
     (Just 'b', Just 'x') -> 0
     (Just 'b', Just 'y') -> 732
     (Just 'b', Just 'z') -> 0
-    (Just 'c', Nothing) -> 77
+    (Just 'c', Nothing) -> 38
     (Just 'c', Just 'a') -> 1469
     (Just 'c', Just 'b') -> 0
     (Just 'c', Just 'c') -> 335
@@ -125,7 +125,7 @@ letterWeight prev actual =
     (Just 'c', Just 'x') -> 0
     (Just 'c', Just 'y') -> 530
     (Just 'c', Just 'z') -> 0
-    (Just 'd', Nothing) -> 14304
+    (Just 'd', Nothing) -> 7152
     (Just 'd', Just 'a') -> 1089
     (Just 'd', Just 'b') -> 2
     (Just 'd', Just 'c') -> 0
@@ -152,7 +152,7 @@ letterWeight prev actual =
     (Just 'd', Just 'x') -> 0
     (Just 'd', Just 'y') -> 428
     (Just 'd', Just 'z') -> 0
-    (Just 'e', Nothing) -> 23223
+    (Just 'e', Nothing) -> 11611
     (Just 'e', Just 'a') -> 3265
     (Just 'e', Just 'b') -> 42
     (Just 'e', Just 'c') -> 1720
@@ -179,7 +179,7 @@ letterWeight prev actual =
     (Just 'e', Just 'x') -> 766
     (Just 'e', Just 'y') -> 1186
     (Just 'e', Just 'z') -> 0
-    (Just 'f', Nothing) -> 4969
+    (Just 'f', Nothing) -> 2484
     (Just 'f', Just 'a') -> 817
     (Just 'f', Just 'b') -> 0
     (Just 'f', Just 'c') -> 0
@@ -206,7 +206,7 @@ letterWeight prev actual =
     (Just 'f', Just 'x') -> 0
     (Just 'f', Just 'y') -> 42
     (Just 'f', Just 'z') -> 0
-    (Just 'g', Nothing) -> 3768
+    (Just 'g', Nothing) -> 1884
     (Just 'g', Just 'a') -> 747
     (Just 'g', Just 'b') -> 88
     (Just 'g', Just 'c') -> 0
@@ -233,7 +233,7 @@ letterWeight prev actual =
     (Just 'g', Just 'x') -> 0
     (Just 'g', Just 'y') -> 24
     (Just 'g', Just 'z') -> 0
-    (Just 'h', Nothing) -> 4341
+    (Just 'h', Nothing) -> 2170
     (Just 'h', Just 'a') -> 6588
     (Just 'h', Just 'b') -> 53
     (Just 'h', Just 'c') -> 0
@@ -260,7 +260,7 @@ letterWeight prev actual =
     (Just 'h', Just 'x') -> 0
     (Just 'h', Just 'y') -> 79
     (Just 'h', Just 'z') -> 0
-    (Just 'i', Nothing) -> 2174
+    (Just 'i', Nothing) -> 1087
     (Just 'i', Just 'a') -> 741
     (Just 'i', Just 'b') -> 315
     (Just 'i', Just 'c') -> 1575
@@ -287,7 +287,7 @@ letterWeight prev actual =
     (Just 'i', Just 'x') -> 67
     (Just 'i', Just 'y') -> 0
     (Just 'i', Just 'z') -> 800
-    (Just 'j', Nothing) -> 1
+    (Just 'j', Nothing) -> 0
     (Just 'j', Just 'a') -> 311
     (Just 'j', Just 'b') -> 0
     (Just 'j', Just 'c') -> 0
@@ -314,7 +314,7 @@ letterWeight prev actual =
     (Just 'j', Just 'x') -> 0
     (Just 'j', Just 'y') -> 0
     (Just 'j', Just 'z') -> 0
-    (Just 'k', Nothing) -> 846
+    (Just 'k', Nothing) -> 423
     (Just 'k', Just 'a') -> 18
     (Just 'k', Just 'b') -> 1
     (Just 'k', Just 'c') -> 0
@@ -341,7 +341,7 @@ letterWeight prev actual =
     (Just 'k', Just 'x') -> 0
     (Just 'k', Just 'y') -> 18
     (Just 'k', Just 'z') -> 0
-    (Just 'l', Nothing) -> 2989
+    (Just 'l', Nothing) -> 1494
     (Just 'l', Just 'a') -> 1499
     (Just 'l', Just 'b') -> 0
     (Just 'l', Just 'c') -> 31
@@ -368,7 +368,7 @@ letterWeight prev actual =
     (Just 'l', Just 'x') -> 3
     (Just 'l', Just 'y') -> 2585
     (Just 'l', Just 'z') -> 0
-    (Just 'm', Nothing) -> 2819
+    (Just 'm', Nothing) -> 1409
     (Just 'm', Just 'a') -> 1973
     (Just 'm', Just 'b') -> 206
     (Just 'm', Just 'c') -> 0
@@ -395,7 +395,7 @@ letterWeight prev actual =
     (Just 'm', Just 'x') -> 0
     (Just 'm', Just 'y') -> 845
     (Just 'm', Just 'z') -> 0
-    (Just 'n', Nothing) -> 9627
+    (Just 'n', Nothing) -> 4813
     (Just 'n', Just 'a') -> 602
     (Just 'n', Just 'b') -> 3
     (Just 'n', Just 'c') -> 1709
@@ -422,7 +422,7 @@ letterWeight prev actual =
     (Just 'n', Just 'x') -> 47
     (Just 'n', Just 'y') -> 610
     (Just 'n', Just 'z') -> 1
-    (Just 'o', Nothing) -> 6721
+    (Just 'o', Nothing) -> 3360
     (Just 'o', Just 'a') -> 110
     (Just 'o', Just 'b') -> 360
     (Just 'o', Just 'c') -> 226
@@ -449,7 +449,7 @@ letterWeight prev actual =
     (Just 'o', Just 'x') -> 7
     (Just 'o', Just 'y') -> 75
     (Just 'o', Just 'z') -> 2
-    (Just 'p', Nothing) -> 322
+    (Just 'p', Nothing) -> 161
     (Just 'p', Just 'a') -> 1029
     (Just 'p', Just 'b') -> 3
     (Just 'p', Just 'c') -> 0
@@ -476,7 +476,7 @@ letterWeight prev actual =
     (Just 'p', Just 'x') -> 0
     (Just 'p', Just 'y') -> 135
     (Just 'p', Just 'z') -> 0
-    (Just 'q', Nothing) -> 1
+    (Just 'q', Nothing) -> 0
     (Just 'q', Just 'a') -> 0
     (Just 'q', Just 'b') -> 0
     (Just 'q', Just 'c') -> 0
@@ -503,7 +503,7 @@ letterWeight prev actual =
     (Just 'q', Just 'x') -> 0
     (Just 'q', Just 'y') -> 0
     (Just 'q', Just 'z') -> 0
-    (Just 'r', Nothing) -> 10580
+    (Just 'r', Nothing) -> 5290
     (Just 'r', Just 'a') -> 1612
     (Just 'r', Just 'b') -> 57
     (Just 'r', Just 'c') -> 705
@@ -530,7 +530,7 @@ letterWeight prev actual =
     (Just 'r', Just 'x') -> 0
     (Just 'r', Just 'y') -> 1372
     (Just 'r', Just 'z') -> 0
-    (Just 's', Nothing) -> 13089
+    (Just 's', Nothing) -> 6544
     (Just 's', Just 'a') -> 1388
     (Just 's', Just 'b') -> 59
     (Just 's', Just 'c') -> 351
@@ -557,7 +557,7 @@ letterWeight prev actual =
     (Just 's', Just 'x') -> 0
     (Just 's', Just 'y') -> 68
     (Just 's', Just 'z') -> 0
-    (Just 't', Nothing) -> 14025
+    (Just 't', Nothing) -> 7012
     (Just 't', Just 'a') -> 1603
     (Just 't', Just 'b') -> 1
     (Just 't', Just 'c') -> 104
@@ -584,7 +584,7 @@ letterWeight prev actual =
     (Just 't', Just 'x') -> 0
     (Just 't', Just 'y') -> 803
     (Just 't', Just 'z') -> 37
-    (Just 'u', Nothing) -> 1383
+    (Just 'u', Nothing) -> 691
     (Just 'u', Just 'a') -> 468
     (Just 'u', Just 'b') -> 248
     (Just 'u', Just 'c') -> 1063
@@ -611,7 +611,7 @@ letterWeight prev actual =
     (Just 'u', Just 'x') -> 1
     (Just 'u', Just 'y') -> 5
     (Just 'u', Just 'z') -> 3
-    (Just 'v', Nothing) -> 24
+    (Just 'v', Nothing) -> 12
     (Just 'v', Just 'a') -> 371
     (Just 'v', Just 'b') -> 0
     (Just 'v', Just 'c') -> 0
@@ -638,7 +638,7 @@ letterWeight prev actual =
     (Just 'v', Just 'x') -> 0
     (Just 'v', Just 'y') -> 8
     (Just 'v', Just 'z') -> 0
-    (Just 'w', Nothing) -> 1239
+    (Just 'w', Nothing) -> 619
     (Just 'w', Just 'a') -> 2783
     (Just 'w', Just 'b') -> 0
     (Just 'w', Just 'c') -> 4
@@ -665,7 +665,7 @@ letterWeight prev actual =
     (Just 'w', Just 'x') -> 0
     (Just 'w', Just 'y') -> 0
     (Just 'w', Just 'z') -> 1
-    (Just 'x', Nothing) -> 49
+    (Just 'x', Nothing) -> 24
     (Just 'x', Just 'a') -> 74
     (Just 'x', Just 'b') -> 0
     (Just 'x', Just 'c') -> 164
@@ -692,7 +692,7 @@ letterWeight prev actual =
     (Just 'x', Just 'x') -> 46
     (Just 'x', Just 'y') -> 1
     (Just 'x', Just 'z') -> 0
-    (Just 'y', Nothing) -> 9590
+    (Just 'y', Nothing) -> 4795
     (Just 'y', Just 'a') -> 5
     (Just 'y', Just 'b') -> 70
     (Just 'y', Just 'c') -> 3

@@ -10,6 +10,7 @@ import Data.Aeson.KeyMap qualified as KeyMap
 import Data.Char qualified as Char
 import Data.Map.Strict (Map)
 import Data.Map.Strict qualified as Map
+import Data.Maybe (isNothing)
 import Data.Text qualified as Text
 import Data.Text.IO qualified as Text
 import Data.Text.Lazy.IO qualified as TextLazy
@@ -29,7 +30,10 @@ main = do
   let (r, _) = Text.foldl' updateLetterWeights (initLetterWeights, Nothing) txt
   TextLazy.writeFile
     "Perception/Routine/Mnemonic/LetterWeight.hs"
-    (renderMustache letterWeightTemplate (prepareForRendering r))
+    ( renderMustache
+        letterWeightTemplate
+        (prepareForRendering (adjustWorkBreakWeights r))
+    )
 
 type LetterWeights = Map (Maybe Char, Maybe Char) Natural
 
@@ -62,6 +66,15 @@ updateLetterWeights (m, prev) actual = (m', actual')
     m' = case (prev, actual') of
       (Nothing, Nothing) -> m
       _ -> Map.adjust (+ 1) (prev, actual') m
+
+-- | Adjust weights for word breaks.
+adjustWorkBreakWeights :: LetterWeights -> LetterWeights
+adjustWorkBreakWeights = Map.mapWithKey f
+  where
+    f (_prev, actual) weight =
+      if isNothing actual
+        then weight `div` 2
+        else weight
 
 -- | Prepare values for being interpolated in the template.
 prepareForRendering :: LetterWeights -> Value
