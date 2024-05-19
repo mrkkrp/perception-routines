@@ -9,8 +9,11 @@ module Perception.Routine
 where
 
 import Data.Bifunctor (first)
+import Data.Char qualified as Char
 import Data.List (unfoldr)
+import Data.List.NonEmpty (NonEmpty (..))
 import Data.List.NonEmpty qualified as NonEmpty
+import Data.Maybe (fromJust, isJust, mapMaybe)
 import Data.Text (Text)
 import Data.Text qualified as Text
 import Numeric.Natural
@@ -26,7 +29,7 @@ import Prelude hiding (id)
 import Prelude qualified
 
 -- | Perception routine.
-data Routine = Routine Routine.Id.Id [Directive]
+data Routine = Routine Routine.Id.Id [NonEmpty Directive]
 
 -- | Generate multiple perception routines.
 makeN ::
@@ -60,23 +63,35 @@ make domain g0 =
   where
     go st g n lastDirective acc =
       if State.stamina st == 0 || n >= maxDirectivesPerRoutine
-        then (acc [], g)
+        then (finalize acc, g)
         else
           let precondition x =
                 Directive.precondition x n st && Just x /= lastDirective
            in case NonEmpty.nonEmpty (filter precondition Directive.all) of
-                Nothing -> (acc [], g)
+                Nothing -> (finalize acc, g)
                 Just xs ->
-                  let (directive, g') =
+                  let (mdirective, g') =
                         weightedSample
                           g
-                          ( applyPhoneticBias
+                          ( assignWeights
                               Directive.mnemonic
                               lastDirective
-                              (attachBaseWeights Directive.mnemonic xs)
+                              xs
                           )
-                      st' = Directive.effect directive n st
-                   in go st' g' (n + 1) (Just directive) (acc . (directive :))
+                      st' =
+                        case mdirective of
+                          Nothing -> st
+                          Just directive -> Directive.effect directive n st
+                   in go st' g' (n + 1) mdirective (acc . (mdirective :))
+    finalize acc =
+      mapMaybe
+        f
+        (NonEmpty.groupBy (\x y -> isJust x == isJust y) (acc []))
+    f xs@(x :| _) =
+      case x of
+        Nothing -> Nothing
+        Just _ -> Just (fmap fromJust xs) -- want it to fail loudly if my
+        -- assumption is violated, hence partial 'fromJust'
 
 -- | Project the routine id from a routine.
 id :: Routine -> Routine.Id.Id
@@ -85,7 +100,16 @@ id (Routine id' _) = id'
 -- | Render a 'Routine' as a mnemonic phrase.
 mnemonic :: Routine -> Text
 mnemonic (Routine _ xs) =
-  (Text.toTitle . Text.pack . fmap Directive.mnemonic) xs
+  ( capitalize
+      . Text.unwords
+      . fmap (Text.pack . NonEmpty.toList . fmap Directive.mnemonic)
+  )
+    xs
+  where
+    capitalize txt =
+      case Text.uncons txt of
+        Nothing -> txt
+        Just (a, as) -> Text.cons (Char.toUpper a) as
 
 -- | The maximal number of directives that can be included in a perception
 -- routine. This is mostly for safely so as to prevent diverging generation

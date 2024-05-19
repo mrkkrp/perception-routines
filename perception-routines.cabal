@@ -33,6 +33,7 @@ library
         Perception.Routine.Domain
         Perception.Routine.Id
         Perception.Routine.Mnemonic
+        Perception.Routine.Mnemonic.LetterWeight
         Perception.Routine.Probability
         Perception.State
         Perception.State.Internal
