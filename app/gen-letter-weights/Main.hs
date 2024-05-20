@@ -73,7 +73,7 @@ adjustWorkBreakWeights = Map.mapWithKey f
   where
     f (_prev, actual) weight =
       if isNothing actual
-        then weight `div` 2
+        then floor (fromIntegral weight * 0.7 :: Double)
         else weight
 
 -- | Prepare values for being interpolated in the template.
