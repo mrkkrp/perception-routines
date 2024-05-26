@@ -19,11 +19,10 @@ import Data.Text qualified as Text
 import Numeric.Natural
 import Perception.Directive (Directive)
 import Perception.Directive qualified as Directive
-import Perception.Routine.Domain (Domain)
+import Perception.Routine.Domain (Domain (..))
 import Perception.Routine.Id qualified as Routine.Id
 import Perception.Routine.Mnemonic
 import Perception.Routine.Probability
-import Perception.State qualified as State
 import System.Random.SplitMix
 import Prelude hiding (id)
 import Prelude qualified
@@ -56,17 +55,17 @@ make ::
   SMGen ->
   -- | The generated routine and the updated preudo-random generator state
   (Routine, SMGen)
-make domain g0 =
+make domain@(Domain e s) g0 =
   first
     (Routine (Routine.Id.make domain g0))
-    (go (State.init domain) g0 0 Nothing Nothing Prelude.id)
+    (go g0 0 Nothing Nothing Prelude.id)
   where
-    go st g n lastDirective lastMnemonic acc =
-      if State.stamina st == 0 || n >= maxDirectivesPerRoutine
+    go g n lastDirective lastMnemonic acc =
+      if n >= s
         then (finalize acc, g)
         else
           let precondition x =
-                Directive.precondition x n st && Just x /= lastDirective
+                Directive.compatible e x && Just x /= lastDirective
            in case NonEmpty.nonEmpty (filter precondition Directive.all) of
                 Nothing -> (finalize acc, g)
                 Just xs ->
@@ -78,15 +77,12 @@ make domain g0 =
                               lastMnemonic
                               xs
                           )
-                      (lastDirective', st') =
+                      lastDirective' =
                         case mdirective of
-                          Nothing ->
-                            (lastDirective, st)
-                          Just directive ->
-                            (Just directive, Directive.effect directive n st)
+                          Nothing -> lastDirective
+                          Just directive -> Just directive
                       lastMnemonic' = Directive.mnemonic <$> mdirective
                    in go
-                        st'
                         g'
                         (n + 1)
                         lastDirective'
@@ -119,9 +115,3 @@ mnemonic (Routine _ xs) =
       case Text.uncons txt of
         Nothing -> txt
         Just (a, as) -> Text.cons (Char.toUpper a) as
-
--- | The maximal number of directives that can be included in a perception
--- routine. This is mostly for safely so as to prevent diverging generation
--- even when the directives fail to e.g. decrease the stamina.
-maxDirectivesPerRoutine :: Natural
-maxDirectivesPerRoutine = fromIntegral (length Directive.all)

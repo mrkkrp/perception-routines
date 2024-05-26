@@ -8,15 +8,12 @@ module Perception.Directive
     name,
     mnemonic,
     text,
-    precondition,
-    effect,
+    compatible,
   )
 where
 
 import Data.Text (Text)
-import Numeric.Natural
 import Perception.Routine.Domain (Environment (..))
-import Perception.State.Internal (State (..))
 import Prelude hiding (all)
 
 -- | All known perception directives.
@@ -30,7 +27,6 @@ data Directive
   | ConstancyThroughTime
   | ExpectationsOfView
   | FarthestArea
-  | GoOut
   | Ground
   | Pressure
   | Shadows
@@ -58,7 +54,6 @@ name = \case
   ConstancyThroughTime -> "constancy through time"
   ExpectationsOfView -> "expectations of view"
   FarthestArea -> "farthest area"
-  GoOut -> "go out"
   Ground -> "walk (with focus on the ground/floor)"
   Pressure -> "pressure"
   Shadows -> "shadows"
@@ -81,7 +76,6 @@ mnemonic = \case
   ConstancyThroughTime -> 'i'
   ExpectationsOfView -> 'v'
   FarthestArea -> 'f'
-  GoOut -> 'x'
   Ground -> 'g'
   Pressure -> 'p'
   Shadows -> 'h'
@@ -137,11 +131,6 @@ text = \case
     \sky and celestial objects) that you can observe from your position. Try to\n\
     \evaluate how much space is accessible to your vision in every direction.\n\
     \Form a mental image of the totality of that space."
-  GoOut ->
-    -- May not always be possible and seems to disrespect the original
-    -- preference of the subject with respect to the environment where they
-    -- want to practice perception routines.
-    "Go out, pay attention to the change in materiality of the environment."
   Ground ->
     "Walk so as to change your position. What does the ground/floor feel like?\n\
     \How hard is it? How does it react when you step on it? What sounds does it\n\
@@ -183,37 +172,7 @@ text = \case
     \movement contribute to your sense of spacial immersion? Try to concentrate\n\
     \on your being embedded in a 3d scene that you are traversing."
 
--- | Return the function that determines when a given 'Directive' can be
--- used.
-precondition ::
-  -- | The directive in question
-  Directive ->
-  -- | The index of this directive
-  Natural ->
-  -- | The perception routine state
-  State ->
-  -- | Can this directive be used?
-  Bool
-precondition directive _n st = case directive of
-  GoOut -> stEnvironment st == Indoors
-  Sky -> stEnvironment st == Outdoors
-  _ -> True
-
--- | Apply the side-effects of a 'Directive' to a 'State'.
-effect ::
-  -- | The directive in question
-  Directive ->
-  -- | The index of this directive
-  Natural ->
-  -- | The state before
-  State ->
-  -- | The state after
-  State
-effect directive _n st =
-  st
-    { stEnvironment =
-        if directive == GoOut
-          then Outdoors
-          else stEnvironment st,
-      stStamina = stStamina st - 1
-    }
+-- | Check if the directive is compatible with the environment.
+compatible :: Environment -> Directive -> Bool
+compatible Indoors Sky = False
+compatible _ _ = True
