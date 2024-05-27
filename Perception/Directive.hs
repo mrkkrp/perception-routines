@@ -8,12 +8,16 @@ module Perception.Directive
     name,
     mnemonic,
     text,
-    compatible,
+    sample,
   )
 where
 
+import Data.List.NonEmpty qualified as NonEmpty
 import Data.Text (Text)
+import Perception.Gen (Gen)
+import Perception.Gen qualified as Gen
 import Perception.Routine.Domain (Environment (..))
+import Perception.Routine.Mnemonic (WithWordBreaks (..), assignWeights)
 import Prelude hiding (all)
 
 -- | All known perception directives.
@@ -176,3 +180,38 @@ text = \case
 compatible :: Environment -> Directive -> Bool
 compatible Indoors Sky = False
 compatible _ _ = True
+
+-- | Produce a random directive sample given the target environment and the
+-- preceding directive in the routine.
+sample ::
+  -- | Target environment
+  Environment ->
+  -- | The previous directive
+  Maybe (WithWordBreaks Directive) ->
+  -- | The resulting directive
+  Gen (WithWordBreaks Directive)
+sample env precedingDirective = go
+  where
+    go = do
+      mdirective <-
+        Gen.weighted $
+          assignWeights
+            mnemonic
+            precedingChar
+            eligibleDirectives
+      case (mdirective, precedingDirective') of
+        (Nothing, Just x) -> pure (WordBreak x)
+        -- Two consecutive word breaks should not happen, but try again.
+        (Nothing, Nothing) -> go
+        (Just x, _) -> pure (WordConstituent x)
+    precedingChar = case precedingDirective of
+      Nothing -> Nothing
+      Just (WordConstituent x) -> Just (mnemonic x)
+      Just (WordBreak _) -> Nothing
+    precedingDirective' = case precedingDirective of
+      Nothing -> Nothing
+      Just (WordConstituent x) -> Just x
+      Just (WordBreak x) -> Just x
+    eligibleDirectives = NonEmpty.fromList (filter eligibleDirective all)
+    eligibleDirective x =
+      compatible env x && Just x /= precedingDirective'
