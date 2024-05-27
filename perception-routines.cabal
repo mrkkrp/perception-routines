@@ -33,19 +33,20 @@ flag dev
 library
     exposed-modules:
         Perception.Directive
+        Perception.Gen
         Perception.Routine
         Perception.Routine.Domain
         Perception.Routine.Id
         Perception.Routine.Mnemonic
         Perception.Routine.Mnemonic.LetterWeight
-        Perception.Routine.Probability
 
     default-language: GHC2021
     build-depends:
         QuickCheck >=2.14,
         base >=4.15 && <5,
         splitmix >=0.1 && <0.2,
-        text >=0.2 && <2.2
+        text >=0.2 && <2.2,
+        transformers >=0.4 && <0.7
 
     if flag(dev)
         ghc-options: -Wall -Werror -Wpartial-fields -Wunused-packages

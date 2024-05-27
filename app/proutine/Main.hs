@@ -18,6 +18,7 @@ import Numeric.Natural
 import Options.Applicative
 import Paths_perception_routines (version)
 import Perception.Directive qualified as Directive
+import Perception.Gen qualified as Gen
 import Perception.Routine qualified as Routine
 import Perception.Routine.Domain
 import Perception.Routine.Id qualified as Routine.Id
@@ -31,7 +32,7 @@ main = do
     Nothing -> initSMGen
     Just seed -> return (mkSMGen (fromIntegral seed))
   let domain = Domain optEnvironment optStamina
-      routines = Routine.makeN optRoutinesToGenerate domain g
+      (routines, _) = Gen.run g (Routine.sampleN optRoutinesToGenerate domain)
       m :: Int
       m =
         1 + floor (logBase 10.0 (fromIntegral optRoutinesToGenerate :: Double))

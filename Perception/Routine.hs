@@ -1,29 +1,29 @@
 -- | This module implements generation of perception routines.
 module Perception.Routine
   ( Routine,
-    makeN,
-    make,
+    sampleN,
+    sample,
     id,
     mnemonic,
   )
 where
 
-import Data.Bifunctor (first)
+import Control.Monad (replicateM)
 import Data.Char qualified as Char
-import Data.List (unfoldr)
 import Data.List.NonEmpty (NonEmpty (..))
 import Data.List.NonEmpty qualified as NonEmpty
-import Data.Maybe (fromJust, isJust, mapMaybe)
+import Data.Maybe (mapMaybe)
 import Data.Text (Text)
 import Data.Text qualified as Text
 import Numeric.Natural
 import Perception.Directive (Directive)
 import Perception.Directive qualified as Directive
+import Perception.Gen (Gen)
+import Perception.Gen qualified as Gen
 import Perception.Routine.Domain (Domain (..))
 import Perception.Routine.Id qualified as Routine.Id
 import Perception.Routine.Mnemonic
-import Perception.Routine.Probability
-import System.Random.SplitMix
+import Perception.Routine.Mnemonic qualified as Mnemonic
 import Prelude hiding (id)
 import Prelude qualified
 
@@ -31,72 +31,50 @@ import Prelude qualified
 data Routine = Routine Routine.Id.Id [NonEmpty Directive]
 
 -- | Generate multiple perception routines.
-makeN ::
+sampleN ::
   -- | How many perception routines to generate?
   Natural ->
   -- | The domain to use
   Domain ->
-  -- | The state of the preudo-random generator
-  SMGen ->
   -- | The generated routines
-  [Routine]
-makeN n0 domain g0 = unfoldr makeOne (n0, g0)
-  where
-    makeOne (0, _) = Nothing
-    makeOne (n, g) =
-      let (routine, g') = make domain g
-       in Just (routine, (n - 1, g'))
+  Gen [Routine]
+sampleN n domain = replicateM (fromIntegral n) (sample domain)
 
 -- | Generate a perception routine.
-make ::
+sample ::
   -- | The domain to use
   Domain ->
-  -- | The state of the preudo-random generator
-  SMGen ->
   -- | The generated routine and the updated preudo-random generator state
-  (Routine, SMGen)
-make domain@(Domain e s) g0 =
-  first
-    (Routine (Routine.Id.make domain g0))
-    (go g0 0 Nothing Nothing Prelude.id)
+  Gen Routine
+sample domain@(Domain env s0) = do
+  g <- Gen.askSMGen
+  xs <- go s0 Nothing Prelude.id
+  pure $ Routine (Routine.Id.make domain g) xs
   where
-    go g n lastDirective lastMnemonic acc =
-      if n >= s
-        then (finalize acc, g)
-        else
-          let precondition x =
-                Directive.compatible e x && Just x /= lastDirective
-           in case NonEmpty.nonEmpty (filter precondition Directive.all) of
-                Nothing -> (finalize acc, g)
-                Just xs ->
-                  let (mdirective, g') =
-                        weightedSample
-                          g
-                          ( assignWeights
-                              Directive.mnemonic
-                              lastMnemonic
-                              xs
-                          )
-                      lastDirective' =
-                        case mdirective of
-                          Nothing -> lastDirective
-                          Just directive -> Just directive
-                      lastMnemonic' = Directive.mnemonic <$> mdirective
-                   in go
-                        g'
-                        (n + 1)
-                        lastDirective'
-                        lastMnemonic'
-                        (acc . (mdirective :))
+    go s prev acc =
+      if s > 0
+        then do
+          r <- Directive.sample env prev
+          case r of
+            WordConstituent _ -> go (s - 1) (Just r) (acc . (r :))
+            WordBreak _ -> go s (Just r) (acc . (r :))
+        else pure (finalize acc)
     finalize acc =
       mapMaybe
         f
-        (NonEmpty.groupBy (\x y -> isJust x == isJust y) (acc []))
+        ( NonEmpty.groupBy
+            ( \x y ->
+                Mnemonic.isWordConstituent x == Mnemonic.isWordConstituent y
+            )
+            (acc [])
+        )
     f xs@(x :| _) =
       case x of
-        Nothing -> Nothing
-        Just _ -> Just (fmap fromJust xs) -- want it to fail loudly if my
-        -- assumption is violated, hence partial 'fromJust'
+        WordBreak _ -> Nothing
+        WordConstituent _ ->
+          -- I want it to fail loudly if my assumption is violated, hence
+          -- the partial 'fromWordConstituent'.
+          Just (fmap Mnemonic.fromWordConstituent xs)
 
 -- | Project the routine id from a routine.
 id :: Routine -> Routine.Id.Id
