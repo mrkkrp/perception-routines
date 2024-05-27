@@ -32,6 +32,7 @@ data Directive
   | ExpectationsOfView
   | FarthestArea
   | Ground
+  | OutsidePerspective
   | Pressure
   | Shadows
   | Sky
@@ -59,6 +60,7 @@ name = \case
   ExpectationsOfView -> "expectations of view"
   FarthestArea -> "farthest area"
   Ground -> "walk (with focus on the ground/floor)"
+  OutsidePerspective -> "an outside perspective"
   Pressure -> "pressure"
   Shadows -> "shadows"
   Sky -> "sky"
@@ -81,6 +83,7 @@ mnemonic = \case
   ExpectationsOfView -> 'v'
   FarthestArea -> 'f'
   Ground -> 'g'
+  OutsidePerspective -> 'x'
   Pressure -> 'p'
   Shadows -> 'h'
   Sky -> 'y'
@@ -139,6 +142,10 @@ text = \case
     "Walk so as to change your position. What does the ground/floor feel like?\n\
     \How hard is it? How does it react when you step on it? What sounds does it\n\
     \make, if any?"
+  OutsidePerspective ->
+    "Visualize your body in its current position and environment from an\n\
+    \outside perspective. Attempt to “disconnect” from your familiar sense of\n\
+    \self and perceive yourself as an independent observer."
   Pressure ->
     "Choose a suitable surface and press on it with your hand. Maintain the\n\
     \pressure for some time, thus experiencing materiality of the surface.\n\
