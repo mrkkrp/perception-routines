@@ -105,26 +105,28 @@ optsParser =
       [ long "seed",
         short 's',
         metavar "SEED",
-        help "Seed of the preudo-random generator (if not set random seed is used)"
+        help "Seed of the preudo-random generator (if not set a random seed is used)"
       ]
     <*> (option environmentReader . mconcat)
       [ long "env",
         short 'e',
         metavar "ENVIRONMENT",
         value Outdoors,
-        help "Environment type: 'outdoors' or 'indoors'"
+        help "Environment type: 'outdoors' (default) or 'indoors'"
       ]
     <*> (option naturalReader . mconcat)
       [ long "stamina",
         short 't',
         metavar "STAMINA",
         value 7,
+        showDefault,
         help "Stamina available per routine"
       ]
     <*> (option naturalReader . mconcat)
       [ short 'n',
         metavar "N",
         value 1,
+        showDefault,
         help "Number of routines to generate"
       ]
     <*> (switch . mconcat)
