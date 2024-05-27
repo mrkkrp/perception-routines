@@ -118,7 +118,7 @@ optsParser =
       [ long "stamina",
         short 't',
         metavar "STAMINA",
-        value 10,
+        value 7,
         help "Stamina available per routine"
       ]
     <*> (option naturalReader . mconcat)
