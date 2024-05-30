@@ -68,7 +68,7 @@ name = \case
   Sounds -> "sounds"
   TactileExpectations -> "tactile expectations"
   VisualReconstruction -> "visual reconstruction"
-  Walk -> "walk (with focus on spacial movement)"
+  Walk -> "walk (with focus on spatial movement)"
 
 -- | The mnemonic of a 'Directive'.
 mnemonic :: Directive -> Char
@@ -98,15 +98,15 @@ text :: Directive -> Text
 text = \case
   Breath -> "Take a slow deep breath, pay attention to qualities of the air."
   ClosestArea ->
-    -- Is this necessary/interesting enough?
     "Scrutinize the area that immediately surrounds you, say, within your arm's\n\
-    \length. Do not hesitate to use touch for exploration where it makes sense."
+    \length. Does it feel more accessible than the space farther away? Do not\n\
+    \hesitate to use touch for exploration where it makes sense."
   CompletionOfInvisibleAreas ->
     "Choose a partially occluded object, or an object with an invisible area\n\
     \(e.g. back side) that you feel you can visualize in your head. Visualize\n\
-    \the invisible area of the object, then either move yourself or move the\n\
-    \object (if possible) so as to reveal that part to yourself. Compare your\n\
-    \expectation with what you actually see."
+    \the invisible area of the object, then change your position or move the\n\
+    \object (if possible) so as to gradually reveal the invisible area. Compare\n\
+    \your expectation with what you actually see."
   ColorDifferentiation ->
     -- Too specific? How interesting is this? If we have this, then we
     -- should also have more color-related directives, because this is just
@@ -116,23 +116,23 @@ text = \case
     \differ?"
   ConstancyThroughAngle ->
     "Concentrate on an object or an area of your choice. Move around it in\n\
-    \various ways while maintaining your attention so as to explore the\n\
-    \object/area from different angles. Concentrate on the fact that it is the\n\
-    \same thing in the same position no matter the angle of view."
+    \various ways while maintaining your attention on the chosen object/scene\n\
+    \so as to explore it from different angles. Concentrate on the fact that it\n\
+    \is the same thing in the same position no matter the angle of view."
   ConstancyThroughMotion ->
     "Attend to everything that is in movement around you. Is everything still,\n\
     \or are most things moving? What about things that seem to be still but\n\
-    \move on closer inspection? How does the character of movement change over\n\
-    \time?"
+    \move on closer inspection? Concentrate on the fact that the moving things\n\
+    \retain their integrity despite the movement."
   ConstancyThroughTime ->
     "Choose an object or an area. Scrutinize it carefully over a period of\n\
     \time. How does it change in time, if at all? Concentrate on how the thing\n\
     \you are attending to persists through time; try to see it as an active\n\
     \process rather than something gratuitous."
   ExpectationsOfView ->
-    "Imagine what you would see from a certain position and angle of view\n\
-    \different from where you are now. Go there and compare your expectation\n\
-    \with reality."
+    "Imagine what you would see from a certain position and an angle of view\n\
+    \that is different from where you are now. Assume that position and the\n\
+    \angle of view and compare your expectation with reality."
   FarthestArea ->
     "Scrutinize the farthest area (according to your estimation, excluding the\n\
     \sky and celestial objects) that you can observe from your position. Try to\n\
@@ -145,18 +145,17 @@ text = \case
   OutsidePerspective ->
     "Visualize your body in its current position and environment from an\n\
     \outside perspective. Attempt to “disconnect” from your familiar sense of\n\
-    \self and perceive yourself as an independent observer."
+    \self and perceive yourself as an independent observer would."
   Pressure ->
     "Choose a suitable surface and press on it with your hand. Maintain the\n\
     \pressure for some time, thus experiencing materiality of the surface.\n\
     \Mentally extrapolate this feeling to other similar surfaces that surround\n\
-    \you. Try to give yourself an account of their materiality, materiality of\n\
-    \your surroundings."
+    \you. Try to give yourself an account of their materiality."
   Shadows ->
     "Investigate shadows: their position, length, character. This directive\n\
     \applies equally in the case of diffuse light. There will always be shaded\n\
-    \areas, e.g. in vegetation. Where is the darkest and lightest shadow you\n\
-    \can find?"
+    \areas, e.g. in the vegetation. Where is the darkest and lightest shadow\n\
+    \you can find?"
   Sky ->
     "Concentrate on the sky. How does its color vary? How big does it feel? Are\n\
     \there any clouds? If yes, how many different kinds? What is their\n\
@@ -165,14 +164,14 @@ text = \case
     "Choose a suitable object and smell it."
   Sounds ->
     "Concentrate on what you hear. How many distinct sound sources are there?\n\
-    \Pay attention to the spacial position and character of sounds. Separate\n\
-    \them mentally, keep track of new sound sources that appear. Closing your\n\
-    \eyes might be helpful."
+    \Pay attention to the spatial position and the character of sounds.\n\
+    \Separate them mentally, keep track of new sound sources that appear.\n\
+    \Closing your eyes might be helpful."
   TactileExpectations ->
     "Choose an object or a surface. Imagine what it would feel like to grasp,\n\
     \touch, or perform some other manipulation with that object or surface.\n\
-    \Now, perform the imagined action and compare your expectation with\n\
-    \reality."
+    \Perform the imagined action while maintaining visual contact with the\n\
+    \chosen object/surface and compare your expectation with reality."
   VisualReconstruction ->
     "Look carefully at a scene of your choice. Now close your eyes and try to\n\
     \reconstruct the scene in your head. Open your eyes and compare your\n\
@@ -180,8 +179,8 @@ text = \case
   Walk ->
     "Walk so as to change your position. Pay special attention to things that\n\
     \you pass by. How does the constantly changing angle of view and your\n\
-    \movement contribute to your sense of spacial immersion? Try to concentrate\n\
-    \on your being embedded in a 3d scene that you are traversing."
+    \movement contribute to your sense of spatial immersion? Try to concentrate\n\
+    \on your being embedded in the 3d scene that you are traversing."
 
 -- | Check if the directive is compatible with the environment.
 compatible :: Environment -> Directive -> Bool
