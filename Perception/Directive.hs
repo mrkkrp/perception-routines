@@ -24,7 +24,6 @@ import Prelude hiding (all)
 data Directive
   = Breath
   | ClosestArea
-  | ColorDifferentiation
   | CompletionOfInvisibleAreas
   | ConstancyThroughAngle
   | ConstancyThroughMotion
@@ -52,7 +51,6 @@ name :: Directive -> Text
 name = \case
   Breath -> "breath"
   ClosestArea -> "closest area"
-  ColorDifferentiation -> "color differentiation"
   CompletionOfInvisibleAreas -> "completion of invisible areas"
   ConstancyThroughAngle -> "constancy through angle of view"
   ConstancyThroughMotion -> "constancy through motion"
@@ -75,7 +73,6 @@ mnemonic :: Directive -> Char
 mnemonic = \case
   Breath -> 'e'
   ClosestArea -> 'l'
-  ColorDifferentiation -> 'c'
   CompletionOfInvisibleAreas -> 'r'
   ConstancyThroughAngle -> 'a'
   ConstancyThroughMotion -> 'm'
@@ -107,13 +104,6 @@ text = \case
     \the invisible area of the object, then change your position or move the\n\
     \object (if possible) so as to gradually reveal the invisible area. Compare\n\
     \your expectation with what you actually see."
-  ColorDifferentiation ->
-    -- Too specific? How interesting is this? If we have this, then we
-    -- should also have more color-related directives, because this is just
-    -- one very particular instance and having it without others seems
-    -- arbitrary.
-    "Find two closest colors belonging to different objects. How do they\n\
-    \differ?"
   ConstancyThroughAngle ->
     "Concentrate on an object or an area of your choice. Move around it in\n\
     \various ways while maintaining your attention on the chosen object/scene\n\
