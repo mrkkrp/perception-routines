@@ -30,6 +30,7 @@ data Directive
   | ConstancyThroughDistance
   | ConstancyThroughMotion
   | ConstancyThroughTime
+  | ExpectationsOfSound
   | ExpectationsOfView
   | FarthestArea
   | Ground
@@ -59,6 +60,7 @@ name = \case
   ConstancyThroughDistance -> "constancy through distance"
   ConstancyThroughMotion -> "constancy through motion"
   ConstancyThroughTime -> "constancy through time"
+  ExpectationsOfSound -> "expectations of sound"
   ExpectationsOfView -> "expectations of view"
   FarthestArea -> "farthest area"
   Ground -> "walk (with focus on the ground/floor)"
@@ -83,6 +85,7 @@ mnemonic = \case
   ConstancyThroughDistance -> 'd'
   ConstancyThroughMotion -> 'm'
   ConstancyThroughTime -> 'i'
+  ExpectationsOfSound -> 'n'
   ExpectationsOfView -> 'v'
   FarthestArea -> 'f'
   Ground -> 'g'
@@ -140,10 +143,16 @@ text = \case
     \time. How does it change in time, if at all? Concentrate on how the thing\n\
     \you are attending to persists through time; try to see it as an active\n\
     \process rather than something gratuitous."
+  ExpectationsOfSound ->
+    "Choose a suitable object and imagine what it would be like to provoke a\n\
+    \sound by interacting with that object in a certain way. Carry out the\n\
+    \interaction and compare your expectation with what you actually hear. How\n\
+    \does the sound contribute to the sense of materiality of the chosen\n\
+    \object?"
   ExpectationsOfView ->
     "Imagine what you would see from a certain position and an angle of view\n\
     \that is different from where you are now. Assume that position and the\n\
-    \angle of view and compare your expectation with reality."
+    \angle of view and compare your expectation with what you actually see."
   FarthestArea ->
     "Scrutinize the farthest area (according to your estimation, excluding the\n\
     \sky and celestial objects) that you can observe from your position. Try to\n\
