@@ -26,6 +26,7 @@ data Directive
   | ClosestArea
   | CompletionOfInvisibleAreas
   | ConstancyThroughAngle
+  | ConstancyThroughDistance
   | ConstancyThroughMotion
   | ConstancyThroughTime
   | ExpectationsOfView
@@ -53,6 +54,7 @@ name = \case
   ClosestArea -> "closest area"
   CompletionOfInvisibleAreas -> "completion of invisible areas"
   ConstancyThroughAngle -> "constancy through angle of view"
+  ConstancyThroughDistance -> "constancy through distance"
   ConstancyThroughMotion -> "constancy through motion"
   ConstancyThroughTime -> "constancy through time"
   ExpectationsOfView -> "expectations of view"
@@ -75,6 +77,7 @@ mnemonic = \case
   ClosestArea -> 'l'
   CompletionOfInvisibleAreas -> 'r'
   ConstancyThroughAngle -> 'a'
+  ConstancyThroughDistance -> 'd'
   ConstancyThroughMotion -> 'm'
   ConstancyThroughTime -> 'i'
   ExpectationsOfView -> 'v'
@@ -105,10 +108,17 @@ text = \case
     \object (if possible) so as to gradually reveal the invisible area. Compare\n\
     \your expectation with what you actually see."
   ConstancyThroughAngle ->
-    "Concentrate on an object or an area of your choice. Move around it in\n\
-    \various ways while maintaining your attention on the chosen object/scene\n\
-    \so as to explore it from different angles. Concentrate on the fact that it\n\
-    \is the same thing in the same position no matter the angle of view."
+    "Concentrate on an object or an area of your choice. Gradually move around\n\
+    \it in various ways while maintaining your attention on the chosen\n\
+    \object/area so as to explore it from different angles. Concentrate on the\n\
+    \fact that it is the same thing in the same position no matter the angle of\n\
+    \view. What qualities of space does this exercise exemplify?"
+  ConstancyThroughDistance ->
+    "Concentrate on an object or an area of your choice. Gradually approach it\n\
+    \or move farther away from it so as to change the distance between you and\n\
+    \the chosen object/area. Concentrate on the fact that it is the same thing\n\
+    \of the same physical size no matter the distance from which it is\n\
+    \observed. What qualities of space does this exercise exemplify?"
   ConstancyThroughMotion ->
     "Attend to everything that is in movement around you. Is everything still,\n\
     \or are most things moving? What about things that seem to be still but\n\
