@@ -25,6 +25,7 @@ data Directive
   = Breath
   | ClosestArea
   | CompletionOfInvisibleAreas
+  | ConstancyOfColor
   | ConstancyThroughAngle
   | ConstancyThroughDistance
   | ConstancyThroughMotion
@@ -53,6 +54,7 @@ name = \case
   Breath -> "breath"
   ClosestArea -> "closest area"
   CompletionOfInvisibleAreas -> "completion of invisible areas"
+  ConstancyOfColor -> "constancy of color"
   ConstancyThroughAngle -> "constancy through angle of view"
   ConstancyThroughDistance -> "constancy through distance"
   ConstancyThroughMotion -> "constancy through motion"
@@ -76,6 +78,7 @@ mnemonic = \case
   Breath -> 'e'
   ClosestArea -> 'l'
   CompletionOfInvisibleAreas -> 'r'
+  ConstancyOfColor -> 'c'
   ConstancyThroughAngle -> 'a'
   ConstancyThroughDistance -> 'd'
   ConstancyThroughMotion -> 'm'
@@ -107,6 +110,14 @@ text = \case
     \the invisible area of the object, then change your position or move the\n\
     \object (if possible) so as to gradually reveal the invisible area. Compare\n\
     \your expectation with what you actually see."
+  ConstancyOfColor ->
+    "Choose an object or an area of uniform color or texture. Notice the fact\n\
+    \that that even though the color/texture is uniform there is likely a\n\
+    \variation of tone due to uneven light (i.e. there are highlights and\n\
+    \shadows, sharp or diffused). Recognize the variation in tone as different\n\
+    \manifestations of the same color/texture that allow us to perceive it in a\n\
+    \deeper way. What can qualities of the incident light does this exercise\n\
+    \reveal?"
   ConstancyThroughAngle ->
     "Concentrate on an object or an area of your choice. Gradually move around\n\
     \it in various ways while maintaining your attention on the chosen\n\
