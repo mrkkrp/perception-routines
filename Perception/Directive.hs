@@ -134,10 +134,11 @@ text = \case
     \of the same physical size no matter the distance from which it is\n\
     \observed. What qualities of space does this exercise exemplify?"
   ConstancyThroughMotion ->
-    "Attend to everything that is in movement around you. Is everything still,\n\
-    \or are most things moving? What about things that seem to be still but\n\
-    \move on closer inspection? Concentrate on the fact that the moving things\n\
-    \retain their integrity despite the movement."
+    "Attend to objects in motion around you. Is everything still, or are most\n\
+    \things moving? What about things that seem to be still but move on closer\n\
+    \inspection? Concentrate on the fact that the moving things retain their\n\
+    \integrity and identity despite the movement. What can be said about the\n\
+    \moving force?"
   ConstancyThroughTime ->
     "Choose an object or an area. Scrutinize it carefully over a period of\n\
     \time. How does it change in time, if at all? Concentrate on how the thing\n\
