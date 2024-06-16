@@ -29,8 +29,4 @@ make domain g = Id domain (unseedSMGen g)
 
 -- | Render an 'Id' as 'Text' in a human-friendly way.
 render :: Id -> Text
-render (Id (Domain env s) (x, y)) = Text.pack (printf "%c%d-%016x%016x" e s x y)
-  where
-    e = case env of
-      Outdoors -> 'e'
-      Indoors -> 'i'
+render (Id (Domain s) (x, y)) = Text.pack (printf "%d-%016x%016x" s x y)

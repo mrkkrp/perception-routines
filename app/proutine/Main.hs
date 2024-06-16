@@ -31,7 +31,7 @@ main = do
   g <- case optSeed of
     Nothing -> initSMGen
     Just seed -> return (mkSMGen (fromIntegral seed))
-  let domain = Domain optEnvironment optStamina
+  let domain = Domain optStamina
       (routines, _) = Gen.run g (Routine.sampleN optRoutinesToGenerate domain)
       m :: Int
       m =
@@ -65,8 +65,6 @@ main = do
 data Opts = Opts
   { -- | Seed
     optSeed :: Maybe Natural,
-    -- | Environment (outside or inside).
-    optEnvironment :: Environment,
     -- | Stamina.
     optStamina :: Natural,
     -- | The number of routines to generate.
@@ -101,20 +99,13 @@ optsParserInfo =
 optsParser :: Parser Opts
 optsParser =
   Opts
-    <$> (optional . option naturalReader . mconcat)
+    <$> (optional . option auto . mconcat)
       [ long "seed",
         short 's',
         metavar "SEED",
         help "Seed of the preudo-random generator (if not set a random seed is used)"
       ]
-    <*> (option environmentReader . mconcat)
-      [ long "env",
-        short 'e',
-        metavar "ENVIRONMENT",
-        value Outdoors,
-        help "Environment type: 'outdoors' (default) or 'indoors'"
-      ]
-    <*> (option naturalReader . mconcat)
+    <*> (option auto . mconcat)
       [ long "stamina",
         short 't',
         metavar "STAMINA",
@@ -122,7 +113,7 @@ optsParser =
         showDefault,
         help "Stamina available per routine"
       ]
-    <*> (option naturalReader . mconcat)
+    <*> (option auto . mconcat)
       [ short 'n',
         metavar "N",
         value 1,
@@ -147,15 +138,6 @@ optsParser =
 
 ----------------------------------------------------------------------------
 -- Helpers
-
-naturalReader :: ReadM Natural
-naturalReader = auto
-
-environmentReader :: ReadM Environment
-environmentReader = eitherReader $ \case
-  "outdoors" -> Right Outdoors
-  "indoors" -> Right Indoors
-  s -> Left $ "unknown environment: " ++ s
 
 indentText :: Text -> Text
 indentText = Text.unlines . fmap ("  " <>) . Text.lines

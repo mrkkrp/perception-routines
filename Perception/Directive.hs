@@ -16,7 +16,6 @@ import Data.List.NonEmpty qualified as NonEmpty
 import Data.Text (Text)
 import Perception.Gen (Gen)
 import Perception.Gen qualified as Gen
-import Perception.Routine.Domain (Environment (..))
 import Perception.Routine.Mnemonic (WithWordBreaks (..), assignWeights)
 import Prelude hiding (all)
 
@@ -210,21 +209,14 @@ text = \case
     \movement contribute to your sense of spatial immersion? Try to concentrate\n\
     \on your being embedded in the 3d scene that you are traversing."
 
--- | Check if the directive is compatible with the environment.
-compatible :: Environment -> Directive -> Bool
-compatible Indoors Sky = False
-compatible _ _ = True
-
 -- | Produce a random directive sample given the target environment and the
 -- preceding directive in the routine.
 sample ::
-  -- | Target environment
-  Environment ->
   -- | The previous directive
   Maybe (WithWordBreaks Directive) ->
   -- | The resulting directive
   Gen (WithWordBreaks Directive)
-sample env precedingDirective = go
+sample precedingDirective = go
   where
     go = do
       mdirective <-
@@ -247,5 +239,4 @@ sample env precedingDirective = go
       Just (WordConstituent x) -> Just x
       Just (WordBreak x) -> Just x
     eligibleDirectives = NonEmpty.fromList (filter eligibleDirective all)
-    eligibleDirective x =
-      compatible env x && Just x /= precedingDirective'
+    eligibleDirective x = Just x /= precedingDirective'

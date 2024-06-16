@@ -22,7 +22,7 @@ spec = do
         Routine.mnemonic (routine domain seed gamma)
           `shouldNotSatisfy` consequitiveDirectiveRepetition
     it "generates routines of the requested length" $
-      property $ \domain@(Domain _ stamina) seed gamma -> do
+      property $ \domain@(Domain stamina) seed gamma -> do
         Routine.mnemonic (routine domain seed gamma)
           `shouldSatisfy` nDirectivesEq stamina
 

@@ -46,7 +46,7 @@ sample ::
   Domain ->
   -- | The generated routine and the updated preudo-random generator state
   Gen Routine
-sample domain@(Domain env s0) = do
+sample domain@(Domain s0) = do
   g <- Gen.askSMGen
   xs <- go s0 Nothing Prelude.id
   pure $ Routine (Routine.Id.make domain g) xs
@@ -54,7 +54,7 @@ sample domain@(Domain env s0) = do
     go s prev acc =
       if s > 0
         then do
-          r <- Directive.sample env prev
+          r <- Directive.sample prev
           case r of
             WordConstituent _ -> go (s - 1) (Just r) (acc . (r :))
             WordBreak _ -> go s (Just r) (acc . (r :))
