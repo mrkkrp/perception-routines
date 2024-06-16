@@ -36,6 +36,7 @@ data Directive
   | Ground
   | OutsidePerspective
   | Pressure
+  | SeparationThroughFocus
   | Shadows
   | Sky
   | Smell
@@ -66,6 +67,7 @@ name = \case
   Ground -> "walk (with focus on the ground/floor)"
   OutsidePerspective -> "an outside perspective"
   Pressure -> "pressure"
+  SeparationThroughFocus -> "separation through focus"
   Shadows -> "shadows"
   Sky -> "sky"
   Smell -> "smell"
@@ -87,10 +89,11 @@ mnemonic = \case
   ConstancyThroughTime -> 'i'
   ExpectationsOfSound -> 'n'
   ExpectationsOfView -> 'v'
-  FarthestArea -> 'f'
+  FarthestArea -> 'q'
   Ground -> 'g'
   OutsidePerspective -> 'x'
   Pressure -> 'p'
+  SeparationThroughFocus -> 'f'
   Shadows -> 'h'
   Sky -> 'y'
   Smell -> 's'
@@ -172,6 +175,10 @@ text = \case
     \pressure for some time, thus experiencing materiality of the surface.\n\
     \Mentally extrapolate this feeling to other similar surfaces that surround\n\
     \you. Try to give yourself an account of their materiality."
+  SeparationThroughFocus ->
+    "Concentrate on an object of your choice. Note how it seems to stand out in\n\
+    \relation to its surroundings. What qualities does it seem to have in\n\
+    \comparison to other objects that you are not focused on?"
   Shadows ->
     "Investigate shadows: their position, length, character. This directive\n\
     \applies equally in the case of diffuse light. There will always be shaded\n\
