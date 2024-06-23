@@ -106,6 +106,7 @@ text :: Directive -> Text
 text = \case
   Breath -> "Take a slow deep breath, pay attention to qualities of the air."
   ClosestArea ->
+    -- FIXME is this good enough?
     "Scrutinize the area that immediately surrounds you, say, within your arm's\n\
     \length. Does it feel more accessible than the space farther away? Do not\n\
     \hesitate to use touch for exploration where it makes sense."
@@ -117,12 +118,11 @@ text = \case
     \your expectation with what you actually see."
   ConstancyOfColor ->
     "Choose an object or an area of uniform color or texture. Notice the fact\n\
-    \that that even though the color/texture is uniform there is likely a\n\
-    \variation of tone due to uneven light (i.e. there are highlights and\n\
-    \shadows, sharp or diffused). Recognize the variation in tone as different\n\
-    \manifestations of the same color/texture that allow us to perceive it in a\n\
-    \deeper way. What can qualities of the incident light does this exercise\n\
-    \reveal?"
+    \that even though the color/texture is uniform there is likely a variation\n\
+    \of tone due to uneven light (i.e. there are highlights and shadows, sharp\n\
+    \or diffused). Recognize the variation in tone as different manifestations\n\
+    \of the same color/texture that allow us to perceive it in a deeper way.\n\
+    \What qualities of the incident light does this exercise reveal?"
   ConstancyThroughAngle ->
     "Concentrate on an object or an area of your choice. Gradually move around\n\
     \it in various ways while maintaining your attention on the chosen\n\
@@ -157,6 +157,7 @@ text = \case
     \that is different from where you are now. Assume that position and the\n\
     \angle of view and compare your expectation with what you actually see."
   FarthestArea ->
+    -- FIXME is this good enough?
     "Scrutinize the farthest area (according to your estimation, excluding the\n\
     \sky and celestial objects) that you can observe from your position. Try to\n\
     \evaluate how much space is accessible to your vision in every direction.\n\
@@ -176,9 +177,10 @@ text = \case
     \you. Try to give yourself an account of their materiality."
   SeparationThroughFocus ->
     "Concentrate on an object of your choice. Note how it seems to stand out in\n\
-    \relation to its surroundings. What qualities does it seem to have in\n\
-    \comparison to other objects that you are not focused on?"
+    \relation to its surroundings. What qualities does it have in comparison to\n\
+    \other objects that you are not focused on?"
   Shadows ->
+    -- TODO realization missing?
     "Investigate shadows: their position, length, character. This directive\n\
     \applies equally in the case of diffuse light. There will always be shaded\n\
     \areas, e.g. in the vegetation. Where is the darkest and lightest shadow\n\
