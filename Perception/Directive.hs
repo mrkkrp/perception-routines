@@ -12,11 +12,20 @@ module Perception.Directive
   )
 where
 
+import Data.Bifunctor (second)
+import Data.List (foldl')
+import Data.List qualified
 import Data.List.NonEmpty qualified as NonEmpty
+import Data.Map.Strict (Map)
+import Data.Map.Strict qualified as Map
+import Data.Ord (Down (..))
 import Data.Text (Text)
+import Data.Text qualified as Text
+import Numeric.Natural
 import Perception.Gen (Gen)
 import Perception.Gen qualified as Gen
 import Perception.Routine.Mnemonic (WithWordBreaks (..), assignWeights)
+import Perception.Routine.Mnemonic.LetterFrequency (letterFrequencies)
 import Prelude hiding (all)
 
 -- | All known perception directives.
@@ -43,7 +52,7 @@ data Directive
   | TactileExpectations
   | VisualReconstruction
   | Walk
-  deriving (Enum, Bounded, Eq, Show)
+  deriving (Enum, Bounded, Eq, Ord, Show)
 
 -- | An enumeration of all different values of 'Directive'.
 all :: [Directive]
@@ -64,7 +73,7 @@ name = \case
   ExpectationsOfView -> "expectations of view"
   FarthestArea -> "farthest area"
   Ground -> "walk (with focus on the ground/floor)"
-  OutsidePerspective -> "an outside perspective"
+  OutsidePerspective -> "outside perspective"
   Pressure -> "pressure"
   SeparationThroughFocus -> "separation through focus"
   Shadows -> "shadows"
@@ -75,31 +84,110 @@ name = \case
   VisualReconstruction -> "visual reconstruction"
   Walk -> "walk (with focus on spatial movement)"
 
+-- | Keywords that are used for assigning letter mnemonics. These should be
+-- in lower case and should not contain spaces or punctuation.
+mnemonicKeyword :: Directive -> Text
+mnemonicKeyword = \case
+  Breath -> "breath"
+  ClosestArea -> "closest"
+  CompletionOfInvisibleAreas -> "invisible"
+  ConstancyOfColor -> "color"
+  ConstancyThroughAngle -> "angle"
+  ConstancyThroughDistance -> "distance"
+  ConstancyThroughMotion -> "motion"
+  ConstancyThroughTime -> "time"
+  ExpectationsOfSound -> "sound"
+  ExpectationsOfView -> "view"
+  FarthestArea -> "farthest"
+  Ground -> "ground"
+  OutsidePerspective -> "outside"
+  Pressure -> "pressure"
+  SeparationThroughFocus -> "focus"
+  Shadows -> "shadows"
+  Sky -> "sky"
+  Smell -> "smell"
+  Sounds -> "sounds"
+  TactileExpectations -> "tactile"
+  VisualReconstruction -> "reconstruction"
+  Walk -> "walk"
+
+-- | The frequency rank of a 'Directive'.
+frequencyRank :: Directive -> Natural
+frequencyRank = \case
+  -- Breath is always nice. It is simple and does not take much time.
+  Breath -> 4
+  -- These are my favorites. The corresponding phenomenological realizations
+  -- seem to be evident and the directives are fun to follow.
+  ConstancyOfColor -> 3
+  ConstancyThroughAngle -> 3
+  ConstancyThroughDistance -> 3
+  ConstancyThroughMotion -> 3
+  ConstancyThroughTime -> 3
+  ExpectationsOfSound -> 3
+  Ground -> 3
+  Pressure -> 3
+  SeparationThroughFocus -> 3
+  Smell -> 3
+  Sounds -> 3
+  TactileExpectations -> 3
+  Walk -> 3
+  -- These are also good, but perhaps take a little longer than those in the
+  -- previous group or their principle seems to be a bit more contrived, so
+  -- it makes sense for them to be a little bit more rare.
+  CompletionOfInvisibleAreas -> 2
+  ExpectationsOfView -> 2
+  Shadows -> 2
+  Sky -> 2
+  -- Not my favorites, added for the sake of variety.
+  ClosestArea -> 1
+  FarthestArea -> 1
+  OutsidePerspective -> 1
+  VisualReconstruction -> 1
+
+-- | Directives paired with their normative probabilities.
+normativeDirectiveProbabilities :: [(Directive, Double)]
+normativeDirectiveProbabilities =
+  second adjustedRankToProbability <$> allWithAdjustedRanks
+  where
+    allWithAdjustedRanks = zip all (adjustRank . frequencyRank <$> all)
+    adjustRank :: Natural -> Double
+    adjustRank x = (2.0 :: Double) ^ x
+    totalAdjustedRankPoints = sum (snd <$> allWithAdjustedRanks)
+    adjustedRankToProbability x = x / totalAdjustedRankPoints
+
+-- | The map from directives to their 'Char' mnemonics. This map is the
+-- result of a compromise between mnemonic affinity of directives and
+-- letters and probability affinity between letter probabilities in English
+-- and the normative probabilities of the directives as per their
+-- 'frequencyRank'.
+mnemonicMap :: Map Directive Char
+mnemonicMap =
+  Map.fromList . snd $
+    foldl'
+      assignDirective
+      (letterFrequencies, [])
+      (Data.List.sortOn (Down . snd) normativeDirectiveProbabilities)
+  where
+    assignDirective (letters, acc) directive =
+      case Data.List.sortOn (Down . overallAffinity directive) letters of
+        [] -> ([], acc)
+        ((assignedLetter, _) : _) ->
+          let remainingLetters = filter ((/= assignedLetter) . fst) letters
+           in (remainingLetters, (fst directive, assignedLetter) : acc)
+    overallAffinity (d, p') (ch, p) =
+      mnemonicAffinity (mnemonicKeyword d) ch
+        * probabilityAffinity p' p
+    mnemonicAffinity k ch =
+      max 0.05 $
+        1.0 - maybe 1.0 ((* 0.1) . fromIntegral) (Text.findIndex (== ch) k)
+    probabilityAffinity p' p =
+      let n = max p' p
+       in (n - abs (p' - p)) / n
+{-# NOINLINE mnemonicMap #-}
+
 -- | The mnemonic of a 'Directive'.
 mnemonic :: Directive -> Char
-mnemonic = \case
-  Breath -> 'e'
-  ClosestArea -> 'l'
-  CompletionOfInvisibleAreas -> 'r'
-  ConstancyOfColor -> 'c'
-  ConstancyThroughAngle -> 'a'
-  ConstancyThroughDistance -> 'd'
-  ConstancyThroughMotion -> 'm'
-  ConstancyThroughTime -> 'i'
-  ExpectationsOfSound -> 'n'
-  ExpectationsOfView -> 'v'
-  FarthestArea -> 'q'
-  Ground -> 'g'
-  OutsidePerspective -> 'x'
-  Pressure -> 'p'
-  SeparationThroughFocus -> 'f'
-  Shadows -> 'h'
-  Sky -> 'y'
-  Smell -> 's'
-  Sounds -> 'o'
-  TactileExpectations -> 't'
-  VisualReconstruction -> 'u'
-  Walk -> 'w'
+mnemonic k = mnemonicMap Map.! k
 
 -- | The comprehensive description of a 'Directive'.
 text :: Directive -> Text
