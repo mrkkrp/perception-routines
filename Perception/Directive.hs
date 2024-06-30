@@ -41,6 +41,7 @@ data Directive
   | ExpectationsOfSound
   | ExpectationsOfView
   | FarthestArea
+  | Gravity
   | Ground
   | Light
   | OutsidePerspective
@@ -73,6 +74,7 @@ name = \case
   ExpectationsOfSound -> "expectations of sound"
   ExpectationsOfView -> "expectations of view"
   FarthestArea -> "farthest area"
+  Gravity -> "gravity and supporting forces"
   Ground -> "walk (with focus on the ground/floor)"
   Light -> "light"
   OutsidePerspective -> "outside perspective"
@@ -101,6 +103,7 @@ mnemonicKeyword = \case
   ExpectationsOfSound -> "sound"
   ExpectationsOfView -> "view"
   FarthestArea -> "farthest"
+  Gravity -> "gravity"
   Ground -> "ground"
   Light -> "light"
   OutsidePerspective -> "outside"
@@ -139,6 +142,7 @@ frequencyRank = \case
   -- it makes sense for them to be a little bit more rare.
   CompletionOfInvisibleAreas -> 2
   ExpectationsOfView -> 2
+  Gravity -> 2
   Light -> 2
   Shadows -> 2
   Sky -> 2
@@ -254,6 +258,13 @@ text = \case
     \sky and celestial objects) that you can observe from your position. Try to\n\
     \evaluate how much space is accessible to your vision in every direction.\n\
     \Form a mental image of the totality of that space."
+  Gravity ->
+    "Attempt to imagine the weight of various objects that you observe and the\n\
+    \pressure they exercise on their support (floor, ground, etc.). What forces\n\
+    \allows these objects to remain in their current position? ‘Visualize’ in\n\
+    \your mind such things as rigidity, elasticity, inner tensions. If\n\
+    \feasible, attempt to lift and move around objects of interest to verify\n\
+    \your intuitions."
   Ground ->
     "Walk so as to change your position. What does the ground/floor feel like?\n\
     \How hard is it? How does it react when you step on it? What sounds does it\n\

@@ -19,4 +19,4 @@ spec = do
     it "assigns a directive for each letter" $ do
       let assignedLetters = Directive.mnemonic <$> Directive.all
           allLetters = ['a' .. 'z']
-      allLetters \\ assignedLetters `shouldBe` "qxz" -- FIXME
+      allLetters \\ assignedLetters `shouldBe` "qz" -- FIXME
