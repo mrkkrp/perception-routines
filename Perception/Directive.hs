@@ -42,6 +42,7 @@ data Directive
   | ExpectationsOfView
   | FarthestArea
   | Ground
+  | Light
   | OutsidePerspective
   | Pressure
   | SeparationThroughFocus
@@ -73,6 +74,7 @@ name = \case
   ExpectationsOfView -> "expectations of view"
   FarthestArea -> "farthest area"
   Ground -> "walk (with focus on the ground/floor)"
+  Light -> "light"
   OutsidePerspective -> "outside perspective"
   Pressure -> "pressure"
   SeparationThroughFocus -> "separation through focus"
@@ -100,6 +102,7 @@ mnemonicKeyword = \case
   ExpectationsOfView -> "view"
   FarthestArea -> "farthest"
   Ground -> "ground"
+  Light -> "light"
   OutsidePerspective -> "outside"
   Pressure -> "pressure"
   SeparationThroughFocus -> "focus"
@@ -136,6 +139,7 @@ frequencyRank = \case
   -- it makes sense for them to be a little bit more rare.
   CompletionOfInvisibleAreas -> 2
   ExpectationsOfView -> 2
+  Light -> 2
   Shadows -> 2
   Sky -> 2
   -- Not my favorites, added for the sake of variety.
@@ -254,6 +258,11 @@ text = \case
     "Walk so as to change your position. What does the ground/floor feel like?\n\
     \How hard is it? How does it react when you step on it? What sounds does it\n\
     \make, if any?"
+  Light ->
+    "Appreciate the light that illuminates the scene that you are observing. Do\n\
+    \not take it for granted. One way to do it is to imagine that all\n\
+    \observable light is only a short flash that started recently and can cease\n\
+    \at any moment."
   OutsidePerspective ->
     "Visualize your body in its current position and environment from an\n\
     \outside perspective. Attempt to “disconnect” from your familiar sense of\n\
