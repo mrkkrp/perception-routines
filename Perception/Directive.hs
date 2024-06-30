@@ -288,11 +288,11 @@ text = \case
     \relation to its surroundings. What qualities does it have in comparison to\n\
     \other objects that you are not focused on?"
   Shadows ->
-    -- TODO realization missing?
     "Investigate shadows: their position, length, character. This directive\n\
     \applies equally in the case of diffuse light. There will always be shaded\n\
-    \areas, e.g. in the vegetation. Where is the darkest and lightest shadow\n\
-    \you can find?"
+    \areas, e.g. in the vegetation. Explicitly relate shadows to the angle and\n\
+    \character of light and the occluding object. Where is the darkest and\n\
+    \lightest shadow you can find?"
   Sky ->
     "Concentrate on the sky. How does its color vary? How big does it feel? Are\n\
     \there any clouds? If yes, how many different kinds? What is their\n\
