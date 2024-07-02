@@ -52,6 +52,7 @@ data Directive
   | Smell
   | Sounds
   | TactileExpectations
+  | UnusualView
   | VisualReconstruction
   | Walk
   deriving (Enum, Bounded, Eq, Ord, Show)
@@ -85,6 +86,7 @@ name = \case
   Smell -> "smell"
   Sounds -> "sounds"
   TactileExpectations -> "tactile expectations"
+  UnusualView -> "view from an unusual position/angle "
   VisualReconstruction -> "visual reconstruction"
   Walk -> "walk (with focus on spatial movement)"
 
@@ -114,6 +116,7 @@ mnemonicKeyword = \case
   Smell -> "smell"
   Sounds -> "sounds"
   TactileExpectations -> "tactile"
+  UnusualView -> "unusualview"
   VisualReconstruction -> "reconstruction"
   Walk -> "walk"
 
@@ -136,6 +139,7 @@ frequencyRank = \case
   Smell -> 3
   Sounds -> 3
   TactileExpectations -> 3
+  UnusualView -> 3
   Walk -> 3
   -- These are also good, but perhaps take a little longer than those in the
   -- previous group or their principle seems to be a bit more contrived, so
@@ -309,6 +313,10 @@ text = \case
     \touch, or perform some other manipulation with that object or surface.\n\
     \Perform the imagined action while maintaining visual contact with the\n\
     \chosen object/surface and compare your expectation with reality."
+  UnusualView ->
+    "Observe the environment you are in from an unusual position and/or angle\n\
+    \of view. Note the fact that it is the same scene and yet it looks\n\
+    \different because more of its essence is revealed."
   VisualReconstruction ->
     "Look carefully at a scene of your choice. Now close your eyes and try to\n\
     \reconstruct the scene in your head. Open your eyes and compare your\n\
