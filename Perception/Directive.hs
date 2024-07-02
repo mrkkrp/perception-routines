@@ -12,8 +12,8 @@ module Perception.Directive
   )
 where
 
+import Data.Algorithm.Assignment (assign)
 import Data.Bifunctor (second)
-import Data.List qualified
 import Data.List.NonEmpty qualified as NonEmpty
 import Data.Map.Strict (Map)
 import Data.Map.Strict qualified as Map
@@ -173,19 +173,10 @@ normativeDirectiveProbabilities =
 mnemonicMap :: Map Directive Char
 mnemonicMap =
   Map.fromList $
-    go
-      [ (fst d, fst ch, overallAffinity d ch)
-      | ch <- letterFrequencies,
-        d <- normativeDirectiveProbabilities
-      ]
-      []
+    f <$> assign cost normativeDirectiveProbabilities letterFrequencies
   where
-    go [] acc = acc
-    go xs acc =
-      let (d', ch', _) =
-            Data.List.maximumBy (\(_, _, x) (_, _, y) -> x `compare` y) xs
-          xs' = filter (\(d, ch, _) -> d /= d' && ch /= ch') xs
-       in go xs' ((d', ch') : acc)
+    f ((d, _), (ch, _)) = (d, ch)
+    cost d ch = floor ((1.0 - overallAffinity d ch) * 10000.0)
     overallAffinity (d, p') (ch, p) =
       mnemonicAffinity (mnemonicKeyword d) ch
         * probabilityAffinity p' p
