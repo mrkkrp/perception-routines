@@ -13,12 +13,10 @@ module Perception.Directive
 where
 
 import Data.Bifunctor (second)
-import Data.List (foldl')
 import Data.List qualified
 import Data.List.NonEmpty qualified as NonEmpty
 import Data.Map.Strict (Map)
 import Data.Map.Strict qualified as Map
-import Data.Ord (Down (..))
 import Data.Text (Text)
 import Data.Text qualified as Text
 import Numeric.Natural
@@ -174,18 +172,20 @@ normativeDirectiveProbabilities =
 -- 'frequencyRank'.
 mnemonicMap :: Map Directive Char
 mnemonicMap =
-  Map.fromList . snd $
-    foldl'
-      assignDirective
-      (letterFrequencies, [])
-      (Data.List.sortOn (Down . snd) normativeDirectiveProbabilities)
+  Map.fromList $
+    go
+      [ (fst d, fst ch, overallAffinity d ch)
+      | ch <- letterFrequencies,
+        d <- normativeDirectiveProbabilities
+      ]
+      []
   where
-    assignDirective (letters, acc) directive =
-      case Data.List.sortOn (Down . overallAffinity directive) letters of
-        [] -> ([], acc)
-        ((assignedLetter, _) : _) ->
-          let remainingLetters = filter ((/= assignedLetter) . fst) letters
-           in (remainingLetters, (fst directive, assignedLetter) : acc)
+    go [] acc = acc
+    go xs acc =
+      let (d', ch', _) =
+            Data.List.maximumBy (\(_, _, x) (_, _, y) -> x `compare` y) xs
+          xs' = filter (\(d, ch, _) -> d /= d' && ch /= ch') xs
+       in go xs' ((d', ch') : acc)
     overallAffinity (d, p') (ch, p) =
       mnemonicAffinity (mnemonicKeyword d) ch
         * probabilityAffinity p' p
