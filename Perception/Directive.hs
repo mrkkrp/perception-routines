@@ -298,7 +298,9 @@ text = \case
     "Concentrate on what you hear. How many distinct sound sources are there?\n\
     \Pay attention to the spatial position and the character of sounds.\n\
     \Separate them mentally, keep track of new sound sources that appear.\n\
-    \Closing your eyes might be helpful."
+    \Closing your eyes might be helpful. Note that unlike other sense\n\
+    \modalities we phenomenologically experience sounds from the past as part\n\
+    \of the present (it is perhaps most notable in music)."
   TactileExpectations ->
     "Choose an object or a surface. Imagine what it would feel like to grasp,\n\
     \touch, or perform some other manipulation with that object or surface.\n\
