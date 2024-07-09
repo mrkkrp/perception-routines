@@ -55,9 +55,10 @@ sample domain@(Domain s0) = do
       if s > 0
         then do
           r <- Directive.sample prev
+          let prev' = prev >>= fromWordConstituentMaybe . snd
           case r of
-            WordConstituent _ -> go (s - 1) (Just r) (acc . (r :))
-            WordBreak _ -> go s (Just r) (acc . (r :))
+            WordConstituent _ -> go (s - 1) (Just (prev', r)) (acc . (r :))
+            WordBreak _ -> go s (Just (prev', r)) (acc . (r :))
         else pure (finalize acc)
     finalize acc =
       mapMaybe

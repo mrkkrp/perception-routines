@@ -35,34 +35,37 @@ main = do
         (prepareForRendering (adjustWorkBreakWeights r))
     )
 
-type LetterWeights = Map (Maybe Char, Maybe Char) Natural
+type LetterWeights = Map (Maybe (Maybe Char, Char), Maybe Char) Natural
 
 -- | Initialize letter weights.
 initLetterWeights :: LetterWeights
 initLetterWeights =
   Map.fromList $
-    [((Just x, Just y), defaultWeight) | x <- allLetters, y <- allLetters]
-      ++ [((Nothing, Just x), defaultWeight) | x <- allLetters]
-      ++ [((Just x, Nothing), defaultWeight) | x <- allLetters]
+    [ ((fmap (x1,) x0, y), defaultWeight)
+    | x0 <- allLetters,
+      x1 <- allLetters,
+      y <- allLetters
+    ]
   where
-    allLetters = ['a' .. 'z']
+    allLetters = Nothing : fmap Just ['a' .. 'z']
     defaultWeight = 0
 
 -- | Update letter weights for a single 'Char'.
 updateLetterWeights ::
-  -- | Weights so far and the previous 'Char' if any
-  (LetterWeights, Maybe Char) ->
+  -- | Weights so far and up to 2 preceding 'Char's
+  (LetterWeights, Maybe (Maybe Char, Char)) ->
   -- | 'Char' to consider
   Char ->
   -- | Updated weights and the new last 'Char'
-  (LetterWeights, Maybe Char)
-updateLetterWeights (m, prev) actual = (m', actual')
+  (LetterWeights, Maybe (Maybe Char, Char))
+updateLetterWeights (m, prev) actual = (m', prev')
   where
     actualLower = Char.toLower actual
     actual' =
       if Char.isAsciiLower actualLower
         then Just actualLower
         else Nothing
+    prev' = (fmap snd prev,) <$> actual'
     m' = case (prev, actual') of
       (Nothing, Nothing) -> m
       _ -> Map.adjust (+ 1) (prev, actual') m
@@ -78,12 +81,15 @@ adjustWorkBreakWeights = Map.mapWithKey f
 
 -- | Prepare values for being interpolated in the template.
 prepareForRendering :: LetterWeights -> Value
-prepareForRendering = toJSON . fmap f . Map.toList
+prepareForRendering = toJSON . fmap f . Map.toList . Map.filter (/= 0)
   where
-    f :: ((Maybe Char, Maybe Char), Natural) -> KeyMap String
+    f :: ((Maybe (Maybe Char, Char), Maybe Char), Natural) -> KeyMap String
     f ((prev, actual), weight) =
       KeyMap.fromList
-        [("prev", show prev), ("actual", show actual), ("weight", show weight)]
+        [ ("prev", show prev),
+          ("actual", show actual),
+          ("weight", show weight)
+        ]
 
 -- | A pre-compiled mustache template.
 letterWeightTemplate :: Template
