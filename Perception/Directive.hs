@@ -322,33 +322,33 @@ text = \case
     \on your being embedded in the 3d scene that you are traversing."
 
 -- | Produce a random directive sample given the target environment and the
--- preceding directive in the routine.
+-- preceding directives in the routine.
 sample ::
-  -- | The previous directive
-  Maybe (WithWordBreaks Directive) ->
+  -- | Up to 2 preceding directives
+  Maybe (Maybe Directive, WithWordBreaks Directive) ->
   -- | The resulting directive
   Gen (WithWordBreaks Directive)
-sample precedingDirective = go
+sample precedingDirectives = go
   where
     go = do
       mdirective <-
         Gen.weighted $
           assignWeights
             mnemonic
-            precedingChar
+            precedingChars
             eligibleDirectives
-      case (mdirective, precedingDirective') of
+      case (mdirective, precedingDirective) of
         (Nothing, Just x) -> pure (WordBreak x)
         -- Two consecutive word breaks should not happen, but try again.
         (Nothing, Nothing) -> go
         (Just x, _) -> pure (WordConstituent x)
-    precedingChar = case precedingDirective of
+    precedingChars = case precedingDirectives of
       Nothing -> Nothing
-      Just (WordConstituent x) -> Just (mnemonic x)
-      Just (WordBreak _) -> Nothing
-    precedingDirective' = case precedingDirective of
+      Just (md, WordConstituent x) -> Just (mnemonic <$> md, mnemonic x)
+      Just (_, WordBreak _) -> Nothing
+    precedingDirective = case precedingDirectives of
       Nothing -> Nothing
-      Just (WordConstituent x) -> Just x
-      Just (WordBreak x) -> Just x
+      Just (_, WordConstituent x) -> Just x
+      Just (_, WordBreak x) -> Just x
     eligibleDirectives = NonEmpty.fromList (filter eligibleDirective all)
-    eligibleDirective x = Just x /= precedingDirective'
+    eligibleDirective x = Just x /= precedingDirective

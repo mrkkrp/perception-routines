@@ -6,10 +6,12 @@ where
 
 import Numeric.Natural
 
--- | Obtain weight for a given letter given the preceding letter.
+{- ORMOLU_DISABLE -}
+
+-- | Obtain weight for a given letter given preceding 'Char's.
 letterWeight ::
-  -- | The preceding letter, if any
-  Maybe Char ->
+  -- | Up to 2 preceding 'Char's
+  Maybe (Maybe Char, Char) ->
   -- | The letter to get the weight for, or the end of word possibility if
   -- 'Nothing'
   Maybe Char ->

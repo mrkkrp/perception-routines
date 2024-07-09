@@ -6,6 +6,7 @@ module Perception.Routine.Mnemonic
   ( WithWordBreaks (..),
     isWordConstituent,
     fromWordConstituent,
+    fromWordConstituentMaybe,
     assignWeights,
   )
 where
@@ -36,13 +37,19 @@ fromWordConstituent = \case
   WordConstituent x -> x
   WordBreak _ -> error "Perception.Routine.Mnemonic.fromWordConstituent"
 
+-- | A safe version of 'fromWordConstituent'.
+fromWordConstituentMaybe :: WithWordBreaks a -> Maybe a
+fromWordConstituentMaybe = \case
+  WordConstituent x -> Just x
+  WordBreak _ -> Nothing
+
 -- | Assign weights to a collection of elements that can be mapped to
 -- 'Char's in such a way as to encourage production of quasi-English words.
 assignWeights ::
   -- | The mapping function
   (a -> Char) ->
-  -- | The preceding 'Char', if any
-  Maybe Char ->
+  -- | The preceding 'Char's, if any
+  Maybe (Maybe Char, Char) ->
   -- | The original collection
   NonEmpty a ->
   -- | The resulting weighted collection, also allowing for the end of word
