@@ -195,12 +195,12 @@ mnemonic k = mnemonicMap Map.! k
 -- | The comprehensive description of a 'Directive'.
 text :: Directive -> Text
 text = \case
-  Breath -> "Take a slow deep breath, pay attention to qualities of the air."
+  Breath ->
+    "Take a slow deep breath, pay attention to qualities of the air."
   ClosestArea ->
-    -- FIXME is this good enough?
     "Scrutinize the area that immediately surrounds you, say, within your arm's\n\
-    \length. Does it feel more accessible than the space farther away? Do not\n\
-    \hesitate to use touch for exploration where it makes sense."
+    \length. What qualities does it have in comparison to objects that are\n\
+    \farther away?"
   CompletionOfInvisibleAreas ->
     "Choose a partially occluded object, or an object with an invisible area\n\
     \(e.g. back side) that you feel you can visualize in your head. Visualize\n\
@@ -248,7 +248,6 @@ text = \case
     \that is different from where you are now. Assume that position and the\n\
     \angle of view and compare your expectation with what you actually see."
   FarthestArea ->
-    -- FIXME is this good enough?
     "Scrutinize the farthest area (according to your estimation, excluding the\n\
     \sky and celestial objects) that you can observe from your position. Try to\n\
     \evaluate how much space is accessible to your vision in every direction.\n\
@@ -256,9 +255,10 @@ text = \case
   Gravity ->
     "Attempt to imagine the weight of various objects that you observe and the\n\
     \pressure they exercise on their support (floor, ground, etc.). What forces\n\
-    \allows these objects to remain in their current position? ‘Visualize’ in\n\
+    \allow these objects to remain in their current position? ‘Visualize’ in\n\
     \your mind such things as rigidity, elasticity, inner tensions. If\n\
-    \feasible, attempt to lift and move around objects of interest to verify\n\
+    \feasible, attempt to lift and move around objects of interest to\n\
+    \experience the gravitational forces they are subjected to and to verify\n\
     \your intuitions."
   Ground ->
     "Walk so as to change your position. What does the ground/floor feel like?\n\
@@ -275,9 +275,10 @@ text = \case
     \self and perceive yourself as an independent observer would."
   Pressure ->
     "Choose a suitable surface and press on it with your hand. Maintain the\n\
-    \pressure for some time, thus experiencing materiality of the surface.\n\
-    \Mentally extrapolate this feeling to other similar surfaces that surround\n\
-    \you. Try to give yourself an account of their materiality."
+    \pressure for some time, thus experiencing materiality of the surface. Note\n\
+    \its texture and temperature. Mentally extrapolate this feeling to other\n\
+    \similar surfaces that surround you. Try to give yourself an account of\n\
+    \their materiality."
   SeparationThroughFocus ->
     "Concentrate on an object of your choice. Note how it seems to stand out in\n\
     \relation to its surroundings. What qualities does it have in comparison to\n\
@@ -295,12 +296,12 @@ text = \case
   Smell ->
     "Choose a suitable object and smell it."
   Sounds ->
-    "Concentrate on what you hear. How many distinct sound sources are there?\n\
-    \Pay attention to the spatial position and the character of sounds.\n\
-    \Separate them mentally, keep track of new sound sources that appear.\n\
-    \Closing your eyes might be helpful. Note that unlike other sense\n\
-    \modalities we phenomenologically experience sounds from the past as part\n\
-    \of the present (it is perhaps most notable in music)."
+    "Concentrate on what you hear. Note that unlike other sense modalities we\n\
+    \phenomenologically experience sounds from the past as part of the present.\n\
+    \How many distinct sound sources are there? Pay attention to the spatial\n\
+    \position and the character of sounds. How do reflection and reverberation\n\
+    \contribute to the way sounds describe space? Keep track of new sound\n\
+    \sources that appear. Closing your eyes might be helpful."
   TactileExpectations ->
     "Choose an object or a surface. Imagine what it would feel like to grasp,\n\
     \touch, or perform some other manipulation with that object or surface.\n\
