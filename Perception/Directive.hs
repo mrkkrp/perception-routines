@@ -6,6 +6,12 @@ module Perception.Directive
   ( Directive (..),
     all,
     name,
+    mnemonicKeyword,
+    frequencyRank,
+    normativeDirectiveProbabilities,
+    affinity,
+    mnemonicAffinity,
+    probabilityAffinity,
     mnemonic,
     text,
     sample,
@@ -114,7 +120,7 @@ mnemonicKeyword = \case
   Smell -> "smell"
   Sounds -> "sounds"
   TactileExpectations -> "tactile"
-  UnusualView -> "unusualview"
+  UnusualView -> "unusual"
   VisualReconstruction -> "reconstruction"
   Walk -> "walk"
 
@@ -176,17 +182,39 @@ mnemonicMap =
     f <$> assign cost normativeDirectiveProbabilities letterFrequencies
   where
     f ((d, _), (ch, _)) = (d, ch)
-    cost d ch = floor ((1.0 - overallAffinity d ch) * 10000.0)
-    overallAffinity (d, p') (ch, p) =
-      mnemonicAffinity (mnemonicKeyword d) ch
-        * probabilityAffinity p' p
-    mnemonicAffinity k ch =
-      max 0.05 $
-        1.0 - maybe 1.0 ((* 0.1) . fromIntegral) (Text.findIndex (== ch) k)
-    probabilityAffinity p' p =
-      let n = max p' p
-       in (n - abs (p' - p)) / n
+    cost d ch = floor ((1.0 - affinity d ch) * 10000.0)
 {-# NOINLINE mnemonicMap #-}
+
+-- | Calculate affinity between a directive and a letter. The result is
+-- between 0 (no match) and 1 (perfect match), inclusive.
+affinity ::
+  -- | A directive paired with its normative probability
+  (Directive, Double) ->
+  -- | A letter paired with its probability in English
+  (Char, Double) ->
+  Double
+affinity (d, p') (ch, p) =
+  mnemonicAffinity (mnemonicKeyword d) ch
+    * probabilityAffinity p' p
+
+-- | Calculate affinity between a mnemonic keyword and a given letter. The
+-- result is between 0 (no match) and 1 (perfect match), inclusive.
+mnemonicAffinity ::
+  -- | The mnemonic keyword
+  Text ->
+  -- | A letter
+  Char ->
+  Double
+mnemonicAffinity k ch =
+  max 0.05 $
+    1.0 - maybe 1.0 ((* 0.1) . fromIntegral) (Text.findIndex (== ch) k)
+
+-- | Calculate affinity between two probabilities. The result is between 0
+-- (no match) and 1 (perfect match), inclusive.
+probabilityAffinity :: Double -> Double -> Double
+probabilityAffinity x y =
+  let n = max x y
+   in (n - abs (x - y)) / n
 
 -- | The mnemonic of a 'Directive'.
 mnemonic :: Directive -> Char
