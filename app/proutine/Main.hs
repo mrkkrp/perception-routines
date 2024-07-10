@@ -8,6 +8,7 @@ module Main (main) where
 import Control.Monad (forM_, when)
 import Data.FileEmbed
 import Data.List (sortOn)
+import Data.Maybe (fromJust)
 import Data.Text (Text)
 import Data.Text qualified as Text
 import Data.Text.Encoding qualified as Text
@@ -17,12 +18,15 @@ import Development.GitRev
 import Numeric.Natural
 import Options.Applicative
 import Paths_perception_routines (version)
+import Perception.Directive (Directive)
 import Perception.Directive qualified as Directive
 import Perception.Gen qualified as Gen
 import Perception.Routine qualified as Routine
 import Perception.Routine.Domain
 import Perception.Routine.Id qualified as Routine.Id
+import Perception.Routine.Mnemonic.LetterFrequency (letterFrequencies)
 import System.Random.SplitMix
+import Text.Printf (printf)
 
 -- | Entry point of the program.
 main :: IO ()
@@ -50,12 +54,14 @@ main = do
   when optPrintExplanations $ do
     Text.putStrLn ""
     Text.putStrLn (Text.decodeUtf8 $(embedFile "intro.txt"))
-    forM_ (sortOn Directive.mnemonic Directive.all) $ \d -> do
-      putChar (Directive.mnemonic d)
+    forM_ (sortOn Directive.mnemonic Directive.all) $ \directive -> do
+      putChar (Directive.mnemonic directive)
       Text.putStr " = "
-      Text.putStr (Directive.name d)
+      Text.putStr (Directive.name directive)
       Text.putStrLn ""
-      Text.putStr (indentText (Directive.text d))
+      when optExplainMnemonics $ do
+        Text.putStr (indentText 8 (mnemonicJustification directive))
+      Text.putStr (indentText 2 (Directive.text directive))
     Text.putStrLn ""
 
 ----------------------------------------------------------------------------
@@ -74,7 +80,9 @@ data Opts = Opts
     -- | Print routine ids.
     optPrintIds :: Bool,
     -- | Print explanations of each directive.
-    optPrintExplanations :: Bool
+    optPrintExplanations :: Bool,
+    -- | Also print explanations for assignment of mnemonics.
+    optExplainMnemonics :: Bool
   }
 
 optsParserInfo :: ParserInfo Opts
@@ -135,9 +143,53 @@ optsParser =
         short 'x',
         help "Print explanations for all directives."
       ]
+    <*> (switch . mconcat)
+      [ long "explain-mnemonics",
+        short 'm',
+        help "Also print explanations for assignment of mnemonics"
+      ]
 
 ----------------------------------------------------------------------------
 -- Helpers
 
-indentText :: Text -> Text
-indentText = Text.unlines . fmap ("  " <>) . Text.lines
+mnemonicJustification :: Directive -> Text
+mnemonicJustification directive =
+  Text.unlines
+    [ "Affinity (overall): " <> percent affinity,
+      "Mnemonic affinity: "
+        <> percent mnemonicAffinity
+        <> " ('"
+        <> Text.singleton mnemonic
+        <> "'"
+        <> " for \""
+        <> mnemonicKeyword
+        <> "\")",
+      "Probability affinity: "
+        <> percent probabilityAffinity
+        <> " ("
+        <> percent normativeProbability
+        <> " normative vs "
+        <> percent mnemonicProbability
+        <> " letter)"
+    ]
+  where
+    percent x = Text.pack (printf "%.2f%%" (x * 100.0))
+    affinity =
+      Directive.affinity
+        (directive, normativeProbability)
+        (mnemonic, mnemonicProbability)
+    mnemonicAffinity =
+      Directive.mnemonicAffinity mnemonicKeyword mnemonic
+    probabilityAffinity =
+      Directive.probabilityAffinity normativeProbability mnemonicProbability
+    mnemonic = Directive.mnemonic directive
+    mnemonicKeyword = Directive.mnemonicKeyword directive
+    mnemonicProbability =
+      fromJust $
+        lookup mnemonic letterFrequencies
+    normativeProbability =
+      fromJust $
+        lookup directive Directive.normativeDirectiveProbabilities
+
+indentText :: Int -> Text -> Text
+indentText n = Text.unlines . fmap (Text.replicate n " " <>) . Text.lines
