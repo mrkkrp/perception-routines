@@ -56,6 +56,7 @@ data Directive
   | Sky
   | Smell
   | Sounds
+  | SpatialReference
   | TactileExpectations
   | UnusualView
   | VisualReconstruction
@@ -90,6 +91,7 @@ name = \case
   Sky -> "sky"
   Smell -> "smell"
   Sounds -> "sounds"
+  SpatialReference -> "spatial reference"
   TactileExpectations -> "tactile expectations"
   UnusualView -> "view from an unusual position/angle "
   VisualReconstruction -> "visual reconstruction"
@@ -120,6 +122,7 @@ mnemonicKeyword = \case
   Sky -> "sky"
   Smell -> "smell"
   Sounds -> "sounds"
+  SpatialReference -> "reference"
   TactileExpectations -> "tactile"
   UnusualView -> "unusual"
   VisualReconstruction -> "reconstruction"
@@ -155,6 +158,7 @@ frequencyRank = \case
   Light -> 2
   Shadows -> 2
   Sky -> 2
+  SpatialReference -> 2
   -- Not my favorites, added for the sake of variety.
   ClosestArea -> 1
   FarthestArea -> 1
@@ -331,6 +335,10 @@ text = \case
     \position and the character of sounds. How do reflection and reverberation\n\
     \contribute to the way sounds describe space? Keep track of new sound\n\
     \sources that appear. Closing your eyes might be helpful."
+  SpatialReference ->
+    "Think of a reference object that you cannot directly observe then form an\n\
+    \idea of how you are positioned and oriented in relation to that object.\n\
+    \How does this affect your sense of space perception?"
   TactileExpectations ->
     "Choose an object or a surface. Imagine what it would feel like to grasp,\n\
     \touch, or perform some other manipulation with that object or surface.\n\

@@ -28,9 +28,9 @@ spec = do
         Routine.mnemonic (routine domain seed gamma)
           `shouldSatisfy` nDirectivesEq size
     it "all directives have a chance to appear" $ do
-        let xs = routineN 1_000 (Domain 5) 0 0
-        Set.fromList (concatMap Routine.directives xs)
-          `shouldBe` Set.fromList Directive.all
+      let xs = routineN 1_000 (Domain 5) 0 0
+      Set.fromList (concatMap Routine.directives xs)
+        `shouldBe` Set.fromList Directive.all
 
 routine :: Domain -> Word64 -> Word64 -> Routine
 routine domain seed gamma =
