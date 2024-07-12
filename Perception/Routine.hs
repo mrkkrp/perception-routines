@@ -10,9 +10,6 @@ where
 
 import Control.Monad (replicateM)
 import Data.Char qualified as Char
-import Data.List.NonEmpty (NonEmpty (..))
-import Data.List.NonEmpty qualified as NonEmpty
-import Data.Maybe (mapMaybe)
 import Data.Text (Text)
 import Data.Text qualified as Text
 import Numeric.Natural
@@ -22,13 +19,11 @@ import Perception.Gen (Gen)
 import Perception.Gen qualified as Gen
 import Perception.Routine.Domain (Domain (..))
 import Perception.Routine.Id qualified as Routine.Id
-import Perception.Routine.Mnemonic
-import Perception.Routine.Mnemonic qualified as Mnemonic
 import Prelude hiding (id)
 import Prelude qualified
 
 -- | Perception routine.
-data Routine = Routine Routine.Id.Id [NonEmpty Directive]
+data Routine = Routine Routine.Id.Id [Directive]
 
 -- | Generate multiple perception routines.
 sampleN ::
@@ -48,34 +43,17 @@ sample ::
   Gen Routine
 sample domain@(Domain s0) = do
   g <- Gen.askSMGen
-  xs <- go s0 Nothing Prelude.id
-  pure $ Routine (Routine.Id.make domain g) xs
+  xs <- go s0 [] Prelude.id
+  pure (Routine (Routine.Id.make domain g) xs)
   where
-    go s prev acc =
+    go s directivesSoFar acc =
       if s > 0
         then do
-          r <- Directive.sample prev
-          let prev' = prev >>= fromWordConstituentMaybe . snd
-          case r of
-            WordConstituent _ -> go (s - 1) (Just (prev', r)) (acc . (r :))
-            WordBreak _ -> go s (Just (prev', r)) (acc . (r :))
-        else pure (finalize acc)
-    finalize acc =
-      mapMaybe
-        f
-        ( NonEmpty.groupBy
-            ( \x y ->
-                Mnemonic.isWordConstituent x == Mnemonic.isWordConstituent y
-            )
-            (acc [])
-        )
-    f xs@(x :| _) =
-      case x of
-        WordBreak _ -> Nothing
-        WordConstituent _ ->
-          -- I want it to fail loudly if my assumption is violated, hence
-          -- the partial 'fromWordConstituent'.
-          Just (fmap Mnemonic.fromWordConstituent xs)
+          m <- Directive.sample directivesSoFar
+          case m of
+            Nothing -> pure (acc [])
+            Just r -> go (s - 1) (r : directivesSoFar) (acc . (r :))
+        else pure (acc [])
 
 -- | Project the routine id from a routine.
 id :: Routine -> Routine.Id.Id
@@ -84,11 +62,7 @@ id (Routine id' _) = id'
 -- | Render a 'Routine' as a mnemonic phrase.
 mnemonic :: Routine -> Text
 mnemonic (Routine _ xs) =
-  ( capitalize
-      . Text.unwords
-      . fmap (Text.pack . NonEmpty.toList . fmap Directive.mnemonic)
-  )
-    xs
+  (capitalize . Text.pack . fmap Directive.mnemonic) xs
   where
     capitalize txt =
       case Text.uncons txt of

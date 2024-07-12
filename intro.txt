@@ -3,7 +3,7 @@ Perception routines
 A perception routine is a sequence of directives and the action of carrying
 them out. Each directive is represented by a letter of the Latin alphabet.
 The goal with this form of representation is to make it easy to memorize a
-perception routine as a phrase made up of quasi-English syllables and to
+perception routine as a word made up of quasi-English syllables and to
 follow it from memory without looking anything up.
 
 Before you start following a perception routine, make sure that there are no
@@ -15,10 +15,11 @@ printed letters and the corresponding directives.
 
 Attention is crucial for perception routines. This, however, does not mean
 that one cannot deviate from the given directives. In fact, the directives
-are only suggestions, not rules. They can be overlapped in time, skipped,
-paused and resumed. The only condition is that one is paying attention to
-reality at all times and stays concentrated. Unrelated thoughts are to be
-avoided.
+in a perception routine are meant to be a collection of possibilities or
+suggestions that can be explored in arbitrary order so as to construct a
+perceptual narrative that is meaningful for the subject. They can be
+overlapped in time, skipped, paused and resumed. The only condition is that
+one is paying attention to reality at all times and stays concentrated.
 
 Some directives will assume an object/area/surface. The choice is yours. If
 you have an obvious predilection, go for it. Otherwise choose randomly.

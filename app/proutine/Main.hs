@@ -35,7 +35,7 @@ main = do
   g <- case optSeed of
     Nothing -> initSMGen
     Just seed -> return (mkSMGen (fromIntegral seed))
-  let domain = Domain optStamina
+  let domain = Domain optSize
       (routines, _) = Gen.run g (Routine.sampleN optRoutinesToGenerate domain)
       m :: Int
       m =
@@ -71,8 +71,8 @@ main = do
 data Opts = Opts
   { -- | Seed
     optSeed :: Maybe Natural,
-    -- | Stamina.
-    optStamina :: Natural,
+    -- | Size of the directive pool per routine.
+    optSize :: Natural,
     -- | The number of routines to generate.
     optRoutinesToGenerate :: Natural,
     -- | Print indices of the generated perception routines.
@@ -114,12 +114,12 @@ optsParser =
         help "Seed of the preudo-random generator (if not set a random seed is used)"
       ]
     <*> (option auto . mconcat)
-      [ long "stamina",
+      [ long "size",
         short 't',
-        metavar "STAMINA",
-        value 7,
+        metavar "SIZE",
+        value 5,
         showDefault,
-        help "Stamina available per routine"
+        help "Size of the directive pool per routine"
       ]
     <*> (option auto . mconcat)
       [ short 'n',

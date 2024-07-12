@@ -15,7 +15,9 @@ newtype Domain = Domain Natural
 
 instance Arbitrary Domain where
   arbitrary =
-    Domain <$> (fromIntegral . getNonNegative <$> n)
+    Domain <$> (fromIntegral <$> (n `suchThat` f))
     where
-      n :: Gen (NonNegative Integer)
+      n :: Gen Integer
       n = arbitrary
+      f :: Integer -> Bool
+      f x = x > 0 && x < 20
