@@ -5,6 +5,7 @@ module Perception.Routine
     sample,
     id,
     mnemonic,
+    directives,
   )
 where
 
@@ -68,3 +69,7 @@ mnemonic (Routine _ xs) =
       case Text.uncons txt of
         Nothing -> txt
         Just (a, as) -> Text.cons (Char.toUpper a) as
+
+-- | Project directives from a 'Routine'.
+directives :: Routine -> [Directive]
+directives (Routine _ xs) = xs
