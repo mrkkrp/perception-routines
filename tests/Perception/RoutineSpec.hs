@@ -1,7 +1,7 @@
 module Perception.RoutineSpec (spec) where
 
 import Data.Char qualified as Char
-import Data.List (group)
+import Data.List qualified
 import Data.Text (Text)
 import Data.Text qualified as Text
 import Data.Word (Word64)
@@ -17,14 +17,14 @@ import Test.QuickCheck
 spec :: Spec
 spec = do
   describe "sample" $ do
-    it "does not generate routines with consecutively repeating directives" $
+    it "does not generate routines with repeating directives" $
       property $ \domain seed gamma -> do
         Routine.mnemonic (routine domain seed gamma)
-          `shouldNotSatisfy` consequitiveDirectiveRepetition
-    it "generates routines of the requested length" $
-      property $ \domain@(Domain stamina) seed gamma -> do
+          `shouldSatisfy` noDirectiveRepetition
+    it "generates routines of the requested size" $
+      property $ \domain@(Domain size) seed gamma -> do
         Routine.mnemonic (routine domain seed gamma)
-          `shouldSatisfy` nDirectivesEq stamina
+          `shouldSatisfy` nDirectivesEq size
 
 routine :: Domain -> Word64 -> Word64 -> Routine
 routine domain seed gamma =
@@ -33,13 +33,11 @@ routine domain seed gamma =
       (seedSMGen seed gamma)
       (Routine.sample domain)
 
-consequitiveDirectiveRepetition :: Text -> Bool
-consequitiveDirectiveRepetition =
-  any (\x -> length x > 1)
-    . group
-    . fmap Char.toLower
-    . filter (not . Char.isSpace)
-    . Text.unpack
+noDirectiveRepetition :: Text -> Bool
+noDirectiveRepetition t = t0 == t1
+  where
+    t0 = Text.unpack t
+    t1 = Data.List.nub t0
 
 nDirectivesEq :: Natural -> Text -> Bool
 nDirectivesEq n txt =

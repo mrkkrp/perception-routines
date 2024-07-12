@@ -20,6 +20,7 @@ where
 
 import Data.Algorithm.Assignment (assign)
 import Data.Bifunctor (second)
+import Data.List ((\\))
 import Data.List.NonEmpty qualified as NonEmpty
 import Data.Map.Strict (Map)
 import Data.Map.Strict qualified as Map
@@ -28,7 +29,7 @@ import Data.Text qualified as Text
 import Numeric.Natural
 import Perception.Gen (Gen)
 import Perception.Gen qualified as Gen
-import Perception.Routine.Mnemonic (WithWordBreaks (..), assignWeights)
+import Perception.Routine.Mnemonic (assignWeights)
 import Perception.Routine.Mnemonic.LetterFrequency (letterFrequencies)
 import Prelude hiding (all)
 
@@ -349,34 +350,26 @@ text = \case
     \movement contribute to your sense of spatial immersion? Try to concentrate\n\
     \on your being embedded in the 3d scene that you are traversing."
 
--- | Produce a random directive sample given the target environment and the
--- preceding directives in the routine.
+-- | Produce a random directive sample given the preceding directives in the
+-- routine.
 sample ::
-  -- | Up to 2 preceding directives
-  Maybe (Maybe Directive, WithWordBreaks Directive) ->
+  -- | Directives used so far (latest first)
+  [Directive] ->
   -- | The resulting directive
-  Gen (WithWordBreaks Directive)
+  Gen (Maybe Directive)
 sample precedingDirectives = go
   where
-    go = do
-      mdirective <-
-        Gen.weighted $
-          assignWeights
-            mnemonic
-            precedingChars
-            eligibleDirectives
-      case (mdirective, precedingDirective) of
-        (Nothing, Just x) -> pure (WordBreak x)
-        -- Two consecutive word breaks should not happen, but try again.
-        (Nothing, Nothing) -> go
-        (Just x, _) -> pure (WordConstituent x)
+    go = case NonEmpty.nonEmpty (all \\ precedingDirectives) of
+      Nothing -> return Nothing
+      Just eligibleDirectives ->
+        Just
+          <$> Gen.weighted
+            ( assignWeights
+                mnemonic
+                precedingChars
+                eligibleDirectives
+            )
     precedingChars = case precedingDirectives of
-      Nothing -> Nothing
-      Just (md, WordConstituent x) -> Just (mnemonic <$> md, mnemonic x)
-      Just (_, WordBreak _) -> Nothing
-    precedingDirective = case precedingDirectives of
-      Nothing -> Nothing
-      Just (_, WordConstituent x) -> Just x
-      Just (_, WordBreak x) -> Just x
-    eligibleDirectives = NonEmpty.fromList (filter eligibleDirective all)
-    eligibleDirective x = Just x /= precedingDirective
+      [] -> Nothing
+      [x] -> Just (Nothing, mnemonic x)
+      (x0 : x1 : _) -> Just (Just (mnemonic x1), mnemonic x0)
