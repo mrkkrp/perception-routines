@@ -5,7 +5,6 @@
 module Perception.Gen
   ( Gen,
     run,
-    askSMGen,
     weighted,
   )
 where
@@ -24,10 +23,6 @@ newtype Gen a = Gen (SMGen -> (a, SMGen))
 -- | Run the 'Gen' monad.
 run :: SMGen -> Gen a -> (a, SMGen)
 run g (Gen f) = f g
-
--- | Obtain the internal generator state.
-askSMGen :: Gen SMGen
-askSMGen = Gen $ \x -> (x, x)
 
 -- | Pick an element from a given weighted collection.
 weighted :: NonEmpty (Natural, a) -> Gen a

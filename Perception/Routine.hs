@@ -1,9 +1,9 @@
 -- | This module implements generation of perception routines.
 module Perception.Routine
   ( Routine,
+    size,
     sampleN,
     sample,
-    id,
     mnemonic,
     directives,
   )
@@ -17,35 +17,29 @@ import Numeric.Natural
 import Perception.Directive (Directive)
 import Perception.Directive qualified as Directive
 import Perception.Gen (Gen)
-import Perception.Gen qualified as Gen
-import Perception.Routine.Domain (Domain (..))
-import Perception.Routine.Id qualified as Routine.Id
 import Prelude hiding (id)
 import Prelude qualified
 
 -- | Perception routine.
-data Routine = Routine Routine.Id.Id [Directive]
+newtype Routine = Routine [Directive]
+
+-- | Routine size.
+size :: Natural
+size = 5
 
 -- | Generate multiple perception routines.
 sampleN ::
   -- | How many perception routines to generate?
   Natural ->
-  -- | The domain to use
-  Domain ->
   -- | The generated routines
   Gen [Routine]
-sampleN n domain = replicateM (fromIntegral n) (sample domain)
+sampleN n = replicateM (fromIntegral n) sample
 
 -- | Generate a perception routine.
-sample ::
-  -- | The domain to use
-  Domain ->
-  -- | The generated routine and the updated preudo-random generator state
-  Gen Routine
-sample domain@(Domain s0) = do
-  g <- Gen.askSMGen
-  xs <- go s0 [] Prelude.id
-  pure (Routine (Routine.Id.make domain g) xs)
+sample :: Gen Routine
+sample = do
+  xs <- go size [] Prelude.id
+  pure (Routine xs)
   where
     go s directivesSoFar acc =
       if s > 0
@@ -56,13 +50,9 @@ sample domain@(Domain s0) = do
             Just r -> go (s - 1) (r : directivesSoFar) (acc . (r :))
         else pure (acc [])
 
--- | Project the routine id from a routine.
-id :: Routine -> Routine.Id.Id
-id (Routine id' _) = id'
-
 -- | Render a 'Routine' as a mnemonic phrase.
 mnemonic :: Routine -> Text
-mnemonic (Routine _ xs) =
+mnemonic (Routine xs) =
   (capitalize . Text.pack . fmap Directive.mnemonic) xs
   where
     capitalize txt =
@@ -72,4 +62,4 @@ mnemonic (Routine _ xs) =
 
 -- | Project directives from a 'Routine'.
 directives :: Routine -> [Directive]
-directives (Routine _ xs) = xs
+directives (Routine xs) = xs

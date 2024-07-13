@@ -1,17 +1,10 @@
 Perception routines
 
-A perception routine is a sequence of directives and the action of carrying
-them out. Each directive is represented by a letter of the Latin alphabet.
-The goal with this form of representation is to make it easy to memorize a
-perception routine as a word made up of quasi-English syllables and to
-follow it from memory without looking anything up.
-
-Before you start following a perception routine, make sure that there are no
-distractions around. The very first directive is implicit and therefore it
-is not encoded in the printed phrases. It consists of exploring the
-environment freely according to whatever naturally attracts your attention.
-Only when this initial impulse has been satisfied should you start with the
-printed letters and the corresponding directives.
+A perception routine is a sequence of directives and the activity of
+carrying them out. Each directive is represented by a letter of the Latin
+alphabet. The goal with this form of representation is to make it easy to
+memorize a perception routine as a 5-letter word (a ‘pentad’) made up of
+quasi-English syllables.
 
 Attention is crucial for perception routines. This, however, does not mean
 that one cannot deviate from the given directives. In fact, the directives
@@ -19,11 +12,19 @@ in a perception routine are meant to be a collection of possibilities or
 suggestions that can be explored in arbitrary order so as to construct a
 perceptual narrative that is meaningful for the subject. They can be
 overlapped in time, skipped, paused and resumed. The only condition is that
-one is paying attention to reality at all times and stays concentrated.
+one is paying attention to reality and stays concentrated.
 
 Some directives will assume an object/area/surface. The choice is yours. If
 you have an obvious predilection, go for it. Otherwise choose randomly.
 Choose things you do not necessarily pay attention to in everyday life. Feel
 free to repeat this kind of action with different objects/areas/surfaces.
+
+The so-called perception routine pentads that this application generates are
+only the first step of the journey. They are meant to be helpful in learning
+the vocabulary of how reality can be perceived in a way that is aligned with
+the real realist intention. Once learned, this vocabulary can and should be
+practiced naturally as part of everyday life. At that point pentads are no
+longer very important, except for occasions when the individual feels like
+they need inspiration or external guidance.
 
 The following directives are defined:
