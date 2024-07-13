@@ -22,8 +22,6 @@ import Perception.Directive (Directive)
 import Perception.Directive qualified as Directive
 import Perception.Gen qualified as Gen
 import Perception.Routine qualified as Routine
-import Perception.Routine.Domain
-import Perception.Routine.Id qualified as Routine.Id
 import Perception.Routine.Mnemonic.LetterFrequency (letterFrequencies)
 import System.Random.SplitMix
 import Text.Printf (printf)
@@ -35,8 +33,7 @@ main = do
   g <- case optSeed of
     Nothing -> initSMGen
     Just seed -> return (mkSMGen (fromIntegral seed))
-  let domain = Domain optSize
-      (routines, _) = Gen.run g (Routine.sampleN optRoutinesToGenerate domain)
+  let (routines, _) = Gen.run g (Routine.sampleN optRoutinesToGenerate)
       m :: Int
       m =
         1 + floor (logBase 10.0 (fromIntegral optRoutinesToGenerate :: Double))
@@ -46,10 +43,6 @@ main = do
           m' = m - length i'
       putStr (replicate m' ' ' ++ i' ++ ". ")
     Text.putStr (Routine.mnemonic routine)
-    when optPrintIds $ do
-      Text.putStr " ("
-      Text.putStr (Routine.Id.render (Routine.id routine))
-      Text.putStr ")"
     Text.putStrLn ""
   when optPrintExplanations $ do
     Text.putStrLn ""
@@ -71,14 +64,10 @@ main = do
 data Opts = Opts
   { -- | Seed
     optSeed :: Maybe Natural,
-    -- | Size of the directive pool per routine.
-    optSize :: Natural,
     -- | The number of routines to generate.
     optRoutinesToGenerate :: Natural,
     -- | Print indices of the generated perception routines.
     optPrintIndices :: Bool,
-    -- | Print routine ids.
-    optPrintIds :: Bool,
     -- | Print explanations of each directive.
     optPrintExplanations :: Bool,
     -- | Also print explanations for assignment of mnemonics.
@@ -114,14 +103,6 @@ optsParser =
         help "Seed of the preudo-random generator (if not set a random seed is used)"
       ]
     <*> (option auto . mconcat)
-      [ long "size",
-        short 't',
-        metavar "SIZE",
-        value 5,
-        showDefault,
-        help "Size of the directive pool per routine"
-      ]
-    <*> (option auto . mconcat)
       [ short 'n',
         metavar "N",
         value 1,
@@ -132,11 +113,6 @@ optsParser =
       [ long "indices",
         short 'i',
         help "Print indices of the generated perception routines"
-      ]
-    <*> (switch . mconcat)
-      [ long "ids",
-        short 'I',
-        help "Print routine ids"
       ]
     <*> (switch . mconcat)
       [ long "explain",

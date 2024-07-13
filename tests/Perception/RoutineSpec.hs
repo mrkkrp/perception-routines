@@ -11,7 +11,6 @@ import Perception.Directive qualified as Directive
 import Perception.Gen qualified as Gen
 import Perception.Routine (Routine)
 import Perception.Routine qualified as Routine
-import Perception.Routine.Domain (Domain (..))
 import System.Random.SplitMix
 import Test.Hspec
 import Test.QuickCheck
@@ -20,31 +19,31 @@ spec :: Spec
 spec = do
   describe "sample" $ do
     it "does not generate routines with repeating directives" $
-      property $ \domain seed gamma -> do
-        Routine.mnemonic (routine domain seed gamma)
+      property $ \seed gamma -> do
+        Routine.mnemonic (routine seed gamma)
           `shouldSatisfy` noDirectiveRepetition
     it "generates routines of the requested size" $
-      property $ \domain@(Domain size) seed gamma -> do
-        Routine.mnemonic (routine domain seed gamma)
-          `shouldSatisfy` nDirectivesEq size
+      property $ \seed gamma -> do
+        Routine.mnemonic (routine seed gamma)
+          `shouldSatisfy` nDirectivesEq Routine.size
     it "all directives have a chance to appear" $ do
-      let xs = routineN 1_000 (Domain 5) 0 0
+      let xs = routineN 1_000 0 0
       Set.fromList (concatMap Routine.directives xs)
         `shouldBe` Set.fromList Directive.all
 
-routine :: Domain -> Word64 -> Word64 -> Routine
-routine domain seed gamma =
+routine :: Word64 -> Word64 -> Routine
+routine seed gamma =
   fst $
     Gen.run
       (seedSMGen seed gamma)
-      (Routine.sample domain)
+      Routine.sample
 
-routineN :: Natural -> Domain -> Word64 -> Word64 -> [Routine]
-routineN n domain seed gamma =
+routineN :: Natural -> Word64 -> Word64 -> [Routine]
+routineN n seed gamma =
   fst $
     Gen.run
       (seedSMGen seed gamma)
-      (Routine.sampleN n domain)
+      (Routine.sampleN n)
 
 noDirectiveRepetition :: Text -> Bool
 noDirectiveRepetition t = t0 == t1
