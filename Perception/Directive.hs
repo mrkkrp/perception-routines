@@ -36,7 +36,6 @@ import Prelude hiding (all)
 -- | All known perception directives.
 data Directive
   = Breath
-  | ClosestArea
   | CompletionOfInvisibleAreas
   | ConstancyOfColor
   | ConstancyThroughAngle
@@ -45,7 +44,6 @@ data Directive
   | ConstancyThroughTime
   | ExpectationsOfSound
   | ExpectationsOfView
-  | FarthestArea
   | Gravity
   | Ground
   | Light
@@ -71,7 +69,6 @@ all = [minBound .. maxBound]
 name :: Directive -> Text
 name = \case
   Breath -> "breath"
-  ClosestArea -> "closest area"
   CompletionOfInvisibleAreas -> "completion of invisible areas"
   ConstancyOfColor -> "constancy of color"
   ConstancyThroughAngle -> "constancy through angle of view"
@@ -80,7 +77,6 @@ name = \case
   ConstancyThroughTime -> "constancy through time"
   ExpectationsOfSound -> "expectations of sound"
   ExpectationsOfView -> "expectations of view"
-  FarthestArea -> "farthest area"
   Gravity -> "gravity and supporting forces"
   Ground -> "walk (with focus on the ground/floor)"
   Light -> "light"
@@ -102,7 +98,6 @@ name = \case
 mnemonicKeyword :: Directive -> Text
 mnemonicKeyword = \case
   Breath -> "breath"
-  ClosestArea -> "closest"
   CompletionOfInvisibleAreas -> "invisible"
   ConstancyOfColor -> "color"
   ConstancyThroughAngle -> "angle"
@@ -111,7 +106,6 @@ mnemonicKeyword = \case
   ConstancyThroughTime -> "time"
   ExpectationsOfSound -> "sound"
   ExpectationsOfView -> "view"
-  FarthestArea -> "farthest"
   Gravity -> "gravity"
   Ground -> "ground"
   Light -> "light"
@@ -160,8 +154,6 @@ frequencyRank = \case
   Sky -> 2
   SpatialReference -> 2
   -- Not my favorites, added for the sake of variety.
-  ClosestArea -> 1
-  FarthestArea -> 1
   OutsidePerspective -> 1
   VisualReconstruction -> 1
 
@@ -230,10 +222,6 @@ text :: Directive -> Text
 text = \case
   Breath ->
     "Take a slow deep breath, pay attention to qualities of the air."
-  ClosestArea ->
-    "Scrutinize the area that immediately surrounds you, say, within your arm's\n\
-    \length. What qualities does it have in comparison to objects that are\n\
-    \farther away?"
   CompletionOfInvisibleAreas ->
     "Choose a partially occluded object, or an object with an invisible area\n\
     \(e.g. back side) that you feel you can visualize in your head. Visualize\n\
@@ -280,11 +268,6 @@ text = \case
     "Imagine what you would see from a certain position and an angle of view\n\
     \that is different from where you are now. Assume that position and the\n\
     \angle of view and compare your expectation with what you actually see."
-  FarthestArea ->
-    "Scrutinize the farthest area (according to your estimation, excluding the\n\
-    \sky and celestial objects) that you can observe from your position. Try to\n\
-    \evaluate how much space is accessible to your vision in every direction.\n\
-    \Form a mental image of the totality of that space."
   Gravity ->
     "Attempt to imagine the weight of various objects that you observe and the\n\
     \pressure they exercise on their support (floor, ground, etc.). What forces\n\
