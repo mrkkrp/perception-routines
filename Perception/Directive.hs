@@ -42,6 +42,7 @@ data Directive
   | ConstancyThroughDistance
   | ConstancyThroughMotion
   | ConstancyThroughTime
+  | ExpectationsOfExtent
   | ExpectationsOfSound
   | ExpectationsOfView
   | Gravity
@@ -75,6 +76,7 @@ name = \case
   ConstancyThroughDistance -> "constancy through distance"
   ConstancyThroughMotion -> "constancy through motion"
   ConstancyThroughTime -> "constancy through time"
+  ExpectationsOfExtent -> "expectations of extent"
   ExpectationsOfSound -> "expectations of sound"
   ExpectationsOfView -> "expectations of view"
   Gravity -> "gravity and supporting forces"
@@ -104,6 +106,7 @@ mnemonicKeyword = \case
   ConstancyThroughDistance -> "distance"
   ConstancyThroughMotion -> "motion"
   ConstancyThroughTime -> "time"
+  ExpectationsOfExtent -> "extent"
   ExpectationsOfSound -> "sound"
   ExpectationsOfView -> "view"
   Gravity -> "gravity"
@@ -147,6 +150,7 @@ frequencyRank = \case
   -- previous group or their principle seems to be a bit more contrived, so
   -- it makes sense for them to be a little bit more rare.
   CompletionOfInvisibleAreas -> 2
+  ExpectationsOfExtent -> 2
   ExpectationsOfView -> 2
   Gravity -> 2
   Light -> 2
@@ -258,6 +262,12 @@ text = \case
     \time. How does it change in time, if at all? Concentrate on how the thing\n\
     \you are attending to persists through time; try to see it as an active\n\
     \process rather than something gratuitous."
+  ExpectationsOfExtent ->
+    "Choose an object or an area that is at least 3 meters away from you.\n\
+    \Attempt to estimate its size, e.g. in relation to your hands. Approach the\n\
+    \chosen object/area and verify your intuitions. Repeat this exercise, but\n\
+    \this time around use your estimation to form an idea of extent of space\n\
+    \that you are embedded in."
   ExpectationsOfSound ->
     "Choose a suitable object and imagine what it would be like to provoke a\n\
     \sound by interacting with that object in a certain way. Carry out the\n\
