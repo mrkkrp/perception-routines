@@ -1,30 +1,20 @@
 Perception routines
 
-A perception routine is a sequence of directives and the activity of
-carrying them out. Each directive is represented by a letter of the Latin
-alphabet. The goal with this form of representation is to make it easy to
-memorize a perception routine as a 5-letter word (a ‘pentad’) made up of
-quasi-English syllables.
+A perception routine is a set of perceptual tactics and the activity of
+exercising them. Each perceptual tactic is expressed through language and
+its textual formulation is called directive. A perceptual tactic is
+represented by a letter of the Latin alphabet. The goal with this form of
+representation is to make it easy to memorize a perception routine as a
+5-letter word (a pentad) made up of quasi-English syllables.
 
-Attention is crucial for perception routines. This, however, does not mean
-that one cannot deviate from the given directives. In fact, the directives
-in a perception routine are meant to be a collection of possibilities or
-suggestions that can be explored in arbitrary order so as to construct a
-perceptual narrative that is meaningful for the subject. They can be
-overlapped in time, skipped, paused and resumed. The only condition is that
-one is paying attention to reality and stays concentrated.
+It is up to the individual to choose when to employ a perceptual tactic from
+the routine. However, one should try to stick to the tactics of a given
+routine without mixing in other perceptual tactics one might know.
+Furthermore, it is recommended to employ perceptual tactics sequentially
+rather in parallel, since the latter case implies division of attention.
 
-Some directives will assume an object/area/surface. The choice is yours. If
-you have an obvious predilection, go for it. Otherwise choose randomly.
-Choose things you do not necessarily pay attention to in everyday life. Feel
-free to repeat this kind of action with different objects/areas/surfaces.
+Some perceptual tactics will assume an object/area/surface. Try to choose
+randomly. Choose things you do not necessarily pay attention to in everyday
+life.
 
-The so-called perception routine pentads that this application generates are
-only the first step of the journey. They are meant to be helpful in learning
-the vocabulary of how reality can be perceived in a way that is aligned with
-the real realist intention. Once learned, this vocabulary can and should be
-practiced naturally as part of everyday life. At that point pentads are no
-longer very important, except for occasions when the individual feels like
-they need inspiration or external guidance.
-
-The following directives are defined:
+The following perceptual tactics are defined:
