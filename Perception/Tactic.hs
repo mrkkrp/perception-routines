@@ -40,12 +40,10 @@ data Tactic
   | ConstancyOfColor
   | ConstancyThroughAngle
   | ConstancyThroughDistance
-  | ConstancyThroughMotion
   | ConstancyThroughTime
   | ExpectationsOfExtent
   | ExpectationsOfSound
   | ExpectationsOfView
-  | Gravity
   | Ground
   | Light
   | OutsidePerspective
@@ -73,12 +71,10 @@ name = \case
   ConstancyOfColor -> "constancy of color"
   ConstancyThroughAngle -> "constancy through angle of view"
   ConstancyThroughDistance -> "constancy through distance"
-  ConstancyThroughMotion -> "constancy through motion"
   ConstancyThroughTime -> "constancy through time"
   ExpectationsOfExtent -> "expectations of extent"
   ExpectationsOfSound -> "expectations of sound"
   ExpectationsOfView -> "expectations of view"
-  Gravity -> "gravity and supporting forces"
   Ground -> "walk (with focus on the ground/floor)"
   Light -> "light"
   OutsidePerspective -> "outside perspective"
@@ -102,12 +98,10 @@ mnemonicKeyword = \case
   ConstancyOfColor -> "color"
   ConstancyThroughAngle -> "angle"
   ConstancyThroughDistance -> "distance"
-  ConstancyThroughMotion -> "motion"
   ConstancyThroughTime -> "time"
   ExpectationsOfExtent -> "extent"
   ExpectationsOfSound -> "sound"
   ExpectationsOfView -> "view"
-  Gravity -> "gravity"
   Ground -> "ground"
   Light -> "light"
   OutsidePerspective -> "outside"
@@ -132,7 +126,6 @@ frequencyRank = \case
   ConstancyOfColor -> 3
   ConstancyThroughAngle -> 3
   ConstancyThroughDistance -> 3
-  ConstancyThroughMotion -> 3
   ConstancyThroughTime -> 3
   ExpectationsOfSound -> 3
   Ground -> 3
@@ -149,7 +142,6 @@ frequencyRank = \case
   CompletionOfInvisibleAreas -> 2
   ExpectationsOfExtent -> 2
   ExpectationsOfView -> 2
-  Gravity -> 2
   Light -> 2
   Shadows -> 2
   SpatialReference -> 2
@@ -246,12 +238,6 @@ directive = \case
     \the chosen object/area. Concentrate on the fact that it is the same thing\n\
     \of the same physical size no matter the distance from which it is\n\
     \observed. What qualities of space does this exercise exemplify?"
-  ConstancyThroughMotion ->
-    "Attend to objects in motion around you. Is everything still, or are most\n\
-    \things moving? What about things that seem to be still but move on closer\n\
-    \inspection? Concentrate on the fact that the moving things retain their\n\
-    \integrity and identity despite the movement. What can be said about the\n\
-    \moving force?"
   ConstancyThroughTime ->
     "Choose an object or an area. Scrutinize it carefully over a period of\n\
     \time. How does it change in time, if at all? Concentrate on how the thing\n\
@@ -272,14 +258,6 @@ directive = \case
     "Imagine what you would see from a certain position and an angle of view\n\
     \that is different from where you are now. Assume that position and the\n\
     \angle of view and compare your expectation with what you actually see."
-  Gravity ->
-    "Attempt to imagine the weight of various objects that you observe and the\n\
-    \pressure they exercise on their support (floor, ground, etc.). What forces\n\
-    \allow these objects to remain in their current position? ‘Visualize’ in\n\
-    \your mind such things as rigidity, elasticity, inner tensions. If\n\
-    \feasible, attempt to lift and move around objects of interest to\n\
-    \experience the gravitational forces they are subjected to and to verify\n\
-    \your intuitions."
   Ground ->
     "Walk so as to change your position. What does the ground/floor feel like?\n\
     \How hard is it? How does it react when you step on it? What sounds does it\n\
