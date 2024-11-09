@@ -52,7 +52,6 @@ data Tactic
   | Pressure
   | SeparationThroughFocus
   | Shadows
-  | Sky
   | Smell
   | Sounds
   | SpatialReference
@@ -86,7 +85,6 @@ name = \case
   Pressure -> "pressure"
   SeparationThroughFocus -> "separation through focus"
   Shadows -> "shadows"
-  Sky -> "sky"
   Smell -> "smell"
   Sounds -> "sounds"
   SpatialReference -> "spatial reference"
@@ -116,7 +114,6 @@ mnemonicKeyword = \case
   Pressure -> "pressure"
   SeparationThroughFocus -> "focus"
   Shadows -> "shadows"
-  Sky -> "sky"
   Smell -> "smell"
   Sounds -> "sounds"
   SpatialReference -> "reference"
@@ -155,7 +152,6 @@ frequencyRank = \case
   Gravity -> 2
   Light -> 2
   Shadows -> 2
-  Sky -> 2
   SpatialReference -> 2
   -- Not my favorites, added for the sake of variety.
   OutsidePerspective -> 1
@@ -263,10 +259,9 @@ directive = \case
     \process rather than something gratuitous."
   ExpectationsOfExtent ->
     "Choose an object or an area that is at least 3 meters away from you.\n\
-    \Attempt to estimate its size, e.g. in relation to your hands. Approach the\n\
-    \chosen object/area and verify your intuitions. Repeat this exercise, but\n\
-    \this time around use your estimation to form an idea of extent of space\n\
-    \that you are embedded in."
+    \Attempt to estimate its size, e.g. in relation to parts of your body.\n\
+    \Visualize yourself next to the chosen object/area, then approach it and\n\
+    \verify your intuitions."
   ExpectationsOfSound ->
     "Choose a suitable object and imagine what it would be like to provoke a\n\
     \sound by interacting with that object in a certain way. Carry out the\n\
@@ -292,7 +287,7 @@ directive = \case
   Light ->
     "Appreciate the light that illuminates the scene that you are observing. Do\n\
     \not take it for granted. One way to do it is to imagine that all\n\
-    \observable light is only a short flash that started recently and can cease\n\
+    \observable light is only a short flash that has just started and can cease\n\
     \at any moment."
   OutsidePerspective ->
     "Visualize your body in its current position and environment from an\n\
@@ -312,25 +307,21 @@ directive = \case
     "Investigate shadows: their position, length, character. This tactic\n\
     \applies equally in the case of diffuse light. There will always be shaded\n\
     \areas, e.g. in the vegetation. Explicitly relate shadows to the angle and\n\
-    \character of light and the occluding object. Where is the darkest and\n\
-    \lightest shadow you can find?"
-  Sky ->
-    "Concentrate on the sky. How does its color vary? How big does it feel? Are\n\
-    \there any clouds? If yes, how many different kinds? What is their\n\
-    \character and speed? Stare long enough to see how clouds actually move."
+    \character of light and the occluding object."
   Smell ->
     "Choose a suitable object and smell it."
   Sounds ->
     "Concentrate on what you hear. Note that unlike other sense modalities we\n\
     \phenomenologically experience sounds from the past as part of the present.\n\
-    \How many distinct sound sources are there? Pay attention to the spatial\n\
-    \position and the character of sounds. How do reflection and reverberation\n\
-    \contribute to the way sounds describe space? Keep track of new sound\n\
-    \sources that appear. Closing your eyes might be helpful."
+    \How many distinct sound sources are there? Pay attention to their spatial\n\
+    \position and character. How do reflection and reverberation contribute to\n\
+    \the way sounds describe space? Keep track of new sound sources that\n\
+    \appear. Closing your eyes might be helpful."
   SpatialReference ->
-    "Think of a reference object that you cannot directly observe then form an\n\
-    \idea of how you are positioned and oriented in relation to that object.\n\
-    \How does this affect your sense of space perception?"
+    "Think of a reference object that you cannot directly observe, then form an\n\
+    \idea of how some other object or area of your choice is oriented in\n\
+    \relation to the reference object. How does this affect your sense of space\n\
+    \perception?"
   TactileExpectations ->
     "Choose an object or a surface. Imagine what it would feel like to grasp,\n\
     \touch, or perform some other manipulation with that object or surface.\n\
@@ -339,7 +330,7 @@ directive = \case
   UnusualView ->
     "Observe the environment you are in from an unusual position and/or angle\n\
     \of view. Note the fact that it is the same scene and yet it looks\n\
-    \different because more of its essence is revealed."
+    \different because more of its nature is revealed."
   VisualReconstruction ->
     "Look carefully at a scene of your choice. Now close your eyes and try to\n\
     \reconstruct the scene in your head. Open your eyes and compare your\n\
