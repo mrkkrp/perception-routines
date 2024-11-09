@@ -32,12 +32,12 @@ flag dev
 
 library
     exposed-modules:
-        Perception.Directive
         Perception.Gen
         Perception.Routine
         Perception.Routine.Mnemonic
         Perception.Routine.Mnemonic.LetterFrequency
         Perception.Routine.Mnemonic.LetterWeight
+        Perception.Tactic
 
     default-language: GHC2021
     build-depends:
@@ -108,8 +108,8 @@ test-suite tests
     build-tool-depends: hspec-discover:hspec-discover >=2 && <3
     hs-source-dirs:     tests
     other-modules:
-        Perception.DirectiveSpec
         Perception.RoutineSpec
+        Perception.TacticSpec
 
     default-language:   GHC2021
     build-depends:

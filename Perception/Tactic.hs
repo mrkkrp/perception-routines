@@ -1,19 +1,19 @@
 {-# LANGUAGE LambdaCase #-}
 {-# LANGUAGE OverloadedStrings #-}
 
--- | This module defines all perception directives.
-module Perception.Directive
-  ( Directive (..),
+-- | This module defines all perception tactics.
+module Perception.Tactic
+  ( Tactic (..),
     all,
     name,
     mnemonicKeyword,
     frequencyRank,
-    normativeDirectiveProbabilities,
+    normativeProbabilities,
     affinity,
     mnemonicAffinity,
     probabilityAffinity,
     mnemonic,
-    text,
+    directive,
     sample,
   )
 where
@@ -33,8 +33,8 @@ import Perception.Routine.Mnemonic (assignWeights)
 import Perception.Routine.Mnemonic.LetterFrequency (letterFrequencies)
 import Prelude hiding (all)
 
--- | All known perception directives.
-data Directive
+-- | All known perception tactics.
+data Tactic
   = Breath
   | CompletionOfInvisibleAreas
   | ConstancyOfColor
@@ -62,12 +62,12 @@ data Directive
   | Walk
   deriving (Enum, Bounded, Eq, Ord, Show)
 
--- | An enumeration of all different values of 'Directive'.
-all :: [Directive]
+-- | An enumeration of all different values of 'Tactic'.
+all :: [Tactic]
 all = [minBound .. maxBound]
 
--- | The human-friendly name of a 'Directive'.
-name :: Directive -> Text
+-- | The human-friendly name of a 'Tactic'.
+name :: Tactic -> Text
 name = \case
   Breath -> "breath"
   CompletionOfInvisibleAreas -> "completion of invisible areas"
@@ -97,7 +97,7 @@ name = \case
 
 -- | Keywords that are used for assigning letter mnemonics. These should be
 -- in lower case and should not contain spaces or punctuation.
-mnemonicKeyword :: Directive -> Text
+mnemonicKeyword :: Tactic -> Text
 mnemonicKeyword = \case
   Breath -> "breath"
   CompletionOfInvisibleAreas -> "invisible"
@@ -125,13 +125,13 @@ mnemonicKeyword = \case
   VisualReconstruction -> "reconstruction"
   Walk -> "walk"
 
--- | The frequency rank of a 'Directive'.
-frequencyRank :: Directive -> Natural
+-- | The frequency rank of a 'Tactic'.
+frequencyRank :: Tactic -> Natural
 frequencyRank = \case
   -- Breath is always nice. It is simple and does not take much time.
   Breath -> 4
   -- These are my favorites. The corresponding phenomenological realizations
-  -- seem to be evident and the directives are fun to follow.
+  -- seem to be evident and the tactics are fun to follow.
   ConstancyOfColor -> 3
   ConstancyThroughAngle -> 3
   ConstancyThroughDistance -> 3
@@ -161,9 +161,9 @@ frequencyRank = \case
   OutsidePerspective -> 1
   VisualReconstruction -> 1
 
--- | Directives paired with their normative probabilities.
-normativeDirectiveProbabilities :: [(Directive, Double)]
-normativeDirectiveProbabilities =
+-- | Tactics paired with their normative probabilities.
+normativeProbabilities :: [(Tactic, Double)]
+normativeProbabilities =
   second adjustedRankToProbability <$> allWithAdjustedRanks
   where
     allWithAdjustedRanks = zip all (adjustRank . frequencyRank <$> all)
@@ -172,25 +172,24 @@ normativeDirectiveProbabilities =
     totalAdjustedRankPoints = sum (snd <$> allWithAdjustedRanks)
     adjustedRankToProbability x = x / totalAdjustedRankPoints
 
--- | The map from directives to their 'Char' mnemonics. This map is the
--- result of a compromise between mnemonic affinity of directives and
--- letters and probability affinity between letter probabilities in English
--- and the normative probabilities of the directives as per their
--- 'frequencyRank'.
-mnemonicMap :: Map Directive Char
+-- | The map from tactics to their 'Char' mnemonics. This map is the result
+-- of a compromise between a mnemonic affinity of tactics and letters and a
+-- probability affinity between letter probabilities in English and the
+-- normative probabilities of the tactics as per their 'frequencyRank'.
+mnemonicMap :: Map Tactic Char
 mnemonicMap =
   Map.fromList $
-    f <$> assign cost normativeDirectiveProbabilities letterFrequencies
+    f <$> assign cost normativeProbabilities letterFrequencies
   where
     f ((d, _), (ch, _)) = (d, ch)
     cost d ch = floor ((1.0 - affinity d ch) * 10000.0)
 {-# NOINLINE mnemonicMap #-}
 
--- | Calculate affinity between a directive and a letter. The result is
+-- | Calculate the affinity between a tactic and a letter. The result is
 -- between 0 (no match) and 1 (perfect match), inclusive.
 affinity ::
-  -- | A directive paired with its normative probability
-  (Directive, Double) ->
+  -- | A tactic paired with its normative probability
+  (Tactic, Double) ->
   -- | A letter paired with its probability in English
   (Char, Double) ->
   Double
@@ -198,8 +197,8 @@ affinity (d, p') (ch, p) =
   mnemonicAffinity (mnemonicKeyword d) ch
     * probabilityAffinity p' p
 
--- | Calculate affinity between a mnemonic keyword and a given letter. The
--- result is between 0 (no match) and 1 (perfect match), inclusive.
+-- | Calculate the affinity between a mnemonic keyword and a given letter.
+-- The result is between 0 (no match) and 1 (perfect match), inclusive.
 mnemonicAffinity ::
   -- | The mnemonic keyword
   Text ->
@@ -210,20 +209,20 @@ mnemonicAffinity k ch =
   max 0.05 $
     1.0 - maybe 1.0 ((* 0.1) . fromIntegral) (Text.findIndex (== ch) k)
 
--- | Calculate affinity between two probabilities. The result is between 0
--- (no match) and 1 (perfect match), inclusive.
+-- | Calculate the affinity between two probabilities. The result is between
+-- 0 (no match) and 1 (perfect match), inclusive.
 probabilityAffinity :: Double -> Double -> Double
 probabilityAffinity x y =
   let n = max x y
    in (n - abs (x - y)) / n
 
--- | The mnemonic of a 'Directive'.
-mnemonic :: Directive -> Char
+-- | The mnemonic of a 'Tactic'.
+mnemonic :: Tactic -> Char
 mnemonic k = mnemonicMap Map.! k
 
--- | The comprehensive description of a 'Directive'.
-text :: Directive -> Text
-text = \case
+-- | The comprehensive description of a 'Tactic'.
+directive :: Tactic -> Text
+directive = \case
   Breath ->
     "Take a slow deep breath, pay attention to qualities of the air."
   CompletionOfInvisibleAreas ->
@@ -310,7 +309,7 @@ text = \case
     \relation to its surroundings. What qualities does it have in comparison to\n\
     \other objects that you are not focused on?"
   Shadows ->
-    "Investigate shadows: their position, length, character. This directive\n\
+    "Investigate shadows: their position, length, character. This tactic\n\
     \applies equally in the case of diffuse light. There will always be shaded\n\
     \areas, e.g. in the vegetation. Explicitly relate shadows to the angle and\n\
     \character of light and the occluding object. Where is the darkest and\n\
@@ -351,26 +350,26 @@ text = \case
     \movement contribute to your sense of spatial immersion? Try to concentrate\n\
     \on your being embedded in the 3d scene that you are traversing."
 
--- | Produce a random directive sample given the preceding directives in the
+-- | Produce a random 'Tactic' sample given the preceding 'Tactic's in the
 -- routine.
 sample ::
-  -- | Directives used so far (latest first)
-  [Directive] ->
-  -- | The resulting directive
-  Gen (Maybe Directive)
-sample precedingDirectives = go
+  -- | 'Tactic's used so far (latest first)
+  [Tactic] ->
+  -- | The resulting 'Tactic'
+  Gen (Maybe Tactic)
+sample precedingTactics = go
   where
-    go = case NonEmpty.nonEmpty (all \\ precedingDirectives) of
+    go = case NonEmpty.nonEmpty (all \\ precedingTactics) of
       Nothing -> return Nothing
-      Just eligibleDirectives ->
+      Just eligibleTactics ->
         Just
           <$> Gen.weighted
             ( assignWeights
                 mnemonic
                 precedingChars
-                eligibleDirectives
+                eligibleTactics
             )
-    precedingChars = case precedingDirectives of
+    precedingChars = case precedingTactics of
       [] -> Nothing
       [x] -> Just (Nothing, mnemonic x)
       (x0 : x1 : _) -> Just (Just (mnemonic x1), mnemonic x0)

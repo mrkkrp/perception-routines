@@ -5,7 +5,7 @@ module Perception.Routine
     sampleN,
     sample,
     mnemonic,
-    directives,
+    tactics,
   )
 where
 
@@ -14,14 +14,14 @@ import Data.Char qualified as Char
 import Data.Text (Text)
 import Data.Text qualified as Text
 import Numeric.Natural
-import Perception.Directive (Directive)
-import Perception.Directive qualified as Directive
 import Perception.Gen (Gen)
+import Perception.Tactic (Tactic)
+import Perception.Tactic qualified as Tactic
 import Prelude hiding (id)
 import Prelude qualified
 
 -- | Perception routine.
-newtype Routine = Routine [Directive]
+newtype Routine = Routine [Tactic]
 
 -- | Routine size.
 size :: Natural
@@ -41,25 +41,25 @@ sample = do
   xs <- go size [] Prelude.id
   pure (Routine xs)
   where
-    go s directivesSoFar acc =
+    go s tacticsSoFar acc =
       if s > 0
         then do
-          m <- Directive.sample directivesSoFar
+          m <- Tactic.sample tacticsSoFar
           case m of
             Nothing -> pure (acc [])
-            Just r -> go (s - 1) (r : directivesSoFar) (acc . (r :))
+            Just r -> go (s - 1) (r : tacticsSoFar) (acc . (r :))
         else pure (acc [])
 
 -- | Render a 'Routine' as a mnemonic phrase.
 mnemonic :: Routine -> Text
 mnemonic (Routine xs) =
-  (capitalize . Text.pack . fmap Directive.mnemonic) xs
+  (capitalize . Text.pack . fmap Tactic.mnemonic) xs
   where
     capitalize txt =
       case Text.uncons txt of
         Nothing -> txt
         Just (a, as) -> Text.cons (Char.toUpper a) as
 
--- | Project directives from a 'Routine'.
-directives :: Routine -> [Directive]
-directives (Routine xs) = xs
+-- | Project 'Tactic's from a 'Routine'.
+tactics :: Routine -> [Tactic]
+tactics (Routine xs) = xs

@@ -18,11 +18,11 @@ import Development.GitRev
 import Numeric.Natural
 import Options.Applicative
 import Paths_perception_routines (version)
-import Perception.Directive (Directive)
-import Perception.Directive qualified as Directive
 import Perception.Gen qualified as Gen
 import Perception.Routine qualified as Routine
 import Perception.Routine.Mnemonic.LetterFrequency (letterFrequencies)
+import Perception.Tactic (Tactic)
+import Perception.Tactic qualified as Tactic
 import System.Random.SplitMix
 import Text.Printf (printf)
 
@@ -47,14 +47,14 @@ main = do
   when optPrintExplanations $ do
     Text.putStrLn ""
     Text.putStrLn (Text.decodeUtf8 $(embedFile "intro.txt"))
-    forM_ (sortOn Directive.mnemonic Directive.all) $ \directive -> do
-      putChar (Directive.mnemonic directive)
+    forM_ (sortOn Tactic.mnemonic Tactic.all) $ \tactic -> do
+      putChar (Tactic.mnemonic tactic)
       Text.putStr " = "
-      Text.putStr (Directive.name directive)
+      Text.putStr (Tactic.name tactic)
       Text.putStrLn ""
       when optExplainMnemonics $ do
-        Text.putStr (indentText 8 (mnemonicJustification directive))
-      Text.putStr (indentText 2 (Directive.text directive))
+        Text.putStr (indentText 8 (mnemonicJustification tactic))
+      Text.putStr (indentText 2 (Tactic.directive tactic))
     Text.putStrLn ""
 
 ----------------------------------------------------------------------------
@@ -68,7 +68,7 @@ data Opts = Opts
     optRoutinesToGenerate :: Natural,
     -- | Print indices of the generated perception routines.
     optPrintIndices :: Bool,
-    -- | Print explanations of each directive.
+    -- | Print explanations of each tactic.
     optPrintExplanations :: Bool,
     -- | Also print explanations for assignment of mnemonics.
     optExplainMnemonics :: Bool
@@ -117,7 +117,7 @@ optsParser =
     <*> (switch . mconcat)
       [ long "explain",
         short 'x',
-        help "Print explanations for all directives."
+        help "Print descriptions for all tactics."
       ]
     <*> (switch . mconcat)
       [ long "explain-mnemonics",
@@ -128,8 +128,8 @@ optsParser =
 ----------------------------------------------------------------------------
 -- Helpers
 
-mnemonicJustification :: Directive -> Text
-mnemonicJustification directive =
+mnemonicJustification :: Tactic -> Text
+mnemonicJustification tactic =
   Text.unlines
     [ "Affinity (overall): " <> percent affinity,
       "Mnemonic affinity: "
@@ -151,21 +151,21 @@ mnemonicJustification directive =
   where
     percent x = Text.pack (printf "%.2f%%" (x * 100.0))
     affinity =
-      Directive.affinity
-        (directive, normativeProbability)
+      Tactic.affinity
+        (tactic, normativeProbability)
         (mnemonic, mnemonicProbability)
     mnemonicAffinity =
-      Directive.mnemonicAffinity mnemonicKeyword mnemonic
+      Tactic.mnemonicAffinity mnemonicKeyword mnemonic
     probabilityAffinity =
-      Directive.probabilityAffinity normativeProbability mnemonicProbability
-    mnemonic = Directive.mnemonic directive
-    mnemonicKeyword = Directive.mnemonicKeyword directive
+      Tactic.probabilityAffinity normativeProbability mnemonicProbability
+    mnemonic = Tactic.mnemonic tactic
+    mnemonicKeyword = Tactic.mnemonicKeyword tactic
     mnemonicProbability =
       fromJust $
         lookup mnemonic letterFrequencies
     normativeProbability =
       fromJust $
-        lookup directive Directive.normativeDirectiveProbabilities
+        lookup tactic Tactic.normativeProbabilities
 
 indentText :: Int -> Text -> Text
 indentText n = Text.unlines . fmap (Text.replicate n " " <>) . Text.lines
