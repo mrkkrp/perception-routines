@@ -85,7 +85,7 @@ name = \case
   Sounds -> "sounds"
   SpatialReference -> "spatial reference"
   TactileExpectations -> "tactile expectations"
-  UnusualView -> "view from an unusual position/angle "
+  UnusualView -> "view from an unusual position/angle"
   VisualReconstruction -> "visual reconstruction"
   Walk -> "walk (with focus on spatial movement)"
 
@@ -297,7 +297,7 @@ directive = \case
     \appear. Closing your eyes might be helpful."
   SpatialReference ->
     "Think of a reference object that you cannot directly observe, then form an\n\
-    \idea of how some other object or area of your choice is oriented in\n\
+    \idea of how some other object or area that you observe is oriented in\n\
     \relation to the reference object. How does this affect your sense of space\n\
     \perception?"
   TactileExpectations ->
