@@ -43,6 +43,7 @@ data Tactic
   | ConstancyThroughDistance
   | ConstancyThroughTime
   | ExpectationOfExtent
+  | ExpectationOfRearrangement
   | ExpectationOfSound
   | ExpectationOfView
   | Ground
@@ -75,6 +76,7 @@ name = \case
   ConstancyThroughDistance -> "constancy through distance"
   ConstancyThroughTime -> "constancy through time"
   ExpectationOfExtent -> "expectation of extent"
+  ExpectationOfRearrangement -> "expectation of rearrangement"
   ExpectationOfSound -> "expectation of sound"
   ExpectationOfView -> "expectation of view"
   Ground -> "walk (with focus on the ground/floor)"
@@ -103,6 +105,7 @@ mnemonicKeyword = \case
   ConstancyThroughDistance -> "distance"
   ConstancyThroughTime -> "time"
   ExpectationOfExtent -> "extent"
+  ExpectationOfRearrangement -> "rearrangement"
   ExpectationOfSound -> "sound"
   ExpectationOfView -> "view"
   Ground -> "ground"
@@ -145,6 +148,7 @@ frequencyRank = \case
   -- it makes sense for them to be a little bit more rare.
   CompletionOfInvisibleAreas -> 2
   ExpectationOfExtent -> 2
+  ExpectationOfRearrangement -> 2
   ExpectationOfView -> 2
   Light -> 2
   Shadows -> 2
@@ -260,6 +264,10 @@ directive = \case
     \Attempt to estimate its size, e.g. in relation to parts of your body.\n\
     \Visualize yourself next to the chosen object/area, then approach it and\n\
     \verify your intuitions."
+  ExpectationOfRearrangement ->
+    "Choose a suitable area. Imagine what it would like if you rearranged\n\
+    \certain objects in the area in some way. Carry out the rearrangement and\n\
+    \compare your expectation with what you actually see."
   ExpectationOfSound ->
     "Choose a suitable object and imagine what it would be like to provoke a\n\
     \sound by interacting with that object in a certain way. Carry out the\n\
