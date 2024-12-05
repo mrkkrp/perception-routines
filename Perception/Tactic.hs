@@ -42,9 +42,9 @@ data Tactic
   | ConstancyThroughAngle
   | ConstancyThroughDistance
   | ConstancyThroughTime
-  | ExpectationsOfExtent
-  | ExpectationsOfSound
-  | ExpectationsOfView
+  | ExpectationOfExtent
+  | ExpectationOfSound
+  | ExpectationOfView
   | Ground
   | Light
   | OutsidePerspective
@@ -54,7 +54,7 @@ data Tactic
   | Smell
   | Sounds
   | SpatialReference
-  | TactileExpectations
+  | TactileExpectation
   | UnusualView
   | VisualReconstruction
   | Walk
@@ -74,9 +74,9 @@ name = \case
   ConstancyThroughAngle -> "constancy through angle of view"
   ConstancyThroughDistance -> "constancy through distance"
   ConstancyThroughTime -> "constancy through time"
-  ExpectationsOfExtent -> "expectations of extent"
-  ExpectationsOfSound -> "expectations of sound"
-  ExpectationsOfView -> "expectations of view"
+  ExpectationOfExtent -> "expectation of extent"
+  ExpectationOfSound -> "expectation of sound"
+  ExpectationOfView -> "expectation of view"
   Ground -> "walk (with focus on the ground/floor)"
   Light -> "light"
   OutsidePerspective -> "outside perspective"
@@ -86,7 +86,7 @@ name = \case
   Smell -> "smell"
   Sounds -> "sounds"
   SpatialReference -> "spatial reference"
-  TactileExpectations -> "tactile expectations"
+  TactileExpectation -> "tactile expectation"
   UnusualView -> "view from an unusual position/angle"
   VisualReconstruction -> "visual reconstruction"
   Walk -> "walk (with focus on spatial movement)"
@@ -102,9 +102,9 @@ mnemonicKeyword = \case
   ConstancyThroughAngle -> "angle"
   ConstancyThroughDistance -> "distance"
   ConstancyThroughTime -> "time"
-  ExpectationsOfExtent -> "extent"
-  ExpectationsOfSound -> "sound"
-  ExpectationsOfView -> "view"
+  ExpectationOfExtent -> "extent"
+  ExpectationOfSound -> "sound"
+  ExpectationOfView -> "view"
   Ground -> "ground"
   Light -> "light"
   OutsidePerspective -> "outside"
@@ -114,7 +114,7 @@ mnemonicKeyword = \case
   Smell -> "smell"
   Sounds -> "sounds"
   SpatialReference -> "reference"
-  TactileExpectations -> "tactile"
+  TactileExpectation -> "tactile"
   UnusualView -> "unusual"
   VisualReconstruction -> "reconstruction"
   Walk -> "walk"
@@ -131,21 +131,21 @@ frequencyRank = \case
   ConstancyThroughAngle -> 3
   ConstancyThroughDistance -> 3
   ConstancyThroughTime -> 3
-  ExpectationsOfSound -> 3
+  ExpectationOfSound -> 3
   Ground -> 3
   Pressure -> 3
   SeparationThroughFocus -> 3
   Smell -> 3
   Sounds -> 3
-  TactileExpectations -> 3
+  TactileExpectation -> 3
   UnusualView -> 3
   Walk -> 3
   -- These are also good, but perhaps take a little longer than those in the
   -- previous group or their principle seems to be a bit more contrived, so
   -- it makes sense for them to be a little bit more rare.
   CompletionOfInvisibleAreas -> 2
-  ExpectationsOfExtent -> 2
-  ExpectationsOfView -> 2
+  ExpectationOfExtent -> 2
+  ExpectationOfView -> 2
   Light -> 2
   Shadows -> 2
   SpatialReference -> 2
@@ -255,18 +255,18 @@ directive = \case
     \time. How does it change in time, if at all? Concentrate on how the thing\n\
     \you are attending to persists through time; try to see it as an active\n\
     \process rather than something gratuitous."
-  ExpectationsOfExtent ->
+  ExpectationOfExtent ->
     "Choose an object or an area that is at least 3 meters away from you.\n\
     \Attempt to estimate its size, e.g. in relation to parts of your body.\n\
     \Visualize yourself next to the chosen object/area, then approach it and\n\
     \verify your intuitions."
-  ExpectationsOfSound ->
+  ExpectationOfSound ->
     "Choose a suitable object and imagine what it would be like to provoke a\n\
     \sound by interacting with that object in a certain way. Carry out the\n\
     \interaction and compare your expectation with what you actually hear. How\n\
     \does the sound contribute to the sense of materiality of the chosen\n\
     \object?"
-  ExpectationsOfView ->
+  ExpectationOfView ->
     "Imagine what you would see from a certain position and an angle of view\n\
     \that is different from where you are now. Assume that position and the\n\
     \angle of view and compare your expectation with what you actually see."
@@ -312,7 +312,7 @@ directive = \case
     \idea of how some other object or area that you observe is oriented in\n\
     \relation to the reference object. How does this affect your sense of space\n\
     \perception?"
-  TactileExpectations ->
+  TactileExpectation ->
     "Choose an object or a surface. Imagine what it would feel like to grasp,\n\
     \touch, or perform some other manipulation with that object or surface.\n\
     \Perform the imagined action while maintaining visual contact with the\n\
