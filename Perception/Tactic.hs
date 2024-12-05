@@ -40,6 +40,7 @@ data Tactic
   | ConstancyOfColor
   | ConstancyOfSound
   | ConstancyThroughAngle
+  | ConstancyThroughDeformation
   | ConstancyThroughDistance
   | ConstancyThroughTime
   | ExpectationOfDeformation
@@ -74,6 +75,7 @@ name = \case
   ConstancyOfColor -> "constancy of color"
   ConstancyOfSound -> "constancy of sound"
   ConstancyThroughAngle -> "constancy through angle of view"
+  ConstancyThroughDeformation -> "constancy through deformation"
   ConstancyThroughDistance -> "constancy through distance"
   ConstancyThroughTime -> "constancy through time"
   ExpectationOfDeformation -> "expectation of deformation"
@@ -104,6 +106,7 @@ mnemonicKeyword = \case
   ConstancyOfColor -> "color"
   ConstancyOfSound -> "sound"
   ConstancyThroughAngle -> "angle"
+  ConstancyThroughDeformation -> "deformation"
   ConstancyThroughDistance -> "distance"
   ConstancyThroughTime -> "time"
   ExpectationOfDeformation -> "deformation"
@@ -151,6 +154,7 @@ frequencyRank = \case
   -- previous group or their principle seems to be a bit more contrived, so
   -- it makes sense for them to be a little bit more rare.
   CompletionOfInvisibleAreas -> 2
+  ConstancyThroughDeformation -> 2
   ExpectationOfExtent -> 2
   ExpectationOfRearrangement -> 2
   ExpectationOfView -> 2
@@ -252,6 +256,10 @@ directive = \case
     \object/area so as to explore it from different angles. Concentrate on the\n\
     \fact that it is the same thing in the same position no matter the angle of\n\
     \view. What qualities of space does this exercise exemplify?"
+  ConstancyThroughDeformation ->
+    "Choose a suitable object and carry out plastic or elastic deformation of\n\
+    \that object. Observe that after the deformation it is still the same\n\
+    \object. What does this experience reveal about its nature?"
   ConstancyThroughDistance ->
     "Concentrate on an object or an area of your choice. Gradually approach it\n\
     \or move farther away from it so as to change the distance between you and\n\
