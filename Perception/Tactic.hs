@@ -38,6 +38,7 @@ data Tactic
   = Breath
   | CompletionOfInvisibleAreas
   | ConstancyOfColor
+  | ConstancyOfSound
   | ConstancyThroughAngle
   | ConstancyThroughDistance
   | ConstancyThroughTime
@@ -69,6 +70,7 @@ name = \case
   Breath -> "breath"
   CompletionOfInvisibleAreas -> "completion of invisible areas"
   ConstancyOfColor -> "constancy of color"
+  ConstancyOfSound -> "constancy of sound"
   ConstancyThroughAngle -> "constancy through angle of view"
   ConstancyThroughDistance -> "constancy through distance"
   ConstancyThroughTime -> "constancy through time"
@@ -96,6 +98,7 @@ mnemonicKeyword = \case
   Breath -> "breath"
   CompletionOfInvisibleAreas -> "invisible"
   ConstancyOfColor -> "color"
+  ConstancyOfSound -> "sound"
   ConstancyThroughAngle -> "angle"
   ConstancyThroughDistance -> "distance"
   ConstancyThroughTime -> "time"
@@ -124,6 +127,7 @@ frequencyRank = \case
   -- These are my favorites. The corresponding phenomenological realizations
   -- seem to be evident and the tactics are fun to follow.
   ConstancyOfColor -> 3
+  ConstancyOfSound -> 3
   ConstancyThroughAngle -> 3
   ConstancyThroughDistance -> 3
   ConstancyThroughTime -> 3
@@ -226,6 +230,14 @@ directive = \case
     \or diffused). Recognize the variation in tone as different manifestations\n\
     \of the same color/texture that allow us to perceive it in a deeper way.\n\
     \What qualities of the incident light does this exercise reveal?"
+  ConstancyOfSound ->
+    "Identify a lasting sound source and start paying attention to its\n\
+    \character. Once you have sufficiently familiarized yourself with the sound\n\
+    \source, start moving in space so as to provoke changes in the perceived\n\
+    \character of the sound. In simplest cases there will be changes in volume;\n\
+    \reverberation is also likely to be a factor. Note that the sound source\n\
+    \remains the same despite the differences in the perceived character of the\n\
+    \sound. How do these differences describe the space?"
   ConstancyThroughAngle ->
     "Concentrate on an object or an area of your choice. Gradually move around\n\
     \it in various ways while maintaining your attention on the chosen\n\

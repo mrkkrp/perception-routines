@@ -19,4 +19,4 @@ spec = do
     it "assigns a tactic for each letter" $ do
       let assignedLetters = Tactic.mnemonic <$> Tactic.all
           allLetters = ['a' .. 'z']
-      allLetters \\ assignedLetters `shouldBe` "jkqz"
+      allLetters \\ assignedLetters `shouldBe` "jqz"
