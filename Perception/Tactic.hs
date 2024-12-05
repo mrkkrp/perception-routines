@@ -42,6 +42,7 @@ data Tactic
   | ConstancyThroughAngle
   | ConstancyThroughDistance
   | ConstancyThroughTime
+  | ExpectationOfDeformation
   | ExpectationOfExtent
   | ExpectationOfRearrangement
   | ExpectationOfSound
@@ -75,6 +76,7 @@ name = \case
   ConstancyThroughAngle -> "constancy through angle of view"
   ConstancyThroughDistance -> "constancy through distance"
   ConstancyThroughTime -> "constancy through time"
+  ExpectationOfDeformation -> "expectation of deformation"
   ExpectationOfExtent -> "expectation of extent"
   ExpectationOfRearrangement -> "expectation of rearrangement"
   ExpectationOfSound -> "expectation of sound"
@@ -104,6 +106,7 @@ mnemonicKeyword = \case
   ConstancyThroughAngle -> "angle"
   ConstancyThroughDistance -> "distance"
   ConstancyThroughTime -> "time"
+  ExpectationOfDeformation -> "deformation"
   ExpectationOfExtent -> "extent"
   ExpectationOfRearrangement -> "rearrangement"
   ExpectationOfSound -> "sound"
@@ -134,6 +137,7 @@ frequencyRank = \case
   ConstancyThroughAngle -> 3
   ConstancyThroughDistance -> 3
   ConstancyThroughTime -> 3
+  ExpectationOfDeformation -> 3
   ExpectationOfSound -> 3
   Ground -> 3
   Pressure -> 3
@@ -259,6 +263,12 @@ directive = \case
     \time. How does it change in time, if at all? Concentrate on how the thing\n\
     \you are attending to persists through time; try to see it as an active\n\
     \process rather than something gratuitous."
+  ExpectationOfDeformation ->
+    "Choose a suitable object and imagine what it would be like to deform it\n\
+    \both in terms of tactile sensation and what the end result would look\n\
+    \like. Both kinds of deformation, elastic and plastic are acceptable. Carry\n\
+    \out the intended deformation and compare your expectation with what you\n\
+    \actually experience and observe."
   ExpectationOfExtent ->
     "Choose an object or an area that is at least 3 meters away from you.\n\
     \Attempt to estimate its size, e.g. in relation to parts of your body.\n\
