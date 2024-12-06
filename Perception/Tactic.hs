@@ -136,7 +136,6 @@ frequencyRank = \case
   -- These are my favorites. The corresponding phenomenological realizations
   -- seem to be evident and the tactics are fun to follow.
   ConstancyOfColor -> 3
-  ConstancyOfSound -> 3
   ConstancyThroughAngle -> 3
   ConstancyThroughDistance -> 3
   ConstancyThroughTime -> 3
@@ -144,7 +143,6 @@ frequencyRank = \case
   ExpectationOfSound -> 3
   Ground -> 3
   Pressure -> 3
-  SeparationThroughFocus -> 3
   Smell -> 3
   Sounds -> 3
   TactileExpectation -> 3
@@ -154,11 +152,13 @@ frequencyRank = \case
   -- previous group or their principle seems to be a bit more contrived, so
   -- it makes sense for them to be a little bit more rare.
   CompletionOfInvisibleAreas -> 2
+  ConstancyOfSound -> 2
   ConstancyThroughDeformation -> 2
   ExpectationOfExtent -> 2
   ExpectationOfRearrangement -> 2
   ExpectationOfView -> 2
   Light -> 2
+  SeparationThroughFocus -> 2
   Shadows -> 2
   SpatialReference -> 2
   -- Not my favorites, added for the sake of variety.
