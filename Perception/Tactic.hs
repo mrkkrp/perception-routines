@@ -135,7 +135,6 @@ frequencyRank = \case
   Breath -> 4
   -- These are my favorites. The corresponding phenomenological realizations
   -- seem to be evident and the tactics are fun to follow.
-  ConstancyOfColor -> 3
   ConstancyThroughAngle -> 3
   ConstancyThroughDistance -> 3
   ConstancyThroughTime -> 3
@@ -152,6 +151,7 @@ frequencyRank = \case
   -- previous group or their principle seems to be a bit more contrived, so
   -- it makes sense for them to be a little bit more rare.
   CompletionOfInvisibleAreas -> 2
+  ConstancyOfColor -> 2
   ConstancyOfSound -> 2
   ConstancyThroughDeformation -> 2
   ExpectationOfExtent -> 2
