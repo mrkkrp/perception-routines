@@ -350,7 +350,7 @@ directive = \case
   VisualReconstruction ->
     "Look carefully at a scene of your choice. Now close your eyes and try to\n\
     \reconstruct the scene in your head. Open your eyes and compare your\n\
-    \reconstruction with what you can actually see."
+    \reconstruction with what you actually see."
   Walk ->
     "Walk so as to change your position. Pay special attention to things that\n\
     \you pass by. How does the constantly changing angle of view and your\n\
