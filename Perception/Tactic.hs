@@ -283,9 +283,9 @@ directive = \case
     \Visualize yourself next to the chosen object/area, then approach it and\n\
     \verify your intuitions."
   ExpectationOfRearrangement ->
-    "Choose a suitable area. Imagine what it would like if you rearranged\n\
-    \certain objects in the area in some way. Carry out the rearrangement and\n\
-    \compare your expectation with what you actually see."
+    "Choose an area and imagine what it would like if you rearranged certain\n\
+    \objects in that area in some way. Carry out the rearrangement and compare\n\
+    \your expectation with what you actually see."
   ExpectationOfSound ->
     "Choose a suitable object and imagine what it would be like to provoke a\n\
     \sound by interacting with that object in a certain way. Carry out the\n\
