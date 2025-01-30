@@ -76,7 +76,10 @@ data Opts = Opts
 
 optsParserInfo :: ParserInfo Opts
 optsParserInfo =
-  info (helper <*> ver <*> optsParser) fullDesc
+  info (helper <*> ver <*> optsParser) . mconcat $
+    [ fullDesc,
+      progDesc "Generate mnemonic pentads for perception routines"
+    ]
   where
     ver :: Parser (a -> a)
     ver =
