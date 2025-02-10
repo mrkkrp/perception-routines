@@ -246,10 +246,10 @@ directive = \case
     "Identify a lasting sound source and start paying attention to its\n\
     \character. Once you have sufficiently familiarized yourself with the sound\n\
     \source, start moving in space so as to provoke changes in the perceived\n\
-    \character of the sound. In simplest cases there will be changes in volume;\n\
-    \reverberation is also likely to be a factor. Note that the sound source\n\
-    \remains the same despite the differences in the perceived character of the\n\
-    \sound. How do these differences describe the space you are in?"
+    \character of the sound. In the simplest cases there will be changes in\n\
+    \volume; reverberation is also likely to be a factor. Note that the sound\n\
+    \source remains the same despite the differences in the perceived character\n\
+    \of the sound. How do these differences describe the space you are in?"
   ConstancyThroughAngle ->
     "Concentrate on an object or an area of your choice. Gradually move around\n\
     \it in various ways while maintaining your attention on the chosen\n\
